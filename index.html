@@ -124,7 +124,10 @@
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="img/img1.png" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
+                            <img id="specimen-img" src="" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded hidden">
+                            <div id="img-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center handwritten text-sm text-[#7a1f00]">
+                                📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>
+                            </div>
                         </div>
                     </div>
 
@@ -339,8 +342,8 @@
                     <textarea id="modal-science" rows="2" placeholder="Estudio comprobado..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (ej. img/img2.png):</label>
-                    <input type="text" id="modal-img-url" required placeholder="img/img2.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
+                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Opcional, ej. img/img1.png):</label>
+                    <input type="text" id="modal-img-url" placeholder="img/img1.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm cursor-pointer">Cancelar</button>
@@ -350,7 +353,7 @@
         </div>
     </div>
 
-    <!-- Script principal con manejo inteligente de errores de imagen -->
+    <!-- Script principal con imágenes opcionales y dinámicas -->
     <script>
         const defaultDatabase = {
             anfibios: [
@@ -630,7 +633,12 @@
                 document.getElementById('field-courtship').innerText = "-";
                 document.getElementById('field-relations').innerText = "-";
                 document.getElementById('field-science').innerText = "Agrega tu primer registro para comenzar el estudio.";
-                document.getElementById('specimen-img').src = "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
+                
+                const imgEl = document.getElementById('specimen-img');
+                const placeholder = document.getElementById('img-placeholder');
+                imgEl.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+
                 document.getElementById('regional-canton-display').innerText = "Zona de Los Santos";
                 document.getElementById('counter-display').innerText = "0/0";
                 document.getElementById('record-count').innerText = "Ficha #0 / 0";
@@ -658,11 +666,23 @@
             document.getElementById('field-science').innerText = data.science || "Información científica en proceso de investigación.";
             
             const imgEl = document.getElementById('specimen-img');
-            // Manejador inteligente de errores: si la imagen local falla, muestra un respaldo visual claro
-            imgEl.onerror = function() {
-                this.src = 'https://images.unsplash.com/photo-1511497584788-876761142212?auto=format&fit=crop&w=600&q=80';
-            };
-            imgEl.src = data.img || "img/img1.png";
+            const placeholder = document.getElementById('img-placeholder');
+
+            if (data.img && data.img.trim() !== "") {
+                imgEl.src = data.img;
+                imgEl.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                
+                imgEl.onerror = function() {
+                    this.classList.add('hidden');
+                    placeholder.classList.remove('hidden');
+                    placeholder.innerHTML = `⚠️ No se encontró: ${data.img}<br><span class="text-[9px] typewriter">Sube el archivo a la carpeta img/</span>`;
+                };
+            } else {
+                imgEl.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                placeholder.innerHTML = `📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img7.png)</span>`;
+            }
             
             document.getElementById('regional-canton-display').innerText = data.loc || "Zona de Los Santos";
 
@@ -766,7 +786,7 @@
                 courtship: courtship,
                 relations: relations,
                 science: science,
-                img: imgUrl
+                img: imgUrl.trim()
             };
 
             if (!database[cat]) {
@@ -810,7 +830,7 @@
         }
 
         function exportCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Niche,Morfologia,Etologia,Reproduccion,CortejoDimorfismo,Relaciones,DatoCientifico\n";
+            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Nicho,Morfologia,Etologia,Reproduccion,CortejoDimorfismo,Relaciones,DatoCientifico\n";
             for (let cat in database) {
                 database[cat].forEach(item => {
                     let row = [
