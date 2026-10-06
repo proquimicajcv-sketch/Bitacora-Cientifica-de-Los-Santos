@@ -25,11 +25,6 @@
         .night-vision-overlay {
             background: radial-gradient(circle, rgba(160, 15, 15, 0.18) 0%, rgba(35, 3, 3, 0.90) 90%);
             box-shadow: inset 0 0 70px rgba(90, 0, 0, 0.85);
-            transition: opacity 0.3s ease;
-        }
-        .night-vision-off {
-            opacity: 0 !important;
-            pointer-events: none !important;
         }
         /* Rugged tablet casing border effect */
         .tablet-case {
@@ -60,14 +55,6 @@
             background: rgba(139, 37, 0, 0.4);
             border-radius: 4px;
         }
-        @keyframes stampPulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
-        .stamp-badge {
-            animation: stampPulse 3s infinite ease-in-out;
-        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-2 sm:p-6 relative select-none">
@@ -80,27 +67,32 @@
     <main class="relative z-10 w-full max-w-5xl tablet-case rounded-2xl p-3 sm:p-5 text-red-500">
         
         <!-- Luz ambiental nocturna roja (Night vision red filter overlay) -->
-        <div id="nv-overlay" class="night-vision-overlay absolute inset-0 rounded-2xl pointer-events-none z-20"></div>
+        <div id="night-overlay" class="night-vision-overlay absolute inset-0 rounded-2xl pointer-events-none z-20 transition-opacity duration-300"></div>
 
         <!-- Pantalla interna de la tableta -->
-        <div class="relative z-30 flex flex-col lg:flex-row gap-4 h-full min-h-[660px] bg-[#2a1b14] p-3 sm:p-4 rounded-xl border border-[#443325]">
+        <div class="relative z-30 flex flex-col lg:flex-row gap-4 h-full min-h-[620px] bg-[#2a1b14] p-3 sm:p-4 rounded-xl border border-[#443325]">
 
             <!-- LADO IZQUIERDO: La libreta de papel con anotaciones científicas -->
             <div class="flex-1 paper-texture rounded-lg p-4 sm:p-6 relative flex flex-col justify-between overflow-y-auto border border-[#d8c5aa]">
                 
-                <!-- Sello o marca de agua de la estación con toggle de visión nocturna y exportación CSV -->
-                <div class="absolute top-2 right-4 flex items-center gap-2">
-                    <button onclick="exportDatabaseCSV()" class="typewriter text-[10px] sm:text-xs bg-[#8b2500] text-[#f3e9dc] px-2.5 py-1 rounded border border-[#5c1800] shadow hover:bg-[#a32b00] transition cursor-pointer flex items-center gap-1 font-bold">
+                <!-- Botón superior derecho para visión nocturna y exportar CSV -->
+                <div class="absolute top-2 right-4 flex items-center gap-2 z-30">
+                    <button onclick="toggleNightVision()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3d271d] text-[#f3e9dc] px-2 py-1 rounded border border-[#70492c] hover:bg-[#523528] transition shadow">
+                        🌙 <span id="nv-text">Modo Noche: ON</span>
+                    </button>
+                    <button onclick="exportCSV()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#8b2500] text-[#f3e9dc] px-2 py-1 rounded border border-[#5c1800] hover:bg-[#a82d00] transition shadow">
                         📥 Exportar CSV
                     </button>
-                    <button onclick="toggleNightVision()" id="nv-toggle-btn" class="typewriter text-[10px] sm:text-xs bg-[#2b1d0c] text-[#d4af37] px-2 py-1 rounded border border-[#8b5a2b] shadow hover:bg-[#422c14] transition cursor-pointer flex items-center gap-1">
-                        🔴 <span id="nv-status-text">NV Rojo: ON</span>
-                    </button>
+                </div>
+
+                <!-- Sello o marca de agua de la estación -->
+                <div class="absolute top-8 right-4 text-[10px] sm:text-xs typewriter uppercase tracking-widest text-[#8b5a2b] opacity-65 font-bold">
+                    Est. Los Santos • Zona Tarrazú-Dota
                 </div>
 
                 <!-- Cabecera de la Bitácora -->
                 <div>
-                    <h1 id="journal-title" class="typewriter text-lg sm:text-2xl font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-2 pr-32 sm:pr-48">
+                    <h1 id="journal-title" class="typewriter text-lg sm:text-2xl font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-2">
                         Bitácora de Los Santos - Anfibios
                     </h1>
                     
@@ -115,10 +107,10 @@
                 <!-- CONTENIDO CENTRAL DINÁMICO (Ilustración y Notas Científicas) -->
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     
-                    <!-- Tarjeta de ilustración con anotaciones SVG interactiva (soporta carpeta local img/) -->
+                    <!-- Tarjeta de ilustración con anotaciones SVG interactiva -->
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-48 sm:h-56 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="img/specimen_1.jpg" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded transition-all duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511497584788-876761142212?auto=format&fit=crop&w=600&q=80';">
+                            <img id="specimen-img" src="img/rana_nacientes.jpg" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                             
                             <!-- SVG con líneas de anotación científica apuntando a partes del organismo -->
                             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
@@ -154,10 +146,9 @@
                             <h4 class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Microhábitat Registrado:</h4>
                             <p id="specimen-habitat" class="handwritten text-base text-[#3a2212]">Estrato arbustivo de bosque nuboso primario, 1,600 msnm.</p>
                         </div>
-                        <!-- Sello de Estado de Conservación -->
-                        <div id="conservation-stamp" class="bg-[#e2d3bd] px-3 py-1.5 rounded border border-[#b89768] flex items-center justify-between stamp-badge">
-                            <span class="typewriter text-[10px] uppercase font-bold text-[#5c3a21]">Estado IUCN:</span>
-                            <span id="conservation-status" class="handwritten text-sm font-bold text-[#006400]">Preocupación Menor (LC)</span>
+                        <div class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
+                            <h4 class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Estado IUCN:</h4>
+                            <p id="specimen-iucn" class="handwritten text-base text-[#2d5a27] font-bold">Preocupación Menor (LC)</p>
                         </div>
                     </div>
                 </div>
@@ -170,24 +161,22 @@
                     </p>
                 </div>
 
-                <!-- Pie de página de la libreta con selector de Cantón/Sitio y Registro secuencial #1 en adelante -->
+                <!-- Pie de página de la libreta -->
                 <div class="mt-3 pt-2 border-t border-[#d2b896] flex flex-wrap justify-between items-center text-xs typewriter text-[#70492c] gap-2">
-                    <div class="flex items-center gap-1.5">
+                    <span>Expedición: Cordillera de Talamanca</span>
+                    <div class="flex items-center gap-1">
                         <span>Cantón/Sitio:</span>
-                        <select id="canton-selector" onchange="updateCantonSelection(this.value)" class="bg-[#e8dbcc] border border-[#b08d57] rounded px-1.5 py-0.5 text-[#3a1d0c] font-bold text-xs cursor-pointer">
-                            <option value="Dota">Dota (San Gerardo)</option>
-                            <option value="Tarrazú">Tarrazú (San Marcos)</option>
-                            <option value="León Cortés">León Cortés (San Pablo)</option>
-                            <option value="Cerro de la Muerte">Cerro de la Muerte (Páramo)</option>
-                            <option value="Savegre">Cuenca Río Savegre</option>
+                        <select id="canton-selector" class="bg-[#e8dbcc] border border-[#b08d57] text-[#3a1d0c] rounded px-1 py-0.5 text-xs typewriter font-bold outline-none cursor-pointer">
+                            <option value="Tarrazú (San Marcos)">Tarrazú (San Marcos)</option>
+                            <option value="San Lorenzo de Tarrazú">San Lorenzo de Tarrazú</option>
+                            <option value="Dota (San Gerardo)">Dota (San Gerardo)</option>
+                            <option value="León Cortés (San Pablo)">León Cortés (San Pablo)</option>
                         </select>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="playFieldAudio()" class="bg-[#d2b896] hover:bg-[#c2a47e] text-[#3a1d0c] px-2 py-1 rounded border border-[#b08d57] transition flex items-center gap-1 cursor-pointer">
-                            🔊 <span id="audio-btn-label">Simular Audio</span>
-                        </button>
-                        <span id="record-count" class="font-bold text-[#8b2500]">Registro #1 / 2026</span>
-                    </div>
+                    <button onclick="simulateAudio()" class="bg-[#d2b896] hover:bg-[#c2a886] text-[#3a1d0c] px-2 py-0.5 rounded border border-[#b08d57] transition shadow flex items-center gap-1">
+                        🔊 Simular Audio
+                    </button>
+                    <span id="record-count">Registro #042 / 2026</span>
                 </div>
             </div>
 
@@ -201,80 +190,78 @@
                 </div>
 
                 <!-- Botones de Pestañas con los colores exactos solicitados -->
-                <nav id="category-tabs" class="flex flex-col space-y-2.5">
+                <nav id="category-tabs" class="flex flex-col space-y-2">
                     
                     <!-- Aves -->
-                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95">
                         <span class="flex items-center gap-2 typewriter text-sm">
                             <span class="text-base">🦅</span> Aves
                         </span>
-                        <span id="count-aves" class="text-xs bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
+                        <span class="text-xs bg-red-950 px-2 py-0.5 rounded-full text-red-200">3 spp</span>
                     </button>
 
                     <!-- Mamíferos -->
-                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95">
                         <span class="flex items-center gap-2 typewriter text-sm">
                             <span class="text-base">🦌</span> Mamíferos
                         </span>
-                        <span id="count-mamiferos" class="text-xs bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">2 spp</span>
+                        <span class="text-xs bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">2 spp</span>
                     </button>
 
-                    <!-- Anfibios -->
-                    <button onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    <!-- Anfibios (Seleccionado por defecto) -->
+                    <button onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all transform hover:scale-[1.02] active:scale-95">
                         <span class="flex items-center gap-2 typewriter text-sm">
                             <span class="text-base">🐸</span> Anfibios
                         </span>
-                        <span id="count-anfibios" class="text-xs bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">2 spp</span>
+                        <span class="text-xs bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">3 spp</span>
                     </button>
 
                     <!-- Reptiles -->
-                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95">
                         <span class="flex items-center gap-2 typewriter text-sm">
                             <span class="text-base">🐍</span> Reptiles
                         </span>
-                        <span id="count-reptiles" class="text-xs bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">2 spp</span>
+                        <span class="text-xs bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">2 spp</span>
                     </button>
 
                     <!-- Invertebrados -->
-                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95">
                         <span class="flex items-center gap-2 typewriter text-sm">
                             <span class="text-base">🦂</span> Invertebrados
                         </span>
-                        <span id="count-invertebrados" class="text-xs bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">2 spp</span>
+                        <span class="text-xs bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">2 spp</span>
                     </button>
 
                     <!-- Flora -->
-                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95">
                         <span class="flex items-center gap-2 typewriter text-sm">
                             <span class="text-base">🌿</span> Flora & Musgos
                         </span>
-                        <span id="count-flora" class="text-xs bg-green-950 px-2 py-0.5 rounded-full text-green-200">2 spp</span>
+                        <span class="text-xs bg-green-950 px-2 py-0.5 rounded-full text-green-200">2 spp</span>
                     </button>
 
                     <!-- Geología -->
-                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold shadow-md transition-all transform hover:scale-[1.02] active:scale-95">
                         <span class="flex items-center gap-2 typewriter text-sm">
                             <span class="text-base">🪨</span> Geología
                         </span>
-                        <span id="count-geologia" class="text-xs bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">2 muestras</span>
+                        <span class="text-xs bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">2 muestras</span>
                     </button>
 
                 </nav>
 
-                <!-- Estado del sistema de campo, botón de rotación y agregar nuevo registro -->
+                <!-- Estado del sistema de campo y botón de rotación de especies -->
                 <div class="bg-[#1f140f] p-3 rounded-lg border border-[#4a3424] text-center space-y-2">
                     <div class="flex items-center justify-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-                        <span id="gps-status-label" class="typewriter text-[11px] text-[#e0a96d]">GPS: 9.633°N, 83.950°W</span>
+                        <span class="typewriter text-[11px] text-[#e0a96d]">GPS: 9.651°N, -84.000°W (Alt. Talamanca)</span>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="nextSpeciesInCurrentCategory()" class="bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-2 px-2 rounded border border-[#70492c] transition shadow cursor-pointer">
-                            🔄 Siguiente (<span id="specimen-counter">1/2</span>)
-                        </button>
-                        <button onclick="openNewRecordModal()" class="bg-[#8b2500] hover:bg-[#a32b00] text-[#f3e9dc] text-xs typewriter py-2 px-2 rounded border border-[#5c1800] transition shadow cursor-pointer font-bold">
-                            ➕ Registrar Hallazgo
-                        </button>
-                    </div>
+                    <button onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-2 px-3 rounded border border-[#70492c] transition shadow">
+                        🔄 Siguiente (<span id="counter-display">1/2</span>)
+                    </button>
+                    <button onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-2 px-3 rounded border border-[#5c1800] transition shadow font-bold">
+                        ➕ Registrar Hallazgo
+                    </button>
                 </div>
 
             </aside>
@@ -282,87 +269,64 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar Nuevo Registro de Campo -->
-    <div id="new-record-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl max-h-[90vh] overflow-y-auto">
-            <h3 class="typewriter text-lg font-bold text-[#8b2500] mb-3 border-b-2 border-[#b08d57] pb-1">📝 Nuevo Hallazgo en Expedición (Los Santos)</h3>
-            
-            <form id="field-form" onsubmit="handleNewRecordSubmit(event)" class="space-y-3 text-xs typewriter text-[#2d1c0e]">
+    <!-- Modal personalizado para agregar nuevos registros -->
+    <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Registrar Nuevo Especimen / Muestra</h2>
+            <form id="new-record-form" onsubmit="handleNewRecord(event)" class="space-y-3 handwritten text-lg text-[#3a1d0c]">
                 <div>
-                    <label class="block font-bold mb-1">Categoría Taxonómica:</label>
-                    <select id="new-category" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-sm">
-                        <option value="aves">Aves (🦅)</option>
-                        <option value="mamiferos">Mamíferos (🦌)</option>
-                        <option value="anfibios" selected>Anfibios (🐸)</option>
-                        <option value="reptiles">Reptiles (🐍)</option>
-                        <option value="invertebrados">Invertebrados (🦂)</option>
-                        <option value="flora">Flora & Musgos (🌿)</option>
-                        <option value="geologia">Geología (🪨)</option>
+                    <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
+                    <select id="modal-cat" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
+                        <option value="aves">Aves</option>
+                        <option value="mamiferos">Mamíferos</option>
+                        <option value="anfibios" selected>Anfibios</option>
+                        <option value="reptiles">Reptiles</option>
+                        <option value="invertebrados">Invertebrados</option>
+                        <option value="flora">Flora & Musgos</option>
+                        <option value="geologia">Geología</option>
                     </select>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold mb-1">Nombre Común / Local:</label>
-                        <input type="text" id="new-name" required placeholder="Ej. Rana arbórea" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-sm">
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1">Nombre Científico:</label>
-                        <input type="text" id="new-sci" required placeholder="Ej. Agalychnis decora" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-sm">
-                    </div>
+                <div>
+                    <label class="block typewriter text-xs font-bold uppercase">Nombre Científico / Especie:</label>
+                    <input type="text" id="modal-sci" required placeholder="Ej. Isthmohyla nacientes" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div>
+                    <label class="block typewriter text-xs font-bold uppercase">Nombre Común:</label>
+                    <input type="text" id="modal-common" required placeholder="Ej. Rana de las nacientes" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold mb-1">Localidad / Cantón:</label>
-                        <input type="text" id="new-loc" required value="San Gerardo de Dota" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-xs">
+                        <label class="block typewriter text-xs font-bold uppercase">Localidad / Sitio:</label>
+                        <input type="text" id="modal-loc" required placeholder="San Lorenzo de Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                     <div>
-                        <label class="block font-bold mb-1">Temperatura:</label>
-                        <input type="text" id="new-temp" required value="17°C" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-xs">
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1">Humedad:</label>
-                        <input type="text" id="new-hum" required value="92%" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-xs">
+                        <label class="block typewriter text-xs font-bold uppercase">Temperatura / Humedad:</label>
+                        <input type="text" id="modal-clim" placeholder="19°C / 95%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold mb-1">Microhábitat:</label>
-                    <input type="text" id="new-habitat" required placeholder="Ej. Bajo hoja húmeda en bosque nuboso" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-sm">
+                    <label class="block typewriter text-xs font-bold uppercase">Microhábitat:</label>
+                    <input type="text" id="modal-hab" placeholder="Zona de nacientes de agua" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div>
-                    <label class="block font-bold mb-1">Observaciones / Notas de Campo:</label>
-                    <textarea id="new-notes" rows="2" required placeholder="Detalles de comportamiento, vocalización, etc." class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-sm"></textarea>
+                    <label class="block typewriter text-xs font-bold uppercase">Observaciones y Nota Científica:</label>
+                    <textarea id="modal-notes" rows="2" placeholder="Detalles del hallazgo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
-                    <label class="block font-bold mb-1">Ruta de Imagen Local (Opcional, ej. img/rana1.jpg):</label>
-                    <input type="text" id="new-img" placeholder="img/mi_hallazgo.jpg" class="w-full p-2 rounded bg-[#f0e3d0] border border-[#cca878] font-sans text-xs">
-                    <p class="text-[10px] text-[#633e21] mt-0.5">Si lo dejas en blanco, quedará guardado de manera permanente y podrás agregar la foto en la carpeta `img/` más tarde.</p>
+                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Ej. img/rana_nacientes.jpg):</label>
+                    <input type="text" id="modal-img" placeholder="img/rana_nacientes.jpg" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeNewRecordModal()" class="bg-[#b08d57] hover:bg-[#9a7947] text-[#2d1c0e] px-4 py-2 rounded font-bold cursor-pointer">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="bg-[#8b2500] hover:bg-[#a32b00] text-[#f3e9dc] px-4 py-2 rounded font-bold cursor-pointer">
-                        Guardar en Bitácora
-                    </button>
+                    <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm">Cancelar</button>
+                    <button type="submit" class="bg-[#8b2500] text-white px-4 py-1 rounded typewriter text-sm font-bold">Guardar en Bitácora</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal de notificación general -->
-    <div id="custom-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-md w-full p-6 text-center paper-texture shadow-2xl">
-            <h3 id="modal-title" class="typewriter text-xl font-bold text-[#8b2500] mb-2">Aviso de Expedición</h3>
-            <p id="modal-message" class="handwritten text-xl text-[#2d1c0e] mb-6">Mensaje del sistema de campo.</p>
-            <button onclick="closeModal()" class="bg-[#8b2500] hover:bg-[#a32b00] text-[#f3e9dc] typewriter text-sm px-6 py-2 rounded border border-[#5c1800] shadow cursor-pointer">
-                Entendido / Continuar
-            </button>
-        </div>
-    </div>
-
-    <!-- Script interactivo con persistencia LocalStorage, carpetas img/, numeración secuencial #1 y selector de cantón -->
+    <!-- Script interactivo para la gestión de categorías científicas y fichas de Los Santos -->
     <script>
-        // Base de datos inicial científica por defecto para la región de Los Santos
+        // Base de datos científica inicial con la nueva Rana de las Nacientes integrada en San Lorenzo de Tarrazú
         const defaultDatabase = {
             aves: [
                 {
@@ -372,11 +336,11 @@
                     hum: "92%",
                     name: "Quetzal Resplandeciente",
                     sci: "Pharomachrus mocinno",
-                    habitat: "Dosel de bosque nuboso primario con presencia de aguacatillos silvestres (Persea spp.).",
-                    notes: "Avistamiento en pareja alimentándose de frutos de Lauraceae. Su vocalización es un suave 'carrrr-carrrr'. Clave como dispersor primario de semillas en el bosque altitudinal de Dota.",
-                    img: "img/specimen_1.jpg",
-                    annots: ["Cresta plumosa verde metalizada", "Cola caudal desarrollada (macho)", "Dimorfismo sexual evidente", "Dependencia de árboles maduros"],
-                    conservation: "Casi Amenazado (NT)"
+                    habitat: "Dosel de bosque nuboso primario con presencia de aguacatillos silvestres.",
+                    iucn: "Casi Amenazado (NT)",
+                    notes: "Avistamiento en pareja alimentándose de frutos de Lauraceae. Su vocalización es un suave 'carrrr-carrrr'. Dispersor primario de semillas en el bosque altitudinal.",
+                    img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Cresta verde metalizada", "Cola caudal desarrollada", "Dimorfismo sexual evidente", "Dispersor de semillas"]
                 },
                 {
                     title: "Bitácora de Los Santos - Aves",
@@ -386,10 +350,10 @@
                     name: "Colibrí Volcánico",
                     sci: "Selasphorus flammula",
                     habitat: "Matorrales de altura y páramo arbustivo cerca de fuentes de agua fría.",
-                    notes: "Muy activo en inflorescencias de Ericaceae (arándanos silvestres). Presenta adaptaciones metabólicas para soportar temperaturas bajo cero en las madrugadas de la cordillera.",
-                    img: "img/specimen_2.jpg",
-                    annots: ["Garganta iridiscente fucsia", "Pico corto y recto", "Alta tasa metabólica basal", "Polinizador clave de altura"],
-                    conservation: "Preocupación Menor (LC)"
+                    iucn: "Preocupación Menor (LC)",
+                    notes: "Muy activo en inflorescencias de Ericaceae. Presenta adaptaciones metabólicas para soportar temperaturas bajo cero en las madrugadas de la cordillera.",
+                    img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Garganta iridiscente fucsia", "Pico corto y recto", "Alta tasa metabólica basal", "Polinizador de altura"]
                 }
             ],
             mamiferos: [
@@ -398,41 +362,41 @@
                     loc: "Reserva Los Quetzales, 2,500 msnm",
                     temp: "14°C",
                     hum: "90%",
-                    name: "Puma de Talamanca (Rastro)",
+                    name: "Puma (Rastro y huellas)",
                     sci: "Puma concolor",
-                    habitat: "Senderos de bosque secundario denso y áreas de protección de cuencas hidrográficas.",
-                    notes: "Registro indirecto mediante huellas en lodo arcilloso y fecas con restos de roedores locales. Indicador de la salud y conectividad del Corredor Biológico Los Santos.",
-                    img: "img/specimen_3.jpg",
-                    annots: ["Marcas de garras retráctiles", "Amplitud de paso: 85 cm", "Excreta con pelo de roedor", "Depredador tope regional"],
-                    conservation: "Preocupación Menor (LC)"
-                },
-                {
-                    title: "Bitácora de Los Santos - Mamíferos",
-                    loc: "San Marcos de Tarrazú, 1,400 msnm",
-                    temp: "20°C",
-                    hum: "82%",
-                    name: "Pizote / Coati Norteño",
-                    sci: "Nasua narica",
-                    habitat: "Bordes de cafetales y fragmentos de bosque secundario montano.",
-                    notes: "Grupo social de 6 individuos forrajeando en el suelo en busca de invertebrados y frutos caídos. Muy adaptable a zonas de transición agrícola.",
-                    img: "img/specimen_4.jpg",
-                    annots: ["Hocico alargado móvil", "Cola anillada larga", "Hábitos diurnos en tropa", "Omnívoro oportunista"],
-                    conservation: "Preocupación Menor (LC)"
+                    habitat: "Senderos de bosque secundario denso y áreas de protección de cuencas.",
+                    iucn: "Preocupación Menor (LC)",
+                    notes: "Registro indirecto mediante huellas en lodo arcilloso y fecas con restos de roedores locales. Indicador clave de la salud del Corredor Biológico Los Santos.",
+                    img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Marcas de garras retráctiles", "Amplitud de paso: 85 cm", "Excreta con pelo de roedor", "Depredador tope regional"]
                 }
             ],
             anfibios: [
                 {
                     title: "Bitácora de Los Santos - Anfibios",
+                    loc: "San Lorenzo de Tarrazú, 1,550 msnm",
+                    temp: "19°C",
+                    hum: "95%",
+                    name: "Rana de las Nacientes",
+                    sci: "Isthmohyla nacientes",
+                    habitat: "Vegetación arbustiva y riachuelos cercanos a nacientes de agua en zona cafetalera.",
+                    iucn: "Datos Insuficientes / En Estudio",
+                    notes: "Hallazgo en San Lorenzo de Tarrazú. Nueva especie arborícola y diminuta descrita en las montañas de Los Santos. Localizada en vegetación próxima a nacientes de agua. Bioindicador local de alta sensibilidad.",
+                    img: "img/rana_nacientes.jpg",
+                    annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica de altura", "Isthmohyla nacientes"]
+                },
+                {
+                    title: "Bitácora de Los Santos - Anfibios",
                     loc: "Arroyo del Diablo, Dota, 21:30h",
                     temp: "22°C",
                     hum: "94%",
-                    name: "Rana de Ojos Rojos / Hoja",
+                    name: "Rana de Ojos Rojos",
                     sci: "Cruziohyla calcarifer",
                     habitat: "Estrato arbustivo de bosque nuboso primario, 1,600 msnm.",
-                    notes: "Hallazgo sobre hoja de Psychotria sp. junto al Arroyo del Diablo. Comportamiento: Activo, vocalizando durante evento de lluvia ligero. Sonido grave, pulsado, característico de la especie en la zona de Los Santos. Bioindicador de alta calidad de agua local.",
-                    img: "img/specimen_5.jpg",
-                    annots: ["Ojos rojos nocturnos", "Glándulas parotoides difusas", "Adaptación: Termorregulación", "Cruziohyla calcarifer"],
-                    conservation: "Preocupación Menor (LC)"
+                    iucn: "Preocupación Menor (LC)",
+                    notes: "Hallazgo sobre hoja de Psychotria sp. junto al Arroyo del Diablo. Comportamiento activo, vocalizando durante evento de lluvia ligero. Sonido grave y pulsado.",
+                    img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Ojos rojos nocturnos", "Glándulas parotoides difusas", "Termorregulación", "Cruziohyla calcarifer"]
                 },
                 {
                     title: "Bitácora de Los Santos - Anfibios",
@@ -442,10 +406,10 @@
                     name: "Rana de Hojarasca de Altura",
                     sci: "Craugastor escoces",
                     habitat: "Suelo de bosque nuboso húmedo bajo acumulación densa de briófitos.",
-                    notes: "Desarrollo directo (sin fase acuática de renacuajo). Especie muy sensible a la perturbación microclimática y al uso de agroquímicos en plantaciones cafetaleras cercanas.",
-                    img: "img/specimen_6.jpg",
-                    annots: ["Dorso rugoso críptico", "Ausencia de membranas natatorias", "Desarrollo directo en huevo", "Bioindicador de suelo virgen"],
-                    conservation: "En Peligro (EN)"
+                    iucn: "En Peligro (EN)",
+                    notes: "Desarrollo directo (sin fase acuática de renacuajo). Especie muy sensible a la perturbación microclimática y al uso de agroquímicos en cafetales.",
+                    img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Dorso rugoso críptico", "Sin membranas natatorias", "Desarrollo directo en huevo", "Bioindicador de suelo virgen"]
                 }
             ],
             reptiles: [
@@ -457,23 +421,10 @@
                     name: "Víbora Mano de Piedra / Tamagá",
                     sci: "Atropoides nummifer",
                     habitat: "Bordes de bosque y charrales con acumulación de rocas y troncos caídos.",
-                    notes: "Ejemplar juvenil solitario termorregulando sobre piedra sedimentaria. Coloración marrón oscuro con marcas dorsales en diamante. Importante controlador natural de roedores en zonas agrícolas.",
-                    img: "img/specimen_7.jpg",
-                    annots: ["Cabeza triangular ancha", "Escamas quilladas robustas", "Foseta loreal termoreceptora", "Veneno hemotóxico local"],
-                    conservation: "Preocupación Menor (LC)"
-                },
-                {
-                    title: "Bitácora de Los Santos - Reptiles",
-                    loc: "San Lorenzo de Dota, 1,700 msnm",
-                    temp: "21°C",
-                    hum: "89%",
-                    name: "Víbora de Pestañas",
-                    sci: "Bothriechis schlegelii",
-                    habitat: "Ramas arbustivas y plantas de plátano / café en áreas sombreadas.",
-                    notes: "Coloración amarilla brillante (fase xanthic). Uso de cola prensil para acecho de colibríes y pequeños roedores nocturnos.",
-                    img: "img/specimen_8.jpg",
-                    annots: ["Escamas supraoculares en 'pestaña'", "Cola prensil arbórea", "Foseta termoreceptora", "Fase cromática amarilla"],
-                    conservation: "Preocupación Menor (LC)"
+                    iucn: "Preocupación Menor (LC)",
+                    notes: "Ejemplar juvenil solitario termorregulando sobre piedra sedimentaria. Coloración marrón oscuro con marcas dorsales en diamante. Controlador natural de roedores.",
+                    img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Cabeza triangular ancha", "Escamas quilladas robustas", "Foseta loreal termoreceptora", "Veneno hemotóxico local"]
                 }
             ],
             invertebrados: [
@@ -485,23 +436,10 @@
                     name: "Gusano Terciopelo / Onicóforo",
                     sci: "Peripatus soltani",
                     habitat: "Bajo la corteza en descomposición de robles (Quercus spp.) húmedos.",
-                    notes: "Organismo eslabón evolutivo clave. Posee apéndices lobopodiales y glándulas de baba adhesiva para inmovilizar presas. Extremadamente endémico de microhábitats nubosos estables.",
-                    img: "img/specimen_9.jpg",
-                    annots: ["Piel aterciopelada no articulada", "Papilas eyectoras de baba", "Antenas sensoriales anilladas", "Fósil viviente tropical"],
-                    conservation: "Datos Insuficientes (DD)"
-                },
-                {
-                    title: "Bitácora de Los Santos - Invertebrados",
-                    loc: "San Pablo de León Cortés, 1,550 msnm",
-                    temp: "19°C",
-                    hum: "86%",
-                    name: "Escarabajo Hércules",
-                    sci: "Dynastes hercules (Hembra/Juvenil)",
-                    habitat: "Troncos en descomposición avanzada en zonas cafetaleras protegidas.",
-                    notes: "Importante descomponedor de madera muerta. Su presencia indica salud en el reciclaje de nutrientes del suelo forestal regional.",
-                    img: "img/specimen_10.jpg",
-                    annots: ["Exoesqueleto quitinoso duro", "Patas robustas cavadoras", "Antenas lameladas", "Rol descomponedor vital"],
-                    conservation: "Preocupación Menor (LC)"
+                    iucn: "Datos Insuficientes (DD)",
+                    notes: "Organismo eslabón evolutivo clave. Posee apéndices lobopodiales y glándulas de baba adhesiva para inmovilizar presas. Endémico de microhábitats nubosos estables.",
+                    img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Piel aterciopelada no articulada", "Papilas eyectoras de baba", "Antenas sensoriales anilladas", "Fósil viviente tropical"]
                 }
             ],
             flora: [
@@ -513,23 +451,10 @@
                     name: "Almohadillas de Musgo y Epífitas",
                     sci: "Sphagnum spp. & Bromeliaceae",
                     habitat: "Troncos y ramas maestras de Quercus costaricensis en bosque primario.",
-                    notes: "Los briófitos actúan como esponjas naturales que capturan la neblina horizontal, alimentando los mantos acuíferos que abastecen las zonas cafetaleras de Tarrazú.",
-                    img: "img/specimen_11.jpg",
-                    annots: ["Alta capacidad de retención hídrica", "Microecosistema de tardígrados", "Filidios sin nervio central", "Epífita nodriza de humedad"],
-                    conservation: "No Evaluado (NE)"
-                },
-                {
-                    title: "Bitácora de Los Santos - Flora & Musgos",
-                    loc: "Cerro Vueltas, 2,600 msnm",
-                    temp: "12°C",
-                    hum: "94%",
-                    name: "Quizarra / Magnolia de Altura",
-                    sci: "Magnolia silvae",
-                    habitat: "Estrato alto de bosque nuboso montano superior.",
-                    notes: "Árbol endémico con flores aromáticas grandes polinizadas por escarabajos primitivos. Semillas envueltas en arilo rojo brillante.",
-                    img: "img/specimen_12.jpg",
-                    annots: ["Flores grandes primitivas", "Hojas coriáceas lustrosas", "Arilo rojo brillante en semilla", "Endemismo talamanqueño"],
-                    conservation: "En Peligro (EN)"
+                    iucn: "Preocupación Menor (LC)",
+                    notes: "Los briófitos actúan como esponjas naturales que capturan la neblina horizontal, alimentando los mantos acuíferos que abastecen las zonas cafetaleras.",
+                    img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Alta retención hídrica", "Microecosistema de tardígrados", "Filidios sin nervio central", "Epífita nodriza de humedad"]
                 }
             ],
             geologia: [
@@ -538,104 +463,45 @@
                     loc: "Corte de Talud, Carretera Interamericana Sur, 2,400 msnm",
                     temp: "13°C",
                     hum: "80%",
-                    name: "Granodiorita y rocas volcánicas terciarias",
-                    sci: "Complejo ígneo intrusivo Talamanca",
+                    name: "Complejo Ígneo Intrusivo Talamanca",
+                    sci: "Granodiorita y rocas terciarias",
                     habitat: "Taludes de alta pendiente en formaciones montañosas del sur de Costa Rica.",
-                    notes: "Muestra rocosa que evidencia el alzamiento tectónico miocénico de la Cordillera de Talamanca. Presencia de cristales de plagioclasa y cuarzo meteorizados por el clima frío de altura.",
-                    img: "img/specimen_13.jpg",
-                    annots: ["Matriz cristalina fanerítica", "Minerales de cuarzo y biotita", "Origen magmático intrusivo", "Erosión por gradiente altitudinal"],
-                    conservation: "Muestra Mineral Inerte"
-                },
-                {
-                    title: "Bitácora de Los Santos - Geología",
-                    loc: "Valle de Dota, Cauce Río Savegre, 1,700 msnm",
-                    temp: "20°C",
-                    hum: "85%",
-                    name: "Suelos Andisoles (Tierras volcánicas cafetaleras)",
-                    sci: "Sedimentos aluviales y cenizas volcánicas",
-                    habitat: "Terrazas aluviales y laderas de origen volcánico en la región de Los Santos.",
-                    notes: "Suelos de alta fertilidad ricos en alófana, formados por la acumulación histórica de cenizas de los volcanes de la Cordillera Central y de Talamanca. Clave para la caficultura de especialidad.",
-                    img: "img/specimen_14.jpg",
-                    annots: ["Alta retención de fosfatos", "Estructura porosa liviana", "Origen volcánico andesítico", "Base del Café Tarrazú"],
-                    conservation: "Recurso Edáfico Estratégico"
+                    iucn: "No Aplica (Geología)",
+                    notes: "Muestra rocosa que evidencia el alzamiento tectónico miocénico de la Cordillera de Talamanca. Presencia de cristales de plagioclasa y cuarzo meteorizados.",
+                    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Matriz cristalina fanerítica", "Minerales de cuarzo y biotita", "Origen magmático intrusivo", "Erosión por gradiente altitudinal"]
                 }
             ]
         };
 
-        let database = JSON.parse(localStorage.getItem('los_santos_field_db')) || defaultDatabase;
+        // Cargar base de datos desde localStorage si existe, sino usar la base por defecto
+        let database = JSON.parse(localStorage.getItem('losSantosDatabase')) || defaultDatabase;
+
+        // Estado actual de la navegación
         let currentCategoryKey = 'anfibios';
         let currentIndex = 0;
         let nightVisionActive = true;
-        let selectedCanton = 'Dota';
 
-        // Guardar base de datos en localStorage
-        function saveDatabase() {
-            localStorage.setItem('los_santos_field_db', JSON.stringify(database));
-            updateCategoryCounts();
-        }
-
-        // Actualizar contadores en las pestañas laterales
-        function updateCategoryCounts() {
-            let totalRecordsCount = 0;
-            for (let cat in database) {
-                totalRecordsCount += database[cat].length;
-                const countBadge = document.getElementById(`count-${cat}`);
-                if (countBadge) {
-                    const count = database[cat].length;
-                    const suffix = (cat === 'geologia') ? (count === 1 ? ' muestra' : ' muestras') : (count === 1 ? ' sp' : ' spp');
-                    countBadge.innerText = `${count}${suffix}`;
-                }
-            }
-        }
-
-        // Actualizar selección de Cantón
-        function updateCantonSelection(val) {
-            selectedCanton = val;
-            const data = database[currentCategoryKey][currentIndex];
-            if(data) {
-                data.loc = `${selectedCanton}, ${data.loc.split(',').slice(1).join(',').trim() || 'Zona de Expedición'}`;
-                document.getElementById('meta-loc').innerText = data.loc;
-            }
-        }
-
-        // Geolocalización real por GPS en navegador
-        function initGPS() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude.toFixed(3);
-                        const lon = position.coords.longitude.toFixed(3);
-                        const alt = position.coords.altitude ? Math.round(position.coords.altitude) + 'm' : 'Alt. Talamanca';
-                        document.getElementById('gps-status-label').innerText = `GPS: ${lat}°N, ${lon}°W (${alt})`;
-                    },
-                    (error) => {
-                        console.log("GPS no disponible o denegado, usando coordenadas base de Los Santos.");
-                    },
-                    { timeout: 10000 }
-                );
-            }
-        }
-
-        // Toggle Visión Nocturna
+        // Función para alternar la visión nocturna
         function toggleNightVision() {
             nightVisionActive = !nightVisionActive;
-            const overlay = document.getElementById('nv-overlay');
-            const statusText = document.getElementById('nv-status-text');
-            
-            if(nightVisionActive) {
-                overlay.classList.remove('night-vision-off');
-                statusText.innerText = "NV Rojo: ON";
+            const overlay = document.getElementById('night-overlay');
+            const btnText = document.getElementById('nv-text');
+            if (nightVisionActive) {
+                overlay.style.opacity = '1';
+                btnText.innerText = 'Modo Noche: ON';
             } else {
-                overlay.classList.add('night-vision-off');
-                statusText.innerText = "NV Rojo: OFF";
+                overlay.style.opacity = '0';
+                btnText.innerText = 'Modo Noche: OFF';
             }
         }
 
-        // Cambio de categoría
+        // Función para cambiar de categoría desde las pestañas laterales
         function switchCategory(categoryKey) {
             currentCategoryKey = categoryKey;
-            currentIndex = 0;
+            currentIndex = 0; // Reiniciar al primer elemento de la categoría
             
+            // Actualizar diseño visual de los botones de pestañas
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('ring-2', 'ring-white', 'scale-105');
                 btn.style.opacity = '0.75';
@@ -650,31 +516,16 @@
             renderCurrentSpecimen();
         }
 
-        // Siguiente especie en la categoría actual
+        // Función para rotar entre múltiples especies dentro de la misma categoría
         function nextSpeciesInCurrentCategory() {
             const list = database[currentCategoryKey];
-            if (!list || list.length === 0) return;
-            currentIndex = (currentIndex + 1) % list.length;
-            renderCurrentSpecimen();
-        }
-
-        // Calcular índice secuencial global en orden de creación para numeración desde #1 en adelante
-        function getGlobalSequentialNumber(targetCat, targetIdx) {
-            let globalSeq = 1;
-            const categoriesOrder = ['aves', 'mamiferos', 'anfibios', 'reptiles', 'invertebrados', 'flora', 'geologia'];
-            for (let cat of categoriesOrder) {
-                if (!database[cat]) continue;
-                for (let i = 0; i < database[cat].length; i++) {
-                    if (cat === targetCat && i === targetIdx) {
-                        return globalSeq;
-                    }
-                    globalSeq++;
-                }
+            if (list && list.length > 0) {
+                currentIndex = (currentIndex + 1) % list.length;
+                renderCurrentSpecimen();
             }
-            return globalSeq;
         }
 
-        // Renderizar datos en pantalla
+        // Renderizar los datos de la ficha actual en la libreta
         function renderCurrentSpecimen() {
             const list = database[currentCategoryKey];
             if (!list || list.length === 0) return;
@@ -687,23 +538,19 @@
             document.getElementById('meta-temp').innerText = data.temp;
             document.getElementById('meta-hum').innerText = data.hum;
             
-            document.getElementById('specimen-name').innerText = data.sci;
+            document.getElementById('specimen-name').innerText = "Especie Focal (" + currentCategoryKey.toUpperCase() + "):";
             document.getElementById('specimen-sci').innerText = data.name;
             document.getElementById('specimen-habitat').innerText = data.habitat;
+            document.getElementById('specimen-iucn').innerText = data.iucn || "No especificado";
             document.getElementById('field-notes').innerText = data.notes;
+            document.getElementById('specimen-img').src = data.img || "img/rana_nacientes.jpg";
             
-            // Imagen con respaldo en carpeta img/ y fallback automático a placeholder si aún no se crea el archivo físico
-            const imgElement = document.getElementById('specimen-img');
-            imgElement.src = data.img || "img/specimen_placeholder.jpg";
-            
-            document.getElementById('conservation-status').innerText = data.conservation || "Registrado en Expedición";
-            document.getElementById('specimen-counter').innerText = `${currentIndex + 1}/${list.length}`;
-            
-            // Número de registro secuencial desde #1 en adelante
-            const globalNum = getGlobalSequentialNumber(currentCategoryKey, currentIndex);
-            document.getElementById('record-count').innerText = `Registro #${globalNum} / 2026`;
+            // Actualizar contador del botón rotativo
+            document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
+            document.getElementById('record-count').innerText = `Registro #${Math.floor(Math.random() * 80) + 10} / 2026`;
 
-            const annots = data.annots || ["Observación de campo", "Zona Los Santos", "Talamanca", "Registro verificado"];
+            // Actualizar anotaciones de las flechas manuscritas
+            const annots = data.annots || ["Rasgo 1", "Rasgo 2", "Rasgo 3", "Rasgo 4"];
             const annotElements = [
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
@@ -714,122 +561,98 @@
             annotElements.forEach((el, idx) => {
                 if(el && annots[idx]) {
                     el.innerText = annots[idx];
-                } else if(el) {
-                    el.innerText = "Campo registrado";
                 }
             });
         }
 
-        // Abrir y cerrar modal para nuevo registro
-        function openNewRecordModal() {
-            document.getElementById('new-record-modal').classList.remove('hidden');
+        // Funciones para el Modal de Registro de Hallazgos
+        function openAddModal() {
+            document.getElementById('add-modal').classList.remove('hidden');
         }
 
-        function closeNewRecordModal() {
-            document.getElementById('new-record-modal').classList.add('hidden');
+        function closeAddModal() {
+            document.getElementById('add-modal').classList.add('hidden');
         }
 
-        // Procesar formulario de nuevo hallazgo (permanente incluso sin imagen)
-        function handleNewRecordSubmit(event) {
+        function handleNewRecord(event) {
             event.preventDefault();
-            const cat = document.getElementById('new-category').value;
-            const name = document.getElementById('new-name').value;
-            const sci = document.getElementById('new-sci').value;
-            const loc = document.getElementById('new-loc').value;
-            const temp = document.getElementById('new-temp').value;
-            const hum = document.getElementById('new-hum').value;
-            const habitat = document.getElementById('new-habitat').value;
-            const notes = document.getElementById('new-notes').value;
-            let img = document.getElementById('new-img').value.trim();
+            const cat = document.getElementById('modal-cat').value;
+            const sci = document.getElementById('modal-sci').value;
+            const common = document.getElementById('modal-common').value;
+            const loc = document.getElementById('modal-loc').value;
+            const clim = document.getElementById('modal-clim').value.split('/');
+            const temp = clim[0] ? clim[0].trim() : "18°C";
+            const hum = clim[1] ? clim[1].trim() : "90%";
+            const hab = document.getElementById('modal-hab').value;
+            const notes = document.getElementById('modal-notes').value;
+            const imgInput = document.getElementById('modal-img').value;
 
-            // Si no coloca imagen, asigna una ruta estándar en la carpeta img/ para que pueda editarla en casa posteriormente
-            if (!img) {
-                const totalExisting = Object.values(database).reduce((acc, curr) => acc + curr.length, 1);
-                img = `img/specimen_${totalExisting}.jpg`;
-            }
-
-            const newRecord = {
-                title: `Bitácora de Los Santos - ${cat.toUpperCase()}`,
-                loc: `${selectedCanton}: ${loc}`,
+            const newEntry = {
+                title: `Bitácora de Los Santos - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
+                loc: loc,
                 temp: temp,
                 hum: hum,
-                name: name,
+                name: common,
                 sci: sci,
-                habitat: habitat,
+                habitat: hab,
+                iucn: "Sin Evaluar (NE)",
                 notes: notes,
-                img: img,
-                annots: [name, selectedCanton, "Expedición Local", "Verificado por Investigador"],
-                conservation: "Nuevo Registro de Campo"
+                img: imgInput && imgInput.trim() !== "" ? imgInput : "img/rana_nacientes.jpg",
+                annots: [common, hab, loc, sci]
             };
 
-            if (!database[cat]) database[cat] = [];
-            database[cat].push(newRecord);
-            saveDatabase();
+            if (!database[cat]) {
+                database[cat] = [];
+            }
+            database[cat].push(newEntry);
 
-            closeNewRecordModal();
-            document.getElementById('field-form').reset();
+            // Guardar permanentemente en LocalStorage
+            localStorage.setItem('losSantosDatabase', JSON.stringify(database));
 
-            // Cambiar a la categoría del nuevo registro y mostrarlo inmediatamente
+            closeAddModal();
+            document.getElementById('new-record-form').reset();
+
+            // Cambiar a la categoría del nuevo registro y seleccionarlo
             switchCategory(cat);
             currentIndex = database[cat].length - 1;
             renderCurrentSpecimen();
-
-            showModal("¡Hallazgo Registrado Permanentemente!", `Se ha guardado "${name}" en ${selectedCanton} (${cat.toUpperCase()}). El registro es permanente. Puedes agregar o editar su foto en la carpeta 'img/' cuando estés en casa.`);
+            alert("¡Nuevo hallazgo registrado y guardado permanentemente en la app!");
         }
 
-        // Exportar toda la base de datos a formato CSV para descargar
-        function exportDatabaseCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,NombreCientifico,Localidad,Temperatura,Humedad,Habitat,Notas,RutaImagen\r\n";
-            
+        // Simular audio de campo
+        function simulateAudio() {
+            alert("🔊 Reproduciendo archivo de audio grabado en campo: Canto de vocalización y frecuencias registradas en Los Santos.");
+        }
+
+        // Exportar base de datos a CSV
+        function exportCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Notas\n";
             for (let cat in database) {
                 database[cat].forEach(item => {
-                    const row = [
+                    let row = [
                         cat,
-                        `"${(item.name || '').replace(/"/g, '""')}"`,
-                        `"${(item.sci || '').replace(/"/g, '""')}"`,
-                        `"${(item.loc || '').replace(/"/g, '""')}"`,
-                        `"${(item.temp || '').replace(/"/g, '""')}"`,
-                        `"${(item.hum || '').replace(/"/g, '""')}"`,
-                        `"${(item.habitat || '').replace(/"/g, '""')}"`,
-                        `"${(item.notes || '').replace(/"/g, '""')}"`,
-                        `"${(item.img || '').replace(/"/g, '""')}"`
-                    ];
-                    csvContent += row.join(",") + "\r\n";
+                        `"${item.name}"`,
+                        `"${item.sci}"`,
+                        `"${item.loc}"`,
+                        `"${item.temp}"`,
+                        `"${item.hum}"`,
+                        `"${item.habitat}"`,
+                        `"${item.notes}"`
+                    ].join(",");
+                    csvContent += row + "\r\n";
                 });
             }
-
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Bitacora_Los_Santos_Expedicion_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", "bitacora_los_santos.csv");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        // Simular audio nocturno
-        function playFieldAudio() {
-            const list = database[currentCategoryKey];
-            if (!list || list.length === 0) return;
-            const data = list[currentIndex];
-            showModal("Audio Acústico de Campo", `Reproduciendo frecuencia de vocalización de: "${data.name}" (${data.loc}). Grabación capturada con hidrófono / micrófono direccional en Los Santos.`);
-        }
-
-        // Modal general
-        function showModal(title, message) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-message').innerText = message;
-            document.getElementById('custom-modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('custom-modal').classList.add('hidden');
-        }
-
-        // Inicializar al cargar la ventana
+        // Inicializar por defecto en Anfibios al cargar la página
         window.onload = function() {
-            updateCategoryCounts();
-            initGPS();
             switchCategory('anfibios');
         };
     </script>
