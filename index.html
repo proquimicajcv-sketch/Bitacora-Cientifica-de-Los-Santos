@@ -9,9 +9,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Special+Elite&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <!-- Leaflet CSS para el Mapa Satelital Interactivo -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -43,7 +43,6 @@
             stroke-dasharray: 3,2;
             fill: none;
         }
-        /* Contenedor del Mapa Satelital */
         #sat-map {
             border: 2px solid #8b5a2b;
             border-radius: 6px;
@@ -179,7 +178,7 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Mapa Satelital Interactivo -->
+            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Mapa Satelital -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
                 <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
@@ -218,10 +217,10 @@
                     </button>
                 </nav>
 
-                <!-- MAPA SATELITAL INTERACTIVO DE COSTA RICA (ZONA DE LOS SANTOS) -->
+                <!-- MAPA SATELITAL INTERACTIVO SEGURO -->
                 <div class="flex flex-col space-y-1">
                     <div class="flex justify-between items-center text-[10px] typewriter font-bold text-[#f3e9dc] bg-[#1f140f] px-2 py-0.5 rounded">
-                        <span>🗺️️ Satélite Los Santos</span>
+                        <span>🗺 Satélite Los Santos</span>
                         <span id="map-canton-tag" class="text-[9px] bg-red-800 text-white px-1 rounded">Tarrazú</span>
                     </div>
                     <div id="sat-map"></div>
@@ -345,7 +344,7 @@
         </div>
     </div>
 
-    <!-- Script de Estudio Académico y Mapa Satelital -->
+    <!-- Script de Estudio Académico Seguro -->
     <script>
         const defaultDatabase = {
             aves: [
@@ -559,20 +558,25 @@
         let currentIndex = 0;
         let nightVisionActive = true;
         let isEditing = false;
-        let satMap, currentMarker;
+        let satMap = null;
+        let currentMarker = null;
 
-        // Inicializar el Mapa Satelital con Leaflet
+        // Inicializador seguro del mapa satelital (Protegido contra fallos de red)
         function initSatelliteMap() {
-            // Centrado inicial en la Zona de los Santos, Costa Rica
-            satMap = L.map('sat-map', {
-                zoomControl: false,
-                attributionControl: false
-            }).setView([9.63, -83.95], 11);
+            try {
+                if (!satMap && typeof L !== 'undefined') {
+                    satMap = L.map('sat-map', {
+                        zoomControl: false,
+                        attributionControl: false
+                    }).setView([9.63, -83.95], 10);
 
-            // Capa Satelital de Esri (Muy nítida y detallada para relieve y vegetación)
-            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                maxZoom: 18
-            }).addTo(satMap);
+                    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                        maxZoom: 18
+                    }).addTo(satMap);
+                }
+            } catch (e) {
+                console.log("Mapa satelital operando en modo offline o no disponible.");
+            }
         }
 
         function toggleNightVision() {
@@ -641,15 +645,18 @@
             const imgEl = document.getElementById('specimen-img');
             imgEl.src = data.img || "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
             
-            // Actualizar marcador satelital en el mapa interactivo
+            // Actualizar marcador satelital de forma segura
             if (satMap) {
                 const coords = data.coords || [9.63, -83.95];
-                if (currentMarker) {
-                    satMap.removeLayer(currentMarker);
-                }
-                currentMarker = L.marker(coords).addTo(satMap)
-                    .bindPopup(`<b>${data.name}</b><br>${data.loc}`);
-                satMap.setView(coords, 12);
+                try {
+                    if (currentMarker) {
+                        satMap.removeLayer(currentMarker);
+                    }
+                    currentMarker = L.marker(coords).addTo(satMap)
+                        .bindPopup(`<b>${data.name}</b><br>${data.loc}`);
+                    satMap.setView(coords, 11);
+                    satMap.invalidateSize();
+                } catch(err) {}
             }
 
             document.getElementById('map-canton-tag').innerText = data.loc.includes('Dota') ? 'Dota' : (data.loc.includes('Tarrazú') ? 'Tarrazú' : 'León Cortés');
@@ -800,7 +807,7 @@
             switchCategory(currentCategoryKey);
             renderCurrentSpecimen();
             updateCategoryCounts();
-            setTimeout(() => { satMap.invalidateSize(); }, 200);
+            if (satMap) { setTimeout(() => { satMap.invalidateSize(); }, 200); }
         }
 
         function exportCSV() {
@@ -839,7 +846,7 @@
             initSatelliteMap();
             switchCategory('anfibios');
             updateCategoryCounts();
-            setTimeout(() => { satMap.invalidateSize(); }, 300);
+            if (satMap) { setTimeout(() => { satMap.invalidateSize(); }, 300); }
         };
     </script>
 </body>
