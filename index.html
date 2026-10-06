@@ -321,7 +321,7 @@
         </div>
     </div>
 
-    <!-- Script principal optimizado -->
+    <!-- Script principal optimizado y sin errores -->
     <script>
         const defaultDatabase = {
             aves: [
@@ -520,7 +520,13 @@
             ]
         };
 
-        let database = JSON.parse(localStorage.getItem('losSantosStudyDB')) || defaultDatabase;
+        let database;
+        try {
+            database = JSON.parse(localStorage.getItem('losSantosStudyDB')) || defaultDatabase;
+        } catch(e) {
+            database = defaultDatabase;
+        }
+
         let currentCategoryKey = 'anfibios';
         let currentIndex = 0;
         let nightVisionActive = true;
@@ -602,7 +608,7 @@
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
                 document.getElementById('annot-3'),
-                document.getElementById('annot-4']
+                document.getElementById('annot-4')
             ];
 
             annotElements.forEach((el, idx) => {
