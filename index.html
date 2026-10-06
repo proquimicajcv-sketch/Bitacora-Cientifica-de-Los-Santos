@@ -138,7 +138,7 @@
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
                             <img id="specimen-img" src="" alt="Imagen" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded hidden">
                             <div id="img-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center handwritten text-sm text-[#7a1f00]">
-                                📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/cerro1.png)</span>
+                                📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/quetzal.png)</span>
                             </div>
                         </div>
                     </div>
@@ -342,8 +342,8 @@
                     <textarea id="modal-science" rows="2" placeholder="Información comprobada..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Opcional, ej. img/img1.png):</label>
-                    <input type="text" id="modal-img-url" placeholder="img/img1.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
+                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Opcional, ej. img/quetzal.png):</label>
+                    <input type="text" id="modal-img-url" placeholder="img/quetzal.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm cursor-pointer">Cancelar</button>
@@ -353,7 +353,7 @@
         </div>
     </div>
 
-    <!-- Script con información completa restaurada -->
+    <!-- Script con base de datos completa restaurada -->
     <script>
         const initialSpeciesDB = {
             anfibios: [
@@ -417,16 +417,16 @@
                     loc: "Río Savegre, Dota",
                     temp: "19°C",
                     hum: "95%",
-                    name: "Musgos y Epífitas",
-                    sci: "Sphagnum spp. & Bromeliaceae",
-                    habitat: "Troncos y ramas de Quercus costaricensis.",
-                    niche: "Retenedor hídrico y hábitat de microinvertebrados de altura.",
-                    morph: "Filidios sin nervio central, alta capilaridad.",
-                    ethology: "Crecimiento lento dependiente de la neblina horizontal.",
-                    repro: "Reproducción por esporas y fragmentación.",
+                    name: "Musgos, Epífitas y Chusquea (Bambú de Altura)",
+                    sci: "Chusquea subtomentosa & Sphagnum spp.",
+                    habitat: "Sotobosques densos de bosque nuboso y troncos de Quercus costaricensis.",
+                    niche: "Formador de sotobosque denso, retenedor hídrico y refugio clave para avifauna de altura.",
+                    morph: "Bambú leñoso amacollado con tallos macizos y filidios de alta capilaridad.",
+                    ethology: "Crecimiento estacional y floración sincrónica masiva (gregaria) periódica.",
+                    repro: "Reproducción asexual por rizomas y sexual por semillas tras floración gregaria.",
                     courtship: "No aplica.",
-                    relations: "Epifitismo nodriza; alberga comunidades enteras de tardígrados e insectos.",
-                    science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos de la zona cafetalera.",
+                    relations: "Sustento, refugio y hábitat de anidación para aves endémicas de Talamanca.",
+                    science: "La Chusquea es vital para la estabilidad de los suelos en pendientes pronunciadas y la regulación hídrica de cuencas alta.",
                     img: ""
                 }
             ],
@@ -504,6 +504,23 @@
                     courtship: "Rituales de proximidad química y combate ritual.",
                     relations: "Controlador natural de roedores en zonas de altura.",
                     science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
+                    img: ""
+                },
+                {
+                    title: "Guía Taxonómica - Reptiles",
+                    loc: "Cerro Vueltas y Zonas Altas de Talamanca",
+                    temp: "14°C",
+                    hum: "90%",
+                    name: "Toboba de Altura",
+                    sci: "Cerrophidion sasai",
+                    habitat: "Bosques montanos nubosos y de altura de la Cordillera de Talamanca (1,460 a 2,875 m s. n. m.).",
+                    niche: "Depredador diurno y crepuscular de emboscada especializado en el control de roedores, lagartijas e invertebrados.",
+                    morph: "Serpiente pequeña a mediana (adultos promedio de 50 cm, hasta 85 cm). Coloración base beige o café con una serie de marcas geométricas cuadradas u oscuras a lo largo del dorso.",
+                    ethology: "Hábito estrictamente terrestre, diurno y crepuscular; serpiente de temperamento tranquilo pero ponzoñosa.",
+                    repro: "Vivípara; da a luz crías completamente formadas.",
+                    courtship: "Competencia de machos y marcaje químico por feromonas; los machos suelen alcanzar mayor tamaño promedio.",
+                    relations: "Importante eslabón como regulador natural de poblaciones de roedores en los ecosistemas de alta montaña.",
+                    science: "Especie venenosa con veneno de acción hemotóxica; endémica de las cordilleras de Talamanca y Central en Costa Rica y oeste de Panamá.",
                     img: ""
                 }
             ]
@@ -829,7 +846,7 @@
             } else {
                 imgEl.classList.add('hidden');
                 placeholder.classList.remove('hidden');
-                placeholder.innerHTML = `📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/cerro1.png)</span>`;
+                placeholder.innerHTML = `📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/quetzal.png)</span>`;
             }
         }
 
