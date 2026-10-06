@@ -189,7 +189,7 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio, Taxonomía Ordenada Alfabéticamente y Avistamientos -->
+            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Avistamientos -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
                 <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
@@ -216,7 +216,7 @@
                     </button>
                     <button type="button" onclick="switchCategory('hongos')" id="tab-hongos" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-amber-800/50 bg-[#6d4c41] text-white font-semibold transition-all cursor-pointer">
                         <span class="typewriter text-xs">🍄 Hongos</span>
-                        <span id="count-hongos" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 spp</span>
+                        <span id="count-hongos" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">0 spp</span>
                     </button>
                     <button type="button" onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all cursor-pointer">
                         <span class="typewriter text-xs">🦂 Invertebrados</span>
@@ -478,25 +478,7 @@
                     img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
                 }
             ],
-            hongos: [
-                {
-                    title: "Guía Taxonómica - Hongos",
-                    loc: "San Gerardo de Dota",
-                    temp: "15°C",
-                    hum: "96%",
-                    name: "Hongo Luminoso",
-                    sci: "Mycena luxaeterna",
-                    habitat: "Hojarasca y troncos caídos en bosque nuboso de roble.",
-                    niche: "Organismo descomponedor de necromasa vegetal (saprófito).",
-                    morph: "Sombrero diminuto gelatinoso, estipe delgado.",
-                    ethology: "Fructificación nocturna estacional en época lluviosa.",
-                    repro: "Dispersión de esporas mediante laminillas basidiocarpos.",
-                    courtship: "Emisión de bioluminiscencia verde-azulada constante.",
-                    relations: "Descomposición de madera e interacción con artrópodos dispersores de esporas.",
-                    science: "Estudios micológicos en Talamanca documentan su bioluminiscencia debido a reacciones enzimáticas de luciferina, atrayendo insectos para la dispersión de esporas en la oscuridad.",
-                    img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80"
-                }
-            ],
+            hongos: [],
             invertebrados: [
                 {
                     title: "Guía Taxonómica - Invertebrados",
@@ -571,7 +553,7 @@
         function openApp() {
             document.getElementById('cover-view').classList.add('hidden');
             document.getElementById('app-view').classList.remove('hidden');
-            switchCategory('anfibios'); // Siempre inicia en la primera categoría alfabética
+            switchCategory('anfibios'); // Siempre inicia en la primera categoría alfabética (Anfibios)
         }
 
         function returnToCover() {
@@ -621,7 +603,28 @@
 
         function renderCurrentSpecimen() {
             const list = database[currentCategoryKey];
-            if (!list || list.length === 0) return;
+            if (!list || list.length === 0) {
+                // Si la categoría está vacía (como Hongos inicialmente), mostrar mensaje limpio
+                document.getElementById('journal-title').innerText = `Guía Taxonómica - ${currentCategoryKey.charAt(0).toUpperCase() + currentCategoryKey.slice(1)}`;
+                document.getElementById('meta-loc').innerText = "Sin registros";
+                document.getElementById('meta-temp').innerText = "--";
+                document.getElementById('meta-hum').innerText = "--";
+                document.getElementById('specimen-common').innerText = "No hay especies registradas";
+                document.getElementById('specimen-sci').innerText = "Utiliza el botón 'Agregar Nueva Especie'";
+                document.getElementById('specimen-habitat').innerText = "-";
+                document.getElementById('specimen-niche').innerText = "-";
+                document.getElementById('field-morph').innerText = "-";
+                document.getElementById('field-ethology').innerText = "-";
+                document.getElementById('field-repro').innerText = "-";
+                document.getElementById('field-courtship').innerText = "-";
+                document.getElementById('field-relations').innerText = "-";
+                document.getElementById('field-science').innerText = "Agrega tu primer registro para comenzar el estudio.";
+                document.getElementById('specimen-img').src = "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
+                document.getElementById('regional-canton-display').innerText = "Zona de Los Santos";
+                document.getElementById('counter-display').innerText = "0/0";
+                document.getElementById('record-count').innerText = "Ficha #0 / 0";
+                return;
+            }
             
             if (currentIndex >= list.length) currentIndex = 0;
             const data = list[currentIndex];
@@ -756,7 +759,6 @@
             }
 
             if (isEditing) {
-                // Si cambiamos de categoría al editar, movemos la ficha
                 if (currentCategoryKey !== cat) {
                     database[currentCategoryKey].splice(currentIndex, 1);
                     database[cat].push(entryData);
@@ -777,7 +779,7 @@
             closeAddModal();
             document.getElementById('new-record-form').reset();
 
-            // Mantenerse en la misma categoría y tarjeta exacta sin reiniciar
+            // Mantiene la vista fija en la categoría y tarjeta actual sin reiniciar
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('ring-2', 'ring-white');
                 btn.style.opacity = '0.75';
