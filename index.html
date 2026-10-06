@@ -212,28 +212,36 @@
                     </button>
                 </nav>
 
-                <!-- MAPA OFICIAL DE LOS SANTOS CON MARCADOR "X" DINÁMICO -->
+                <!-- MAPA OFICIAL DE LOS SANTOS CORREGIDO CON MARCADOR "X" -->
                 <div class="real-santos-map p-1.5 rounded-lg text-center relative shadow-inner h-32 flex flex-col justify-between">
                     <div class="flex justify-between items-center text-[10px] typewriter font-bold text-[#f3e9dc] bg-black/60 px-1 rounded z-10">
                         <span>🗺️ Mapa Los Santos[cite: 10]</span>
                         <span id="map-canton-tag" class="text-[9px] bg-red-800 text-white px-1 rounded">Tarrazú</span>
                     </div>
-                    <!-- Imagen de tu mapa oficial apuntando a img/mapa_los_santos.jpg.jfip -->
+                    <!-- Ruta corregida apuntando a img/mapa_los_santos.jpg.jfip[cite: 11] -->
                     <div class="absolute inset-0 pt-5 pb-1 px-1 flex items-center justify-center">
-                        <img src="img/mapa_los_santos.jpg.jfip" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80'" alt="Mapa Los Santos" class="w-full h-full object-cover rounded opacity-85">
+                        <img src="img/mapa_los_santos.jpg.jfip" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80'" alt="Mapa Los Santos" class="w-full h-full object-cover rounded opacity-90">
                     </div>
-                    <!-- Marcador "X" dinámico de hallazgo científico comprobado -->
+                    <!-- Marcador "X" dinámico -->
                     <div id="map-marker" class="absolute z-20 text-red-600 font-extrabold text-sm drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] animate-bounce" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
                         ❌
                     </div>
                     <div class="text-[9px] typewriter text-[#f3e9dc] bg-black/60 rounded z-10">Hallazgos Comprobados</div>
                 </div>
 
-                <!-- Botones de Estudio -->
+                <!-- Botones de Estudio, Editar y Eliminar -->
                 <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1">
                     <button onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow">
                         🔄 Siguiente Especie (<span id="counter-display">1/3</span>)
                     </button>
+                    <div class="grid grid-cols-2 gap-1">
+                        <button onclick="openEditModal()" class="bg-[#5c3a21] hover:bg-[#70492c] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#8b5a2b] transition shadow font-bold">
+                            ✏️ Editar Ficha
+                        </button>
+                        <button onclick="deleteCurrentSpecimen()" class="bg-[#5c1800] hover:bg-[#8b2500] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#a82d00] transition shadow font-bold">
+                            🗑️ Eliminar
+                        </button>
+                    </div>
                     <button onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#5c1800] transition shadow font-bold">
                         ➕ Agregar Nueva Especie
                     </button>
@@ -244,11 +252,11 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar Nueva Especie -->
+    <!-- Modal para Agregar / Editar Especie -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
-            <form id="new-record-form" onsubmit="handleNewRecord(event)" class="space-y-2.5 handwritten text-lg text-[#3a1d0c]">
+            <h2 id="modal-title-text" class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
+            <form id="new-record-form" onsubmit="handleSaveRecord(event)" class="space-y-2.5 handwritten text-lg text-[#3a1d0c]">
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
                     <select id="modal-cat" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
@@ -323,13 +331,13 @@
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm">Cancelar</button>
-                    <button type="submit" class="bg-[#8b2500] text-white px-4 py-1 rounded typewriter text-sm font-bold">Guardar Especie</button>
+                    <button type="submit" class="bg-[#8b2500] text-white px-4 py-1 rounded typewriter text-sm font-bold">Guardar Cambios</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Script de Estudio Académico -->
+    <!-- Script de Estudio Académico con Edición y Eliminación -->
     <script>
         const defaultDatabase = {
             aves: [
@@ -542,6 +550,7 @@
         let currentCategoryKey = 'anfibios';
         let currentIndex = 0;
         let nightVisionActive = true;
+        let isEditing = false;
 
         function toggleNightVision() {
             nightVisionActive = !nightVisionActive;
@@ -648,6 +657,35 @@
         }
 
         function openAddModal() {
+            isEditing = false;
+            document.getElementById('modal-title-text').innerText = "Agregar Nueva Especie a la Guía";
+            document.getElementById('new-record-form').reset();
+            document.getElementById('modal-cat').value = currentCategoryKey;
+            document.getElementById('add-modal').classList.remove('hidden');
+        }
+
+        function openEditModal() {
+            const list = database[currentCategoryKey];
+            if (!list || list.length === 0) return;
+            const data = list[currentIndex];
+
+            isEditing = true;
+            document.getElementById('modal-title-text').innerText = "Editar Ficha Actual";
+            document.getElementById('modal-cat').value = currentCategoryKey;
+            document.getElementById('modal-sci').value = data.sci || "";
+            document.getElementById('modal-common').value = data.name || "";
+            document.getElementById('modal-loc').value = data.loc || "";
+            document.getElementById('modal-clim').value = `${data.temp || '18°C'} / ${data.hum || '90%'}`;
+            document.getElementById('modal-habitat').value = data.habitat || "";
+            document.getElementById('modal-niche').value = data.niche || "";
+            document.getElementById('modal-morph').value = data.morph || "";
+            document.getElementById('modal-ethology').value = data.ethology || "";
+            document.getElementById('modal-repro').value = data.repro || "";
+            document.getElementById('modal-courtship').value = data.courtship || "";
+            document.getElementById('modal-relations').value = data.relations || "";
+            document.getElementById('modal-science').value = data.science || "";
+            document.getElementById('modal-img-url').value = data.img || "";
+
             document.getElementById('add-modal').classList.remove('hidden');
         }
 
@@ -655,7 +693,23 @@
             document.getElementById('add-modal').classList.add('hidden');
         }
 
-        function handleNewRecord(event) {
+        function deleteCurrentSpecimen() {
+            const list = database[currentCategoryKey];
+            if (!list || list.length === 0) return;
+
+            if (confirm(`¿Estás seguro de eliminar la ficha de "${list[currentIndex].name}"?`)) {
+                list.splice(currentIndex, 1);
+                if (currentIndex >= list.length) {
+                    currentIndex = Math.max(0, list.length - 1);
+                }
+                localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
+                renderCurrentSpecimen();
+                updateCategoryCounts();
+                alert("¡Ficha eliminada correctamente!");
+            }
+        }
+
+        function handleSaveRecord(event) {
             event.preventDefault();
             const cat = document.getElementById('modal-cat').value;
             const sci = document.getElementById('modal-sci').value;
@@ -674,7 +728,7 @@
             const science = document.getElementById('modal-science').value;
             const imgUrl = document.getElementById('modal-img-url').value;
 
-            const newEntry = {
+            const entryData = {
                 title: `Guía Taxonómica - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
                 loc: loc,
                 temp: temp,
@@ -697,18 +751,26 @@
             if (!database[cat]) {
                 database[cat] = [];
             }
-            database[cat].push(newEntry);
+
+            if (isEditing) {
+                // Actualizar la ficha existente
+                database[currentCategoryKey][currentIndex] = entryData;
+                alert("¡Ficha actualizada con éxito!");
+            } else {
+                // Agregar nueva ficha
+                database[cat].push(entryData);
+                currentCategoryKey = cat;
+                currentIndex = database[cat].length - 1;
+                alert("¡Nueva especie agregada a tu guía de estudio!");
+            }
 
             localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
-
             closeAddModal();
             document.getElementById('new-record-form').reset();
 
-            switchCategory(cat);
-            currentIndex = database[cat].length - 1;
+            switchCategory(currentCategoryKey);
             renderCurrentSpecimen();
             updateCategoryCounts();
-            alert("¡Nueva especie agregada a tu guía de estudio!");
         }
 
         function exportCSV() {
