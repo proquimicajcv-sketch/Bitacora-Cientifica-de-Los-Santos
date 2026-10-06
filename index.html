@@ -138,7 +138,7 @@
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
                             <img id="specimen-img" src="" alt="Imagen" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded hidden">
                             <div id="img-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center handwritten text-sm text-[#7a1f00]">
-                                📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/quetzal.png)</span>
+                                📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>
                             </div>
                         </div>
                     </div>
@@ -342,8 +342,8 @@
                     <textarea id="modal-science" rows="2" placeholder="Información comprobada..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Opcional, ej. img/quetzal.png):</label>
-                    <input type="text" id="modal-img-url" placeholder="img/quetzal.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
+                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Opcional, ej. img/img1.png):</label>
+                    <input type="text" id="modal-img-url" placeholder="img/img1.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm cursor-pointer">Cancelar</button>
@@ -353,7 +353,7 @@
         </div>
     </div>
 
-    <!-- Script con base de datos completa restaurada -->
+    <!-- Script con base de datos completa e imágenes fijas numeradas (img1.png, img2.png...) -->
     <script>
         const initialSpeciesDB = {
             anfibios: [
@@ -372,7 +372,7 @@
                     courtship: "Canto nupcial en coros; machos con sacos vocales desarrollados.",
                     relations: "Competencia acústica intraespecífica y depredación de artrópodos.",
                     science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
-                    img: ""
+                    img: "img/img1.png"
                 }
             ],
             aves: [
@@ -391,7 +391,7 @@
                     courtship: "El cortejo incluye vuelos acrobáticos espectaculares del macho sobre el dosel acompañados de llamados melodiosos. Marcado dimorfismo sexual en la longitud de la cola, brillo del plumaje (verde iridiscente vs. café-grisáceo) y coloración del pico (amarillo en machos adultos, negruzco en hembras).",
                     relations: "Interacciones de competencia pacífica con otras aves frugívoras en árboles con frutos de lauráceas; vulnerable a la depredación de nidos por tucanetes, aves de presa y mamíferos arborícolas.",
                     science: "Especie altamente sensible a la alteración del hábitat y fragmentación del bosque nuboso. Depende estrictamente de la disponibilidad de árboles maduros para anidar y de corredores biológicos altitudinales funcionales para su supervivencia a largo plazo.",
-                    img: ""
+                    img: "img/img2.png"
                 },
                 {
                     title: "Guía Taxonómica - Aves",
@@ -408,7 +408,7 @@
                     courtship: "Vuelos en picada en forma de 'U' y despliegue de garganta.",
                     relations: "Competencia interespecífica por recursos florales en alta montaña.",
                     science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
-                    img: ""
+                    img: "img/img3.png"
                 }
             ],
             flora: [
@@ -427,7 +427,7 @@
                     courtship: "No aplica.",
                     relations: "Sustento, refugio y hábitat de anidación para aves endémicas de Talamanca.",
                     science: "La Chusquea es vital para la estabilidad de los suelos en pendientes pronunciadas y la regulación hídrica de cuencas alta.",
-                    img: ""
+                    img: "img/img4.png"
                 }
             ],
             geologia: [
@@ -446,7 +446,7 @@
                     courtship: "No aplica.",
                     relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
                     science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
-                    img: ""
+                    img: "img/img5.png"
                 }
             ],
             hongos: [],
@@ -466,7 +466,7 @@
                     courtship: "Transferencia de espermatóforos en la superficie cutánea.",
                     relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
                     science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
-                    img: ""
+                    img: "img/img6.png"
                 }
             ],
             mamiferos: [
@@ -485,7 +485,7 @@
                     courtship: "Las hembras en celo emiten vocalizaciones fuertes y agudas (similares a gritos o llamados intensos) para atraer a los machos. Fuerte dimorfismo sexual en tamaño y peso (machos superan marcadamente a las hembras). Las crías nacen con manchas oscuras y anillos en la cola que pierden al crecer.",
                     relations: "Solitario fuera de la época reproductiva. Competencia indirecta por espacio con el jaguar (Panthera onca) en zonas limítrofes, y relación de depredador sobre presas locales como saínos, pizotes, guatuzas y lagartomas.",
                     science: "Especie altamente adaptable pero vulnerable a la fragmentación de hábitats y la cacería de represalia por depredación de ganado. Funciona como indicador biológico de la salud y conectividad de los corredores biológicos en Talamanca.",
-                    img: ""
+                    img: "img/img7.png"
                 }
             ],
             reptiles: [
@@ -504,7 +504,7 @@
                     courtship: "Rituales de proximidad química y combate ritual.",
                     relations: "Controlador natural de roedores en zonas de altura.",
                     science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
-                    img: ""
+                    img: "img/img8.png"
                 },
                 {
                     title: "Guía Taxonómica - Reptiles",
@@ -521,7 +521,7 @@
                     courtship: "Competencia de machos y marcaje químico por feromonas; los machos suelen alcanzar mayor tamaño promedio.",
                     relations: "Importante eslabón como regulador natural de poblaciones de roedores en los ecosistemas de alta montaña.",
                     science: "Especie venenosa con veneno de acción hemotóxica; endémica de las cordilleras de Talamanca y Central en Costa Rica y oeste de Panamá.",
-                    img: ""
+                    img: "img/img9.png"
                 }
             ]
         };
@@ -539,7 +539,8 @@
                 geology: "Sustrato de rocas ígneas y suelos ácidos altamente orgánicos que forman una esponja natural para la recarga de mantos acuíferos.",
                 ecology: "Bosque nuboso alto, robledales de altura dominados por Quercus costaricensis y transición hacia matorral de páramo.",
                 floraFauna: "Roble encino, musgos esfagnos, colibríes de altura, quetzales y rica avifauna endémica de Talamanca.",
-                special: "Impresionante mirador natural, punto clave de investigación científica sobre captación de neblina e hidrografía regional."
+                special: "Impresionante mirador natural, punto clave de investigación científica sobre captación de neblina e hidrografía regional.",
+                img: "img/img10.png"
             },
             {
                 title: "Sitio Emblemático - Tarrazú",
@@ -553,7 +554,8 @@
                 geology: "Formaciones montañosas abruptas modeladas por procesos tectónicos y fuerte escorrentía hacia la cuenca del río Pirrís.",
                 ecology: "Bosques semimaduros, parches de bosque primario y colindancias con cafetales de altura.",
                 floraFauna: "Arbustos nativos de altura, aves de sotobosque, felinos menores y gran diversidad de insectos.",
-                special: "Destino predilecto para el ecoturismo, senderismo de aventura y rutas de turismo comunitario en la Zona de Los Santos."
+                special: "Destino predilecto para el ecoturismo, senderismo de aventura y rutas de turismo comunitario en la Zona de Los Santos.",
+                img: "img/img11.png"
             },
             {
                 title: "Sitio Emblemático - León Cortés",
@@ -567,7 +569,8 @@
                 geology: "Elevación prominente con vistas panorámicas hacia los valles de San Pablo y San Marcos de Tarrazú.",
                 ecology: "Ecosistemas de transición agrícola y boscosa, con corredores biológicos locales activos.",
                 floraFauna: "Árboles frutales silvestres, aves migratorias, colibríes y abundante entomofauna estacional.",
-                special: "Tradicional destino de paseo familiar, caminatas recreativas comunitarias y contacto directo con la cultura local."
+                special: "Tradicional destino de paseo familiar, caminatas recreativas comunitarias y contacto directo con la cultura local.",
+                img: "img/img12.png"
             },
             {
                 title: "Sitio Emblemático - Tarrazú",
@@ -581,14 +584,21 @@
                 geology: "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
                 ecology: "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
                 floraFauna: "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
-                special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria."
+                special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
+                img: "img/img13.png"
             }
         ];
 
+        // Sincronización inteligente que previene pérdida de datos o imágenes
         let speciesDatabase = JSON.parse(localStorage.getItem('losSantosSpeciesDB'));
         if (!speciesDatabase) {
             speciesDatabase = initialSpeciesDB;
             localStorage.setItem('losSantosSpeciesDB', JSON.stringify(speciesDatabase));
+        } else {
+            // Asegurar que categorías y rutas base estén siempre presentes
+            for (let cat in initialSpeciesDB) {
+                if (!speciesDatabase[cat]) speciesDatabase[cat] = initialSpeciesDB[cat];
+            }
         }
 
         let sitesDatabase = JSON.parse(localStorage.getItem('losSantosSitesDB'));
@@ -692,7 +702,7 @@
                     <div class="max-h-48 overflow-y-auto space-y-1">
                         ${sitesDatabase.map((site, idx) => `
                             <button type="button" onclick="selectSiteIndex(${idx})" class="w-full text-left p-1.5 rounded text-xs typewriter transition cursor-pointer ${idx === currentIndex ? 'bg-[#8b2500] text-white font-bold' : 'bg-[#2a1b14] text-[#d8c5aa] hover:bg-[#3d271d]'}" title="${site.name}">
-                                🏔️ ${site.name}
+                                🏔️️ ${site.name}
                             </button>
                         `).join('')}
                     </div>
@@ -841,12 +851,12 @@
                 imgEl.onerror = function() {
                     this.classList.add('hidden');
                     placeholder.classList.remove('hidden');
-                    placeholder.innerHTML = `⚠️ No se encontró: ${imgPath}<br><span class="text-[9px] typewriter">Verifica la ruta del archivo</span>`;
+                    placeholder.innerHTML = `⚠️ No se encontró: ${imgPath}<br><span class="text-[9px] typewriter">Verifica que el archivo exista en la carpeta img/</span>`;
                 };
             } else {
                 imgEl.classList.add('hidden');
                 placeholder.classList.remove('hidden');
-                placeholder.innerHTML = `📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/quetzal.png)</span>`;
+                placeholder.innerHTML = `📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>`;
             }
         }
 
