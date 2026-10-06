@@ -91,7 +91,7 @@
                 <!-- Contenido Central -->
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
-                        <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
+                        <div class="relative w-full h-40 sm:h-48 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
                             <img id="specimen-img" src="https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                             
                             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
@@ -138,6 +138,16 @@
                         <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌱 Reproducción:</h5>
                         <p id="field-repro" class="handwritten text-sm text-[#2d1c0e] leading-tight">Puesta en vegetación sobre agua.</p>
                     </div>
+                </div>
+
+                <!-- Nueva Sección: Datos Científicos Curiosos e Investigaciones -->
+                <div class="mt-2 bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
+                    <h5 class="typewriter text-xs font-bold text-[#7a1f00] uppercase mb-1 flex items-center gap-1">
+                        🔬 Investigación y Dato Científico Comprobado:
+                    </h5>
+                    <p id="field-science" class="handwritten text-base text-[#2d1c0e] leading-snug">
+                        Investigaciones herpetológicas en la Cordillera de Talamanca demuestran que las especies de altura desarrollan alta sensibilidad a los cambios microclimáticos, sirviendo como bioindicadores clave de la pureza de las fuentes de agua en cuencas cafetaleras.
+                    </p>
                 </div>
 
                 <!-- Pie de página -->
@@ -201,7 +211,7 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar Nueva Especie por URL -->
+    <!-- Modal para Agregar Nueva Especie con URL y Datos Científicos -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
@@ -255,7 +265,11 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">URL de Imagen (Enlace permanente):</label>
+                    <label class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
+                    <textarea id="modal-science" rows="2" placeholder="Estudio comprobado, rol ecológico..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
+                </div>
+                <div>
+                    <label class="block typewriter text-xs font-bold uppercase">URL de Imagen:</label>
                     <input type="url" id="modal-img-url" required placeholder="https://ejemplo.com/imagen.jpg" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
@@ -282,6 +296,7 @@
                     morph: "Plumaje verde iridiscente, cola muy desarrollada en machos.",
                     ethology: "Diurno, solitario o en parejas, territorial en época reproductiva.",
                     repro: "Anida en cavidades de árboles muertos; puesta de 2 huevos.",
+                    science: "Estudios ornitológicos en Talamanca confirman que el Quetzal es el principal dispersor de semillas de la familia Lauraceae (como el aguacatillo), siendo vital para la regeneración del bosque primario nuboso.",
                     img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
                     annots: ["Cresta verde", "Cola caudal", "Dimorfismo", "Dispersor"]
                 },
@@ -297,6 +312,7 @@
                     morph: "Tamaño diminuto, pico corto y recto.",
                     ethology: "Muy activo, tolera temperaturas bajas mediante sopor nocturno.",
                     repro: "Nido en forma de taza copa sobre arbustos de Ericaceae.",
+                    science: "Investigaciones fisiológicas demuestran que entran en un estado de letargo o sopor nocturno, reduciendo drásticamente su temperatura corporal para conservar energía a más de 3,000 msnm.",
                     img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
                     annots: ["Garganta fucsia", "Pico recto", "Tasa metabólica", "Polinizador"]
                 }
@@ -314,6 +330,7 @@
                     morph: "Pelaje leonado uniforme, gran musculatura y agilidad.",
                     ethology: "Solitario, nocturno y crepuscular, amplio ámbito hogareño.",
                     repro: "Gestión de 90-96 días; camadas de 1 a 4 crías en cuevas.",
+                    science: "Monitoreos con cámaras trampa en el Corredor Biológico Los Santos comprueban que el puma regula las poblaciones de herbívoros medianos, manteniendo el equilibrio estructural de los bosques nubosos.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
                     annots: ["Garras retráctiles", "Paso amplio", "Excreta con pelo", "Depredador tope"]
                 }
@@ -328,9 +345,10 @@
                     sci: "Isthmohyla nacientes",
                     habitat: "Vegetación arbustiva y riachuelos.",
                     iucn: "En Estudio / Endémica",
-                    morph: "Tamaño <4cm, coloración verdosa dorsal.",
+                    morph: "Tamaño <4cm, coloración verdosa críptica.",
                     ethology: "Nocturna, arborícola, machos vocalizan cerca de fuentes de agua.",
                     repro: "Puesta de huevos gelatinosos sobre hojas colgantes en nacientes.",
+                    science: "Investigaciones herpetológicas recientes en las montañas de Los Santos documentan su alta dependencia de microhábitats prístinos asociados a nacientes, siendo altamente vulnerable a la contaminación agrícola.",
                     img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80",
                     annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica", "Sensible"]
                 },
@@ -346,6 +364,7 @@
                     morph: "Ojos rojos prominentes, color verde brillante con flancos azulados.",
                     ethology: "Nocturna; despliegue ocular repentino para asustar depredadores.",
                     repro: "Reproducción explosiva en charcas temporales tras lluvias.",
+                    science: "Estudios de comportamiento visual comprueban que sus ojos rojos escarlata actúan como un mecanismo de defensa por 'deimatic display' (sobresalto), desorientando temporalmente a los depredadores nocturnos.",
                     img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
                     annots: ["Ojos rojos", "Parotoides", "Termorregulación", "Arborícola"]
                 },
@@ -361,6 +380,7 @@
                     morph: "Dorso rugoso críptico, ausencia de membranas natatorias.",
                     ethology: "Terrestre, hábitos crípticos ocultos entre la hojarasca.",
                     repro: "Desarrollo directo (eclosionan directamente pequeños anuros).",
+                    science: "A diferencia de la mayoría de anfibios, carecen de fase acuática de renacuajo; los huevos terrestres completan su metamorfosis dentro de la cápsula, una adaptación evolutiva a los torrentes fríos de altura.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
                     annots: ["Dorso rugoso", "Sin membranas", "Desarrollo directo", "Bioindicador"]
                 }
@@ -376,8 +396,9 @@
                     habitat: "Bordes de bosque con rocas y troncos.",
                     iucn: "Preocupación Menor (LC)",
                     morph: "Cabeza ancha triangular, escamas quilladas robustas.",
-                    ethology: "Ambush predator (depredador de emboscada), nocturna y crepuscular.",
+                    ethology: "Depredador de emboscada, nocturna y crepuscular.",
                     repro: "Vivípara; da a luz crías desarrolladas directamente.",
+                    science: "Análisis toxicológicos demuestran que su veneno posee complejos péptidos hemotóxicos locales que afectan la coagulación, cumpliendo un rol ecológico estricto en el control de poblaciones de roedores en zonas montañosas.",
                     img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
                     annots: ["Cabeza triangular", "Foseta loreal", "Hemotóxico", "Controlador"]
                 }
@@ -395,6 +416,7 @@
                     morph: "Cuerpo vermiforme aterciopelado, múltiples pares de lobópodos.",
                     ethology: "Nocturno, expulsa chorros de baba adhesiva para cazar presas.",
                     repro: "Vivíparo con reproducción especializada.",
+                    science: "Considerados verdaderos 'fósiles vivientes', anatomistas eINVESTIGADORES han comprobado que su estructura corporal externa e interna ha permanecido casi inalterada durante más de 500 millones de años.",
                     img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
                     annots: ["Piel terciopelo", "Papilas de baba", "Antenas", "Fósil viviente"]
                 }
@@ -412,6 +434,7 @@
                     morph: "Estructuras filoides sin nervio central verdadero, alta capilaridad.",
                     ethology: "Crecimiento lento dependiente de la humedad horizontal de neblina.",
                     repro: "Reproducción por esporas y fragmentación.",
+                    science: "Estudios hidrológicos en cuencas altas de Costa Rica comprueban que las alfombras de briófitos y musgos capturan hasta un 50% del agua de neblina horizontal, recargando los mantos acuíferos que alimentan las zonas de cultivo de café.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
                     annots: ["Retención hídrica", "Microecosistema", "Filidios", "Epífita nodriza"]
                 }
@@ -429,6 +452,7 @@
                     morph: "Matriz cristalina fanerítica con cuarzo, feldespato y biotita.",
                     ethology: "Sometido a intensa meteorización por gradiente altitudinal y frío.",
                     repro: "Formación geológica por emplazamiento magmático miocénico.",
+                    science: "Geólogos datan el alzamiento de la Cordillera de Talamanca durante el Mioceno (hace ~10-5 millones de años), un evento tectónico clave que generó los puentes terrestres y nichos de altura actuales.",
                     img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
                     annots: ["Matriz cristalina", "Cuarzo biotita", "Magmático", "Erosión"]
                 }
@@ -499,6 +523,7 @@
             document.getElementById('field-morph').innerText = data.morph || "Sin registrar.";
             document.getElementById('field-ethology').innerText = data.ethology || "Sin registrar.";
             document.getElementById('field-repro').innerText = data.repro || "Sin registrar.";
+            document.getElementById('field-science').innerText = data.science || "Información científica en proceso de investigación para esta especie.";
             
             const imgEl = document.getElementById('specimen-img');
             imgEl.src = data.img || "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
@@ -511,7 +536,7 @@
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
                 document.getElementById('annot-3'),
-                document.getElementById('annot-4')
+                document.getElementById('annot-4']
             ];
 
             annotElements.forEach((el, idx) => {
@@ -551,6 +576,7 @@
             const morph = document.getElementById('modal-morph').value;
             const ethology = document.getElementById('modal-ethology').value;
             const repro = document.getElementById('modal-repro').value;
+            const science = document.getElementById('modal-science').value;
             const imgUrl = document.getElementById('modal-img-url').value;
 
             const newEntry = {
@@ -565,6 +591,7 @@
                 morph: morph,
                 ethology: ethology,
                 repro: repro,
+                science: science,
                 img: imgUrl,
                 annots: [common, hab, loc, sci]
             };
@@ -587,7 +614,7 @@
         }
 
         function exportCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Morfologia,Etologia,Reproduccion\n";
+            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Morfologia,Etologia,Reproduccion,DatoCientifico\n";
             for (let cat in database) {
                 database[cat].forEach(item => {
                     let row = [
@@ -600,7 +627,8 @@
                         `"${item.habitat}"`,
                         `"${item.morph || ''}"`,
                         `"${item.ethology || ''}"`,
-                        `"${item.repro || ''}"`
+                        `"${item.repro || ''}"`,
+                        `"${item.science || ''}"`
                     ].join(",");
                     csvContent += row + "\r\n";
                 });
