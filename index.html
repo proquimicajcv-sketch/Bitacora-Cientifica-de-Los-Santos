@@ -75,9 +75,6 @@
             <button type="button" onclick="openApp()" class="w-full max-w-xs bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] typewriter text-sm sm:text-base font-bold py-3 px-6 rounded-xl border-2 border-[#d4af37] shadow-2xl transition transform hover:scale-105 cursor-pointer">
                 📖 Abrir Cuaderno de Estudio
             </button>
-            <button type="button" onclick="resetDatabase()" class="text-[10px] typewriter text-[#d8c5aa] hover:text-white underline cursor-pointer mt-1">
-                🔄 Forzar Actualización / Sincronizar Dispositivos
-            </button>
         </div>
     </div>
 
@@ -97,13 +94,19 @@
                     <button type="button" onclick="returnToCover()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#5c3a21] text-[#f3e9dc] px-2 py-1 rounded border border-[#8b5a2b] hover:bg-[#70492c] transition shadow cursor-pointer font-bold">
                         📓 Cerrar Cuaderno
                     </button>
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-wrap items-center gap-1.5">
                         <button type="button" onclick="toggleNightVision()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3d271d] text-[#f3e9dc] px-2 py-1 rounded border border-[#70492c] hover:bg-[#523528] transition shadow cursor-pointer">
                             🌙 <span id="nv-text">Modo Noche: ON</span>
                         </button>
                         <button type="button" onclick="exportCSV()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#8b0000] text-[#f3e9dc] px-2 py-1 rounded border border-[#5c1800] hover:bg-[#a82d00] transition shadow cursor-pointer">
                             📥 CSV
                         </button>
+                        <button type="button" onclick="exportJSON()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#2d6a4f] text-[#f3e9dc] px-2 py-1 rounded border border-[#1b4332] hover:bg-[#40916c] transition shadow cursor-pointer" title="Descargar respaldo para sincronizar">
+                            📤 Exportar
+                        </button>
+                        <label class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3a5a40] text-[#f3e9dc] px-2 py-1 rounded border border-[#588157] hover:bg-[#4a7c59] transition shadow cursor-pointer font-bold" title="Cargar archivo de respaldo">
+                            📂 Importar <input type="file" id="import-file" accept=".json" onchange="importJSON(event)" class="hidden">
+                        </label>
                     </div>
                 </div>
 
@@ -353,9 +356,9 @@
         </div>
     </div>
 
-    <!-- Script con Sincronización Inteligente sin sobrescribir el progreso -->
+    <!-- Script con Sincronización Inteligente por Archivo JSON -->
     <script>
-        const exactCurrentDatabase = {
+        const initialDatabaseTemplate = {
             anfibios: [
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -509,11 +512,10 @@
             ]
         };
 
-        // Inteligencia de guardado: Si ya existe una base de datos en el navegador, la respeta y no la sobrescribe. 
-        // Si no existe (primera vez), carga esta estructura limpia sin imágenes predeterminadas.
+        // Mantener la base de datos local si ya existe para no perder ningún avance
         let database = JSON.parse(localStorage.getItem('losSantosStudyDB'));
         if (!database) {
-            database = exactCurrentDatabase;
+            database = initialDatabaseTemplate;
             localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
         }
 
@@ -784,6 +786,40 @@
 
             renderCurrentSpecimen();
             updateCategoryCounts();
+        }
+
+        // Funciones para Sincronizar entre dispositivos mediante archivo JSON
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(database, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "bitacora_los_santos_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importJSON(event) {
+            const fileReader = new FileReader();
+            if (event.target.files[0]) {
+                fileReader.readAsText(event.target.files[0], "UTF-8");
+                fileReader.onload = function (e) {
+                    try {
+                        const importedDB = JSON.parse(e.target.result);
+                        if (importedDB && typeof importedDB === 'object') {
+                            database = importedDB;
+                            localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
+                            switchCategory(Object.keys(database)[0] || 'anfibios');
+                            updateCategoryCounts();
+                            alert("¡Progreso y datos sincronizados con éxito en este dispositivo!");
+                        } else {
+                            alert("El archivo de respaldo no tiene un formato válido.");
+                        }
+                    } catch (error) {
+                        alert("Error al leer el archivo JSON.");
+                    }
+                };
+            }
         }
 
         function exportCSV() {
