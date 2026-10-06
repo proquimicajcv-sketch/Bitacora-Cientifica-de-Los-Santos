@@ -33,12 +33,6 @@
                 repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(180, 150, 120, 0.1) 25px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 35px rgba(130, 95, 60, 0.15);
         }
-        .pointer-line {
-            stroke: #8b2500;
-            stroke-width: 1.5;
-            stroke-dasharray: 3,2;
-            fill: none;
-        }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(139, 37, 0, 0.4); border-radius: 4px; }
     </style>
@@ -83,42 +77,34 @@
                     
                     <div id="journal-meta" class="handwritten text-base text-[#4a2e18] font-bold mb-3 flex flex-wrap gap-3 bg-[#e8dbcc]/60 p-2 rounded border border-[#d2b896]">
                         <span>📍 Distribución: <span id="meta-loc">San Lorenzo de Tarrazú</span></span>
-                        <span>🌡️ Nicho Térmico: <span id="meta-temp">19°C</span></span>
+                        <span>🌡️️ Nicho Térmico: <span id="meta-temp">19°C</span></span>
                         <span>💧 Humedad: <span id="meta-hum">95%</span></span>
                     </div>
                 </div>
 
-                <!-- Contenido Central -->
+                <!-- Contenido Central: Imagen limpia + Nombres Común y Científico bien definidos -->
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
-                        <div class="relative w-full h-36 sm:h-44 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
+                        <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
                             <img id="specimen-img" src="img/rana_nacientes.jpg.jpeg" onerror="this.src='https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80'" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
-                            
-                            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
-                                <path id="line-1" d="M 90,80 Q 60,60 30,50" class="pointer-line" />
-                                <path id="line-2" d="M 180,70 Q 210,50 240,40" class="pointer-line" />
-                                <path id="line-3" d="M 210,120 Q 240,110 260,90" class="pointer-line" />
-                                <path id="line-4" d="M 140,150 Q 170,170 210,165" class="pointer-line" />
-                            </svg>
                         </div>
-
-                        <div class="absolute top-1 left-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-1">Tamaño diminuto</div>
-                        <div class="absolute top-2 right-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-2">Garganta translúcida</div>
-                        <div class="absolute bottom-16 right-1 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-3">Endémica de altura</div>
-                        <div class="absolute bottom-1 left-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-4">Isthmohyla nacientes</div>
                     </div>
 
                     <div class="w-full md:w-1/2 flex flex-col justify-center space-y-1.5">
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
-                            <h3 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Especie:</h3>
-                            <p id="specimen-sci" class="handwritten text-base font-bold text-[#8b2500]">Rana de las Nacientes</p>
+                            <h3 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nombre Común:</h3>
+                            <p id="specimen-common" class="handwritten text-lg font-bold text-[#8b2500]">Rana de las Nacientes</p>
                         </div>
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Hábitat (Físico):</h4>
+                            <h3 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nombre Científico:</h3>
+                            <p id="specimen-sci" class="handwritten text-sm italic font-bold text-[#3a2212]">Isthmohyla nacientes</p>
+                        </div>
+                        <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
+                            <h4 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Hábitat (Físico):</h4>
                             <p id="specimen-habitat" class="handwritten text-xs text-[#3a2212]">Vegetación arbustiva y riachuelos en zona cafetalera.</p>
                         </div>
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Nicho Ecológico (Rol):</h4>
+                            <h4 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nicho Ecológico (Rol):</h4>
                             <p id="specimen-niche" class="handwritten text-xs text-[#3a2212]">Depredador nocturno de insectos y bioindicador.</p>
                         </div>
                     </div>
@@ -254,12 +240,12 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Nombre Científico:</label>
-                    <input type="text" id="modal-sci" required placeholder="Ej. Isthmohyla nacientes" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
-                </div>
-                <div>
                     <label class="block typewriter text-xs font-bold uppercase">Nombre Común:</label>
                     <input type="text" id="modal-common" required placeholder="Ej. Rana de las nacientes" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                </div>
+                <div>
+                    <label class="block typewriter text-xs font-bold uppercase">Nombre Científico:</label>
+                    <input type="text" id="modal-sci" required placeholder="Ej. Isthmohyla nacientes" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
@@ -321,7 +307,7 @@
         </div>
     </div>
 
-    <!-- Script principal optimizado y sin errores -->
+    <!-- Script principal -->
     <script>
         const defaultDatabase = {
             aves: [
@@ -340,8 +326,7 @@
                     courtship: "Vuelo nupcial acrobático y vocalizaciones suaves en pareja.",
                     relations: "Mutualismo con árboles de Lauraceae; competencia territorial entre machos.",
                     science: "Estudios ornitológicos en Talamanca confirman que el Quetzal es vital para la regeneración del bosque primario nuboso.",
-                    img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Cresta verde", "Cola caudal", "Dimorfismo", "Dispersor"]
+                    img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80"
                 },
                 {
                     title: "Guía Taxonómica - Aves",
@@ -358,8 +343,7 @@
                     courtship: "Vuelos en picada en forma de 'U' y despliegue de garganta.",
                     relations: "Competencia interespecífica por recursos florales en alta montaña.",
                     science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
-                    img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Garganta fucsia", "Pico recto", "Tasa metabólica", "Polinizador"]
+                    img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80"
                 }
             ],
             mamiferos: [
@@ -378,8 +362,7 @@
                     courtship: "Marcaje territorial por olor y vocalizaciones en celo.",
                     relations: "Depredador tope que controla poblaciones de ungulados y roedores.",
                     science: "Monitoreos con cámaras trampa comprueban que el puma mantiene el equilibrio estructural de los bosques nubosos.",
-                    img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Garras retráctiles", "Paso amplio", "Excreta con pelo", "Depredador tope"]
+                    img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80"
                 }
             ],
             anfibios: [
@@ -398,8 +381,7 @@
                     courtship: "Canto nupcial en coros; machos con sacos vocales desarrollados.",
                     relations: "Competencia acústica intraespecífica y depredación de artrópodos.",
                     science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
-                    img: "img/rana_nacientes.jpg.jpeg",
-                    annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica", "Sensible"]
+                    img: "img/rana_nacientes.jpg.jpeg"
                 },
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -416,8 +398,7 @@
                     courtship: "Reunión masiva en vegetación colgante sobre charcas tras lluvias.",
                     relations: "Presa de serpientes arborícolas y aves nocturnas.",
                     science: "Sus ojos escarlata actúan como mecanismo de defensa por sobresalto (deimatic display).",
-                    img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Ojos rojos", "Parotoides", "Termorregulación", "Arborícola"]
+                    img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80"
                 },
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -434,8 +415,7 @@
                     courtship: "Llamadas de corto alcance en el suelo del bosque.",
                     relations: "Competencia con otros anfibios terrestres por recursos de hojarasca.",
                     science: "Adaptación evolutiva a torrentes fríos de altura al omitir la fase acuática libre.",
-                    img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Dorso rugoso", "Sin membranas", "Desarrollo directo", "Bioindicador"]
+                    img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80"
                 }
             ],
             reptiles: [
@@ -454,8 +434,7 @@
                     courtship: "Rituales de proximidad química y combate ritual.",
                     relations: "Controlador natural de roedores en zonas de altura.",
                     science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
-                    img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Cabeza triangular", "Foseta loreal", "Hemotóxico", "Controlador"]
+                    img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80"
                 }
             ],
             invertebrados: [
@@ -474,8 +453,7 @@
                     courtship: "Transferencia de espermatóforos en la superficie cutánea.",
                     relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
                     science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
-                    img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Piel terciopelo", "Papilas de baba", "Antenas", "Fósil viviente"]
+                    img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80"
                 }
             ],
             flora: [
@@ -494,8 +472,7 @@
                     courtship: "No aplica.",
                     relations: "Epifitismo nodriza; alberga comunidades enteras de tardígrados e insectos.",
                     science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos de la zona cafetalera.",
-                    img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Retención hídrica", "Microecosistema", "Filidios", "Epífita nodriza"]
+                    img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80"
                 }
             ],
             geologia: [
@@ -514,8 +491,7 @@
                     courtship: "No aplica.",
                     relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
                     science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
-                    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Matriz cristalina", "Cuarzo biotita", "Magmático", "Erosión"]
+                    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
                 }
             ]
         };
@@ -584,7 +560,8 @@
             document.getElementById('meta-temp').innerText = data.temp;
             document.getElementById('meta-hum').innerText = data.hum;
             
-            document.getElementById('specimen-sci').innerText = data.name;
+            document.getElementById('specimen-common').innerText = data.name || "Sin registrar.";
+            document.getElementById('specimen-sci').innerText = data.sci || "Sin registrar.";
             document.getElementById('specimen-habitat').innerText = data.habitat || "Sin registrar.";
             document.getElementById('specimen-niche').innerText = data.niche || "Sin registrar.";
             
@@ -602,20 +579,6 @@
 
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
             document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
-
-            const annots = data.annots || ["Rasgo 1", "Rasgo 2", "Rasgo 3", "Rasgo 4"];
-            const annotElements = [
-                document.getElementById('annot-1'),
-                document.getElementById('annot-2'),
-                document.getElementById('annot-3'),
-                document.getElementById('annot-4')
-            ];
-
-            annotElements.forEach((el, idx) => {
-                if(el && annots[idx]) {
-                    el.innerText = annots[idx];
-                }
-            });
         }
 
         function updateCategoryCounts() {
@@ -643,8 +606,8 @@
             isEditing = true;
             document.getElementById('modal-title-text').innerText = "Editar Ficha Actual";
             document.getElementById('modal-cat').value = currentCategoryKey;
-            document.getElementById('modal-sci').value = data.sci || "";
             document.getElementById('modal-common').value = data.name || "";
+            document.getElementById('modal-sci').value = data.sci || "";
             document.getElementById('modal-loc').value = data.loc || "";
             document.getElementById('modal-clim').value = `${data.temp || '18°C'} / ${data.hum || '90%'}`;
             document.getElementById('modal-habitat').value = data.habitat || "";
@@ -683,8 +646,8 @@
         function handleSaveRecord(event) {
             event.preventDefault();
             const cat = document.getElementById('modal-cat').value;
-            const sci = document.getElementById('modal-sci').value;
             const common = document.getElementById('modal-common').value;
+            const sci = document.getElementById('modal-sci').value;
             const loc = document.getElementById('modal-loc').value;
             const clim = document.getElementById('modal-clim').value.split('/');
             const temp = clim[0] ? clim[0].trim() : "18°C";
@@ -714,8 +677,7 @@
                 courtship: courtship,
                 relations: relations,
                 science: science,
-                img: imgUrl,
-                annots: [common, habitat, loc, sci]
+                img: imgUrl
             };
 
             if (!database[cat]) {
