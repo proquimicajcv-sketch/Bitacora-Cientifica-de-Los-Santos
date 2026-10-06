@@ -55,21 +55,21 @@
         <!-- Filtro Visión Nocturna -->
         <div id="night-overlay" class="night-vision-overlay absolute inset-0 rounded-2xl pointer-events-none z-20 transition-opacity duration-300"></div>
 
-        <div class="relative z-30 flex flex-col lg:flex-row gap-4 h-full min-h-[620px] bg-[#2a1b14] p-3 sm:p-4 rounded-xl border border-[#443325]">
+        <div class="relative z-30 flex flex-col lg:flex-row gap-4 h-full min-h-[640px] bg-[#2a1b14] p-3 sm:p-4 rounded-xl border border-[#443325]">
 
             <!-- LADO IZQUIERDO: Cuaderno de Estudio -->
             <div class="flex-1 paper-texture rounded-lg p-4 sm:p-6 relative flex flex-col justify-between overflow-y-auto border border-[#d8c5aa]">
                 
-                <!-- Barra superior de botones sin superposición -->
+                <!-- Barra superior de botones -->
                 <div class="flex flex-wrap justify-between items-center border-b border-[#d2b896] pb-2 mb-3 gap-2">
                     <span class="text-[10px] sm:text-xs typewriter uppercase tracking-widest text-[#8b5a2b] font-bold">
-                        Guía de Estudio • Zona Los Santos
+                        Guía Académica • Zona Los Santos
                     </span>
                     <div class="flex items-center gap-2">
                         <button onclick="toggleNightVision()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3d271d] text-[#f3e9dc] px-2 py-1 rounded border border-[#70492c] hover:bg-[#523528] transition shadow">
                             🌙 <span id="nv-text">Modo Noche: ON</span>
                         </button>
-                        <button onclick="exportCSV()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#8b2500] text-[#f3e9dc] px-2 py-1 rounded border border-[#5c1800] hover:bg-[#a82d00] transition shadow">
+                        <button onclick="exportCSV()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#8b0000] text-[#f3e9dc] px-2 py-1 rounded border border-[#5c1800] hover:bg-[#a82d00] transition shadow">
                             📥 CSV
                         </button>
                     </div>
@@ -77,22 +77,22 @@
 
                 <!-- Cabecera -->
                 <div>
-                    <h1 id="journal-title" class="typewriter text-lg sm:text-2xl font-bold text-[#3a1d0c] pb-1 mb-2">
+                    <h1 id="journal-title" class="typewriter text-lg sm:text-xl font-bold text-[#3a1d0c] pb-1 mb-2">
                         Guía Taxonómica - Anfibios
                     </h1>
                     
-                    <div id="journal-meta" class="handwritten text-base sm:text-lg text-[#4a2e18] font-bold mb-3 flex flex-wrap gap-4 bg-[#e8dbcc]/60 p-2 rounded border border-[#d2b896]">
+                    <div id="journal-meta" class="handwritten text-base text-[#4a2e18] font-bold mb-3 flex flex-wrap gap-3 bg-[#e8dbcc]/60 p-2 rounded border border-[#d2b896]">
                         <span>📍 Distribución: <span id="meta-loc">San Lorenzo de Tarrazú</span></span>
-                        <span>🌡️ Nicho Térmico: <span id="meta-temp">19°C</span></span>
-                        <span>💧 Humedad Ideal: <span id="meta-hum">95%</span></span>
+                        <span>🌡️ Nicho: <span id="meta-temp">19°C</span></span>
+                        <span>💧 Humedad: <span id="meta-hum">95%</span></span>
                     </div>
                 </div>
 
                 <!-- Contenido Central -->
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
-                        <div class="relative w-full h-48 sm:h-56 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="img/rana_nacientes.jpq.jpeg" onerror="this.src='https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80'" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
+                        <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
+                            <img id="specimen-img" src="https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                             
                             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
                                 <path id="line-1" d="M 90,80 Q 60,60 30,50" class="pointer-line" />
@@ -108,82 +108,90 @@
                         <div class="absolute bottom-1 left-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-4">Isthmohyla nacientes</div>
                     </div>
 
-                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-2">
-                        <div class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
-                            <h3 id="specimen-name" class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Especie en Estudio:</h3>
-                            <p id="specimen-sci" class="handwritten text-xl font-bold text-[#8b2500]">Rana de las Nacientes</p>
+                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-1.5">
+                        <div class="bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
+                            <h3 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Especie:</h3>
+                            <p id="specimen-sci" class="handwritten text-lg font-bold text-[#8b2500]">Rana de las Nacientes</p>
                         </div>
-                        <div class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Microhábitat Típico:</h4>
-                            <p id="specimen-habitat" class="handwritten text-base text-[#3a2212]">Vegetación arbustiva y riachuelos cercanos a nacientes.</p>
+                        <div class="bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
+                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Microhábitat:</h4>
+                            <p id="specimen-habitat" class="handwritten text-sm text-[#3a2212]">Vegetación arbustiva y riachuelos cercanos a nacientes.</p>
                         </div>
-                        <div class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Estado IUCN:</h4>
-                            <p id="specimen-iucn" class="handwritten text-base text-[#2d5a27] font-bold">En Estudio / Endémica</p>
+                        <div class="bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
+                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Estado IUCN:</h4>
+                            <p id="specimen-iucn" class="handwritten text-sm text-[#2d5a27] font-bold">En Estudio / Endémica</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Notas de Estudio -->
-                <div class="mt-2 bg-[#f6eddf] p-3 rounded border border-[#d2b896]">
-                    <h4 class="typewriter text-xs font-bold text-[#633e21] mb-1 uppercase tracking-wider">📚 Notas Taxonómicas y de Estudio:</h4>
-                    <p id="field-notes" class="handwritten text-base sm:text-lg text-[#2d1c0e] leading-snug">
-                        Especie arborícola y diminuta descrita en las montañas de Los Santos. Se localiza en vegetación próxima a nacientes de agua. Bioindicador local de alta sensibilidad.
-                    </p>
+                <!-- Bloques Detallados de Estudio (Morfología, Etología, Reproducción) -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-1">
+                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🧬 Morfología:</h5>
+                        <p id="field-morph" class="handwritten text-sm text-[#2d1c0e] leading-tight">Tamaño <4cm, coloración verdosa críptica.</p>
+                    </div>
+                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🦉 Etología:</h5>
+                        <p id="field-ethology" class="handwritten text-sm text-[#2d1c0e] leading-tight">Hábitos nocturnos y arborícolas.</p>
+                    </div>
+                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌱 Reproducción:</h5>
+                        <p id="field-repro" class="handwritten text-sm text-[#2d1c0e] leading-tight">Puesta en vegetación sobre agua.</p>
+                    </div>
                 </div>
 
                 <!-- Pie de página -->
-                <div class="mt-3 pt-2 border-t border-[#d2b896] flex flex-wrap justify-between items-center text-xs typewriter text-[#70492c] gap-2">
-                    <span>Región: Cordillera de Talamanca</span>
+                <div class="mt-2 pt-1 border-t border-[#d2b896] flex flex-wrap justify-between items-center text-xs typewriter text-[#70492c]">
+                    <span>Cordillera de Talamanca, Costa Rica</span>
                     <span id="record-count">Ficha #1 / 2026</span>
                 </div>
             </div>
 
             <!-- LADO DERECHO: Panel de Estudio y Taxonomía -->
-            <aside class="w-full lg:w-72 flex flex-col justify-between space-y-3">
-                <div class="bg-[#1f140f] p-3 rounded-lg border border-[#4a3424] text-center shadow-inner">
+            <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
+                <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
-                    <p class="handwritten text-sm text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
+                    <p class="handwritten text-xs text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
                 </div>
 
                 <!-- Botones de Pestañas -->
-                <nav id="category-tabs" class="flex flex-col space-y-2">
-                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all">
-                        <span class="typewriter text-sm">🦅 Aves</span>
-                        <span id="count-aves" class="text-xs bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
+                <nav id="category-tabs" class="flex flex-col space-y-1.5">
+                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all">
+                        <span class="typewriter text-xs">🦅 Aves</span>
+                        <span id="count-aves" class="text-[10px] bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
                     </button>
-                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all">
-                        <span class="typewriter text-sm">🦌 Mamíferos</span>
-                        <span id="count-mamiferos" class="text-xs bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">1 spp</span>
+                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all">
+                        <span class="typewriter text-xs">🦌 Mamíferos</span>
+                        <span id="count-mamiferos" class="text-[10px] bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all">
-                        <span class="typewriter text-sm">🐸 Anfibios</span>
-                        <span id="count-anfibios" class="text-xs bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">3 spp</span>
+                    <button onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all">
+                        <span class="typewriter text-xs">🐸 Anfibios</span>
+                        <span id="count-anfibios" class="text-[10px] bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">3 spp</span>
                     </button>
-                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all">
-                        <span class="typewriter text-sm">🐍 Reptiles</span>
-                        <span id="count-reptiles" class="text-xs bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
+                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all">
+                        <span class="typewriter text-xs">🐍 Reptiles</span>
+                        <span id="count-reptiles" class="text-[10px] bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all">
-                        <span class="typewriter text-sm">🦂 Invertebrados</span>
-                        <span id="count-invertebrados" class="text-xs bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">1 spp</span>
+                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all">
+                        <span class="typewriter text-xs">🦂 Invertebrados</span>
+                        <span id="count-invertebrados" class="text-[10px] bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold transition-all">
-                        <span class="typewriter text-sm">🌿 Flora & Musgos</span>
-                        <span id="count-flora" class="text-xs bg-green-950 px-2 py-0.5 rounded-full text-green-200">1 spp</span>
+                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold transition-all">
+                        <span class="typewriter text-xs">🌿 Flora & Musgos</span>
+                        <span id="count-flora" class="text-[10px] bg-green-950 px-2 py-0.5 rounded-full text-green-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all">
-                        <span class="typewriter text-sm">🪨 Geología</span>
-                        <span id="count-geologia" class="text-xs bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 muestra</span>
+                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all">
+                        <span class="typewriter text-xs">🪨 Geología</span>
+                        <span id="count-geologia" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 muestra</span>
                     </button>
                 </nav>
 
                 <!-- Botones de Estudio -->
-                <div class="bg-[#1f140f] p-3 rounded-lg border border-[#4a3424] text-center space-y-2">
-                    <button onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-2 px-3 rounded border border-[#70492c] transition shadow">
+                <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center space-y-1.5">
+                    <button onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow">
                         🔄 Siguiente Especie (<span id="counter-display">1/3</span>)
                     </button>
-                    <button onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-2 px-3 rounded border border-[#5c1800] transition shadow font-bold">
+                    <button onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#5c1800] transition shadow font-bold">
                         ➕ Agregar Nueva Especie
                     </button>
                 </div>
@@ -193,11 +201,11 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar Nueva Especie al Estudio -->
+    <!-- Modal para Agregar Nueva Especie por URL -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie para Estudio</h2>
-            <form id="new-record-form" onsubmit="handleNewRecord(event)" class="space-y-3 handwritten text-lg text-[#3a1d0c]">
+            <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
+            <form id="new-record-form" onsubmit="handleNewRecord(event)" class="space-y-2.5 handwritten text-lg text-[#3a1d0c]">
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
                     <select id="modal-cat" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
@@ -232,13 +240,23 @@
                     <label class="block typewriter text-xs font-bold uppercase">Microhábitat:</label>
                     <input type="text" id="modal-hab" placeholder="Zona de nacientes de agua" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
-                <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Notas Taxonómicas y de Estudio:</label>
-                    <textarea id="modal-notes" rows="2" placeholder="Características morfológicas, comportamiento..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block typewriter text-[10px] font-bold uppercase">Morfología:</label>
+                        <input type="text" id="modal-morph" placeholder="Tamaño, color..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                    </div>
+                    <div>
+                        <label class="block typewriter text-[10px] font-bold uppercase">Etología:</label>
+                        <input type="text" id="modal-ethology" placeholder="Hábitos, canto..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                    </div>
+                    <div>
+                        <label class="block typewriter text-[10px] font-bold uppercase">Reproducción:</label>
+                        <input type="text" id="modal-repro" placeholder="Puesta, huevos..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                    </div>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Fotografía desde el iPad:</label>
-                    <input type="file" id="modal-img-file" accept="image/*" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter cursor-pointer">
+                    <label class="block typewriter text-xs font-bold uppercase">URL de Imagen (Enlace permanente):</label>
+                    <input type="url" id="modal-img-url" required placeholder="https://ejemplo.com/imagen.jpg" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm">Cancelar</button>
@@ -248,7 +266,7 @@
         </div>
     </div>
 
-    <!-- Script de Estudio -->
+    <!-- Script de Estudio Académico -->
     <script>
         const defaultDatabase = {
             aves: [
@@ -261,9 +279,11 @@
                     sci: "Pharomachrus mocinno",
                     habitat: "Dosel de bosque nuboso primario.",
                     iucn: "Casi Amenazado (NT)",
-                    notes: "Dispersor primario de semillas de Lauraceae en el bosque altitudinal.",
+                    morph: "Plumaje verde iridiscente, cola muy desarrollada en machos.",
+                    ethology: "Diurno, solitario o en parejas, territorial en época reproductiva.",
+                    repro: "Anida en cavidades de árboles muertos; puesta de 2 huevos.",
                     img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Cresta verde metalizada", "Cola caudal desarrollada", "Dimorfismo sexual", "Dispersor de semillas"]
+                    annots: ["Cresta verde", "Cola caudal", "Dimorfismo", "Dispersor"]
                 },
                 {
                     title: "Guía Taxonómica - Aves",
@@ -272,11 +292,13 @@
                     hum: "88%",
                     name: "Colibrí Volcánico",
                     sci: "Selasphorus flammula",
-                    habitat: "Matorrales de altura.",
+                    habitat: "Matorrales de altura y páramo.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Adaptaciones metabólicas para soportar temperaturas bajo cero.",
+                    morph: "Tamaño diminuto, pico corto y recto.",
+                    ethology: "Muy activo, tolera temperaturas bajas mediante sopor nocturno.",
+                    repro: "Nido en forma de taza copa sobre arbustos de Ericaceae.",
                     img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Garganta iridiscente", "Pico corto y recto", "Alta tasa metabólica", "Polinizador de altura"]
+                    annots: ["Garganta fucsia", "Pico recto", "Tasa metabólica", "Polinizador"]
                 }
             ],
             mamiferos: [
@@ -285,13 +307,15 @@
                     loc: "Reserva Los Quetzales, 2,500 msnm",
                     temp: "14°C",
                     hum: "90%",
-                    name: "Puma (Rastro y huellas)",
+                    name: "Puma",
                     sci: "Puma concolor",
-                    habitat: "Senderos de bosque secundario.",
+                    habitat: "Senderos de bosque secundario y primario.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Depredador tope regional y clave para el Corredor Biológico Los Santos.",
+                    morph: "Pelaje leonado uniforme, gran musculatura y agilidad.",
+                    ethology: "Solitario, nocturno y crepuscular, amplio ámbito hogareño.",
+                    repro: "Gestión de 90-96 días; camadas de 1 a 4 crías en cuevas.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Marcas de garras", "Amplitud de paso", "Excreta con pelo", "Depredador tope"]
+                    annots: ["Garras retráctiles", "Paso amplio", "Excreta con pelo", "Depredador tope"]
                 }
             ],
             anfibios: [
@@ -302,11 +326,13 @@
                     hum: "95%",
                     name: "Rana de las Nacientes",
                     sci: "Isthmohyla nacientes",
-                    habitat: "Vegetación arbustiva y riachuelos cercanos a nacientes de agua.",
+                    habitat: "Vegetación arbustiva y riachuelos.",
                     iucn: "En Estudio / Endémica",
-                    notes: "Especie arborícola y diminuta de las montañas de Los Santos. Localizada en vegetación próxima a nacientes de agua. Bioindicador local de alta sensibilidad.",
-                    img: "img/rana_nacientes.jpq.jpeg",
-                    annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica de altura", "Isthmohyla nacientes"]
+                    morph: "Tamaño <4cm, coloración verdosa dorsal.",
+                    ethology: "Nocturna, arborícola, machos vocalizan cerca de fuentes de agua.",
+                    repro: "Puesta de huevos gelatinosos sobre hojas colgantes en nacientes.",
+                    img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica", "Sensible"]
                 },
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -315,24 +341,28 @@
                     hum: "94%",
                     name: "Rana de Ojos Rojos",
                     sci: "Cruziohyla calcarifer",
-                    habitat: "Estrato arbustivo de bosque nuboso primario.",
+                    habitat: "Estrato arbustivo de bosque nuboso.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Vocalizando durante evento de lluvia ligero. Sonido grave y pulsado.",
+                    morph: "Ojos rojos prominentes, color verde brillante con flancos azulados.",
+                    ethology: "Nocturna; despliegue ocular repentino para asustar depredadores.",
+                    repro: "Reproducción explosiva en charcas temporales tras lluvias.",
                     img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Ojos rojos nocturnos", "Glándulas parotoides", "Termorregulación", "Cruziohyla calcarifer"]
+                    annots: ["Ojos rojos", "Parotoides", "Termorregulación", "Arborícola"]
                 },
                 {
                     title: "Guía Taxonómica - Anfibios",
                     loc: "Quebrada San Pablo, Tarrazú",
                     temp: "17°C",
                     hum: "96%",
-                    name: "Rana de Hojarasca de Altura",
+                    name: "Rana de Hojarasca",
                     sci: "Craugastor escoces",
-                    habitat: "Suelo de bosque nuboso húmedo.",
+                    habitat: "Suelo de bosque nuboso bajo briófitos.",
                     iucn: "En Peligro (EN)",
-                    notes: "Desarrollo directo sin fase acuática de renacuajo.",
-                    img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Dorso rugoso", "Sin membranas", "Desarrollo directo", "Bioindicador de suelo"]
+                    morph: "Dorso rugoso críptico, ausencia de membranas natatorias.",
+                    ethology: "Terrestre, hábitos crípticos ocultos entre la hojarasca.",
+                    repro: "Desarrollo directo (eclosionan directamente pequeños anuros).",
+                    img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
+                    annots: ["Dorso rugoso", "Sin membranas", "Desarrollo directo", "Bioindicador"]
                 }
             ],
             reptiles: [
@@ -341,13 +371,15 @@
                     loc: "Cerro Vueltas, 2,300 msnm",
                     temp: "18°C",
                     hum: "85%",
-                    name: "Víbora Mano de Piedra / Tamagá",
+                    name: "Víbora Mano de Piedra",
                     sci: "Atropoides nummifer",
                     habitat: "Bordes de bosque con rocas y troncos.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Controlador natural de roedores en zonas agrícolas de altura.",
+                    morph: "Cabeza ancha triangular, escamas quilladas robustas.",
+                    ethology: "Ambush predator (depredador de emboscada), nocturna y crepuscular.",
+                    repro: "Vivípara; da a luz crías desarrolladas directamente.",
                     img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Cabeza triangular", "Escamas quilladas", "Foseta loreal", "Veneno hemotóxico"]
+                    annots: ["Cabeza triangular", "Foseta loreal", "Hemotóxico", "Controlador"]
                 }
             ],
             invertebrados: [
@@ -356,13 +388,15 @@
                     loc: "Bosque Nuboso de Dota",
                     temp: "15°C",
                     hum: "98%",
-                    name: "Gusano Terciopelo / Onicóforo",
+                    name: "Gusano Terciopelo",
                     sci: "Peripatus soltani",
                     habitat: "Bajo corteza en descomposición de robles.",
                     iucn: "Datos Insuficientes (DD)",
-                    notes: "Organismo eslabón evolutivo clave. Glándulas de baba adhesiva.",
+                    morph: "Cuerpo vermiforme aterciopelado, múltiples pares de lobópodos.",
+                    ethology: "Nocturno, expulsa chorros de baba adhesiva para cazar presas.",
+                    repro: "Vivíparo con reproducción especializada.",
                     img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Piel aterciopelada", "Papilas eyectoras", "Antenas anilladas", "Fósil viviente"]
+                    annots: ["Piel terciopelo", "Papilas de baba", "Antenas", "Fósil viviente"]
                 }
             ],
             flora: [
@@ -371,13 +405,15 @@
                     loc: "Río Savegre, 1,900 msnm",
                     temp: "19°C",
                     hum: "95%",
-                    name: "Almohadillas de Musgo y Epífitas",
+                    name: "Musgos y Epífitas",
                     sci: "Sphagnum spp. & Bromeliaceae",
                     habitat: "Troncos de Quercus costaricensis.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Esponjas naturales que capturan la neblina horizontal.",
+                    morph: "Estructuras filoides sin nervio central verdadero, alta capilaridad.",
+                    ethology: "Crecimiento lento dependiente de la humedad horizontal de neblina.",
+                    repro: "Reproducción por esporas y fragmentación.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Alta retención hídrica", "Microecosistema", "Filidios sin nervio", "Epífita nodriza"]
+                    annots: ["Retención hídrica", "Microecosistema", "Filidios", "Epífita nodriza"]
                 }
             ],
             geologia: [
@@ -387,12 +423,14 @@
                     temp: "13°C",
                     hum: "80%",
                     name: "Complejo Ígneo Talamanca",
-                    sci: "Granodiorita y rocas terciarias",
+                    sci: "Granodiorita",
                     habitat: "Taludes de alta pendiente.",
                     iucn: "No Aplica",
-                    notes: "Alzamiento tectónico miocénico de la Cordillera de Talamanca.",
+                    morph: "Matriz cristalina fanerítica con cuarzo, feldespato y biotita.",
+                    ethology: "Sometido a intensa meteorización por gradiente altitudinal y frío.",
+                    repro: "Formación geológica por emplazamiento magmático miocénico.",
                     img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
-                    annots: ["Matriz cristalina", "Cuarzo y biotita", "Origen magmático", "Erosión altitudinal"]
+                    annots: ["Matriz cristalina", "Cuarzo biotita", "Magmático", "Erosión"]
                 }
             ]
         };
@@ -454,14 +492,16 @@
             document.getElementById('meta-temp').innerText = data.temp;
             document.getElementById('meta-hum').innerText = data.hum;
             
-            document.getElementById('specimen-name').innerText = "Especie en Estudio (" + currentCategoryKey.toUpperCase() + "):";
             document.getElementById('specimen-sci').innerText = data.name;
             document.getElementById('specimen-habitat').innerText = data.habitat;
             document.getElementById('specimen-iucn').innerText = data.iucn || "No especificado";
-            document.getElementById('field-notes').innerText = data.notes;
+            
+            document.getElementById('field-morph').innerText = data.morph || "Sin registrar.";
+            document.getElementById('field-ethology').innerText = data.ethology || "Sin registrar.";
+            document.getElementById('field-repro').innerText = data.repro || "Sin registrar.";
             
             const imgEl = document.getElementById('specimen-img');
-            imgEl.src = data.img || "img/rana_nacientes.jpq.jpeg";
+            imgEl.src = data.img || "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
             
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
             document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
@@ -471,7 +511,7 @@
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
                 document.getElementById('annot-3'),
-                document.getElementById('annot-4']
+                document.getElementById('annot-4')
             ];
 
             annotElements.forEach((el, idx) => {
@@ -508,21 +548,11 @@
             const temp = clim[0] ? clim[0].trim() : "18°C";
             const hum = clim[1] ? clim[1].trim() : "90%";
             const hab = document.getElementById('modal-hab').value;
-            const notes = document.getElementById('modal-notes').value;
-            const fileInput = document.getElementById('modal-img-file');
+            const morph = document.getElementById('modal-morph').value;
+            const ethology = document.getElementById('modal-ethology').value;
+            const repro = document.getElementById('modal-repro').value;
+            const imgUrl = document.getElementById('modal-img-url').value;
 
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    saveRecordEntry(cat, sci, common, loc, temp, hum, hab, notes, e.target.result);
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                saveRecordEntry(cat, sci, common, loc, temp, hum, hab, notes, "img/rana_nacientes.jpq.jpeg");
-            }
-        }
-
-        function saveRecordEntry(cat, sci, common, loc, temp, hum, hab, notes, imgSrc) {
             const newEntry = {
                 title: `Guía Taxonómica - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
                 loc: loc,
@@ -532,8 +562,10 @@
                 sci: sci,
                 habitat: hab,
                 iucn: "En Estudio / Endémica",
-                notes: notes,
-                img: imgSrc,
+                morph: morph,
+                ethology: ethology,
+                repro: repro,
+                img: imgUrl,
                 annots: [common, hab, loc, sci]
             };
 
@@ -555,7 +587,7 @@
         }
 
         function exportCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Notas\n";
+            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Morfologia,Etologia,Reproduccion\n";
             for (let cat in database) {
                 database[cat].forEach(item => {
                     let row = [
@@ -566,7 +598,9 @@
                         `"${item.temp}"`,
                         `"${item.hum}"`,
                         `"${item.habitat}"`,
-                        `"${item.notes}"`
+                        `"${item.morph || ''}"`,
+                        `"${item.ethology || ''}"`,
+                        `"${item.repro || ''}"`
                     ].join(",");
                     csvContent += row + "\r\n";
                 });
