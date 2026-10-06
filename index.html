@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía de Estudio - Especies de Los Santos</title>
+    <title>Guía de Estudio - Especies y Sitios de Los Santos</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -33,7 +33,6 @@
                 repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(180, 150, 120, 0.1) 25px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 35px rgba(130, 95, 60, 0.15);
         }
-        /* Estilo Portada Libreta de Campo */
         .notebook-cover {
             background-color: #3b2214;
             background-image: 
@@ -52,12 +51,12 @@
     <div class="absolute inset-0 z-0 bg-cover bg-center opacity-40 pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1511497584788-876761142212?auto=format&fit=crop&w=2000&q=80');"></div>
     <div class="absolute inset-0 z-0 bg-gradient-to-t from-[#020503] via-[#08140c]/80 to-[#020503]"></div>
 
-    <!-- VISTA 1: PORTADA (Cuaderno de Anotaciones Científicas) -->
+    <!-- VISTA 1: PORTADA -->
     <div id="cover-view" class="relative z-30 w-full max-w-3xl notebook-cover rounded-2xl p-6 sm:p-10 text-[#f3e9dc] flex flex-col items-center justify-between min-h-[540px]">
         <div class="w-full text-center border-b-2 border-[#b08d57]/60 pb-4">
             <span class="typewriter text-xs sm:text-sm uppercase tracking-widest text-[#d4af37] font-bold">Expedición Científica Regional</span>
             <h1 class="typewriter text-2xl sm:text-4xl font-bold mt-2 text-[#fcf6ed] tracking-wider">BITÁCORA DE CAMPO</h1>
-            <p class="handwritten text-lg sm:text-xl text-[#d8c5aa] mt-1">Biodiversidad de la Zona de Los Santos</p>
+            <p class="handwritten text-lg sm:text-xl text-[#d8c5aa] mt-1">Biodiversidad y Geografía de la Zona de Los Santos</p>
         </div>
 
         <div class="my-6 text-center space-y-4 max-w-lg">
@@ -78,7 +77,7 @@
         </div>
     </div>
 
-    <!-- VISTA 2: APLICACIÓN PRINCIPAL (Oculta al inicio) -->
+    <!-- VISTA 2: APLICACIÓN PRINCIPAL -->
     <main id="app-view" class="relative z-10 w-full max-w-5xl tablet-case rounded-2xl p-3 sm:p-5 text-red-500 hidden">
         
         <!-- Filtro Visión Nocturna -->
@@ -101,10 +100,10 @@
                         <button type="button" onclick="exportCSV()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#8b0000] text-[#f3e9dc] px-2 py-1 rounded border border-[#5c1800] hover:bg-[#a82d00] transition shadow cursor-pointer">
                             📥 CSV
                         </button>
-                        <button type="button" onclick="exportJSON()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#2d6a4f] text-[#f3e9dc] px-2 py-1 rounded border border-[#1b4332] hover:bg-[#40916c] transition shadow cursor-pointer" title="Descargar respaldo para sincronizar">
+                        <button type="button" onclick="exportJSON()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#2d6a4f] text-[#f3e9dc] px-2 py-1 rounded border border-[#1b4332] hover:bg-[#40916c] transition shadow cursor-pointer" title="Descargar respaldo">
                             📤 Exportar
                         </button>
-                        <label class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3a5a40] text-[#f3e9dc] px-2 py-1 rounded border border-[#588157] hover:bg-[#4a7c59] transition shadow cursor-pointer font-bold" title="Cargar archivo de respaldo">
+                        <label class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3a5a40] text-[#f3e9dc] px-2 py-1 rounded border border-[#588157] hover:bg-[#4a7c59] transition shadow cursor-pointer font-bold" title="Cargar respaldo">
                             📂 Importar <input type="file" id="import-file" accept=".json" onchange="importJSON(event)" class="hidden">
                         </label>
                     </div>
@@ -112,79 +111,90 @@
 
                 <!-- Cabecera -->
                 <div>
+                    <!-- SECTOR DE ALTERNANCIA PRINCIPAL -->
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <button type="button" onclick="switchAppMode('species')" id="mode-btn-species" class="typewriter text-xs py-2 px-3 rounded-xl font-bold uppercase border transition shadow cursor-pointer bg-[#8b2500] text-white border-[#d4af37]">
+                            🌿 Guía de Especies
+                        </button>
+                        <button type="button" onclick="switchAppMode('sites')" id="mode-btn-sites" class="typewriter text-xs py-2 px-3 rounded-xl font-bold uppercase border transition shadow cursor-pointer bg-[#3a2212] text-[#d8c5aa] border-[#70492c]">
+                            🏔️️ Sitios y Cerros
+                        </button>
+                    </div>
+
                     <h1 id="journal-title" class="typewriter text-lg sm:text-xl font-bold text-[#3a1d0c] pb-1 mb-2">
                         Guía Taxonómica - Anfibios
                     </h1>
                     
                     <div id="journal-meta" class="handwritten text-base text-[#4a2e18] font-bold mb-3 flex flex-wrap gap-3 bg-[#e8dbcc]/60 p-2 rounded border border-[#d2b896]">
-                        <span>📍 Distribución: <span id="meta-loc">San Lorenzo de Tarrazú</span></span>
+                        <span id="meta-loc-container">📍 Distribución: <span id="meta-loc">San Lorenzo de Tarrazú</span></span>
                         <span>🌡 Nicho Térmico: <span id="meta-temp">19°C</span></span>
                         <span>💧 Humedad: <span id="meta-hum">95%</span></span>
                     </div>
                 </div>
 
-                <!-- Contenido Central -->
+                <!-- Contenido Central (Dinámico según Modo) -->
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded hidden">
+                            <img id="specimen-img" src="" alt="Imagen" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded hidden">
                             <div id="img-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center handwritten text-sm text-[#7a1f00]">
-                                📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>
+                                📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/cerro1.png)</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-1.5">
+                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-1.5" id="main-fields-right">
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
-                            <h3 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nombre Común:</h3>
+                            <h3 id="label-f1" class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nombre Común:</h3>
                             <p id="specimen-common" class="handwritten text-lg font-bold text-[#8b2500]">Rana de las Nacientes</p>
                         </div>
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
-                            <h3 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nombre Científico:</h3>
+                            <h3 id="label-f2" class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nombre Científico:</h3>
                             <p id="specimen-sci" class="handwritten text-sm italic font-bold text-[#3a2212]">Isthmohyla nacientes</p>
                         </div>
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Hábitat (Físico):</h4>
+                            <h4 id="label-f3" class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Hábitat (Físico):</h4>
                             <p id="specimen-habitat" class="handwritten text-xs text-[#3a2212]">Vegetación arbustiva y riachuelos en zona cafetalera.</p>
                         </div>
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nicho Ecológico (Rol):</h4>
+                            <h4 id="label-f4" class="typewriter text-[9px] font-bold text-[#5c3a21] uppercase">Nicho Ecológico (Rol):</h4>
                             <p id="specimen-niche" class="handwritten text-xs text-[#3a2212]">Depredador nocturno de insectos y bioindicador.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bloques Detallados de Estudio -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-1">
-                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
-                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🧬 Morfología:</h5>
-                        <p id="field-morph" class="handwritten text-xs text-[#2d1c0e] leading-tight">Tamaño <4cm, coloración verdosa críptica.</p>
+                <!-- Bloques Detallados de Estudio (Se adaptan para Especies o Sitios) -->
+                <div id="grid-blocks-container" class="space-y-2 my-1">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                            <h5 id="block-t1" class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🧬 Morfología:</h5>
+                            <p id="field-morph" class="handwritten text-xs text-[#2d1c0e] leading-tight">Tamaño <4cm, coloración verdosa críptica.</p>
+                        </div>
+                        <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                            <h5 id="block-t2" class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🦉 Etología:</h5>
+                            <p id="field-ethology" class="handwritten text-xs text-[#2d1c0e] leading-tight">Hábitos nocturnos y arborícolas.</p>
+                        </div>
+                        <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                            <h5 id="block-t3" class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌱 Reproducción:</h5>
+                            <p id="field-repro" class="handwritten text-xs text-[#2d1c0e] leading-tight">Puesta en vegetación sobre agua.</p>
+                        </div>
                     </div>
-                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
-                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🦉 Etología:</h5>
-                        <p id="field-ethology" class="handwritten text-xs text-[#2d1c0e] leading-tight">Hábitos nocturnos y arborícolas.</p>
-                    </div>
-                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
-                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌱 Reproducción:</h5>
-                        <p id="field-repro" class="handwritten text-xs text-[#2d1c0e] leading-tight">Puesta en vegetación sobre agua.</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                            <h5 id="block-t4" class="typewriter text-[10px] font-bold text-[#633e21] uppercase">💞 Cortejo y Dimorfismo:</h5>
+                            <p id="field-courtship" class="handwritten text-xs text-[#2d1c0e] leading-tight">Machos con vocalización y garganta translúcida.</p>
+                        </div>
+                        <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                            <h5 id="block-t5" class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌐 Relaciones (Intra/Inter):</h5>
+                            <p id="field-relations" class="handwritten text-xs text-[#2d1c0e] leading-tight">Competencia territorial y depredación de artrópodos.</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Relaciones y Dimorfismo Sexual -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 my-1">
-                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
-                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">💞 Cortejo y Dimorfismo:</h5>
-                        <p id="field-courtship" class="handwritten text-xs text-[#2d1c0e] leading-tight">Machos con vocalización y garganta translúcida.</p>
-                    </div>
-                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
-                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌐 Relaciones (Intra/Inter):</h5>
-                        <p id="field-relations" class="handwritten text-xs text-[#2d1c0e] leading-tight">Competencia territorial y depredación de artrópodos.</p>
-                    </div>
-                </div>
-
-                <!-- Dato Científico Comprobado -->
+                <!-- Dato Científico / Extra -->
                 <div class="mt-1 bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
-                    <h5 class="typewriter text-[10px] font-bold text-[#7a1f00] uppercase mb-0.5">🔬 Investigación Científica Comprobada:</h5>
+                    <h5 id="block-t6" class="typewriter text-[10px] font-bold text-[#7a1f00] uppercase mb-0.5">🔬 Investigación Científica Comprobada:</h5>
                     <p id="field-science" class="handwritten text-xs text-[#2d1c0e] leading-snug">
                         Alta sensibilidad a cambios microclimáticos, sirviendo como bioindicador de la pureza de agua en cuencas.
                     </p>
@@ -197,74 +207,43 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Avistamientos (Diseño Invertido) -->
+            <!-- LADO DERECHO: Panel de Control y Navegación -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
                 <div class="space-y-2">
                     <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
-                        <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
+                        <h2 id="sidebar-title" class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
                         <p class="handwritten text-xs text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
                     </div>
 
-                    <!-- PANEL DE CANTÓN / COMUNIDAD -->
+                    <!-- PANEL DE UBICACIÓN / AVISTAMIENTO -->
                     <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center space-y-1 shadow-inner">
-                        <span class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">📍 Avistamiento Registrado en:</span>
+                        <span id="loc-title-label" class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">📍 Avistamiento Registrado en:</span>
                         <p id="regional-canton-display" class="handwritten text-lg font-bold text-[#f3e9dc]">San Lorenzo de Tarrazú</p>
                         <p class="text-[9px] typewriter text-[#d8c5aa] opacity-75">Zona de Los Santos, C.R.</p>
                     </div>
 
-                    <!-- Botones de Estudio, Editar y Eliminar -->
+                    <!-- Botones de Control, Editar y Eliminar -->
                     <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1">
-                        <button type="button" onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow cursor-pointer">
-                            🔄 Siguiente Especie (<span id="counter-display">1/3</span>)
+                        <button type="button" onclick="nextRecord()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow cursor-pointer">
+                            🔄 Siguiente <span id="next-label">Especie</span> (<span id="counter-display">1/3</span>)
                         </button>
                         <div class="grid grid-cols-2 gap-1">
                             <button type="button" onclick="openEditModal()" class="bg-[#5c3a21] hover:bg-[#70492c] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#8b5a2b] transition shadow font-bold cursor-pointer">
                                 ✏️ Editar Ficha
                             </button>
-                            <button type="button" onclick="deleteCurrentSpecimen()" class="bg-[#5c1800] hover:bg-[#8b2500] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#a82d00] transition shadow font-bold cursor-pointer">
+                            <button type="button" onclick="deleteCurrentRecord()" class="bg-[#5c1800] hover:bg-[#8b2500] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#a82d00] transition shadow font-bold cursor-pointer">
                                 🗑️ Eliminar
                             </button>
                         </div>
                         <button type="button" onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#5c1800] transition shadow font-bold cursor-pointer">
-                            ➕ Agregar Nueva Especie
+                            ➕ Agregar <span id="add-label">Nueva Especie</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Botones de Pestañas en ORDEN ALFABÉTICO (ahora abajo) -->
-                <nav id="category-tabs" class="flex flex-col space-y-1">
-                    <button type="button" onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🐸 Anfibios</span>
-                        <span id="count-anfibios" class="text-[10px] bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">1 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🦅 Aves</span>
-                        <span id="count-aves" class="text-[10px] bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🌿 Flora & Musgos</span>
-                        <span id="count-flora" class="text-[10px] bg-green-950 px-2 py-0.5 rounded-full text-green-200">1 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🪨 Geología</span>
-                        <span id="count-geologia" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 muestra</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('hongos')" id="tab-hongos" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-amber-800/50 bg-[#6d4c41] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🍄 Hongos</span>
-                        <span id="count-hongos" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">0 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🦂 Invertebrados</span>
-                        <span id="count-invertebrados" class="text-[10px] bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">1 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🦌 Mamíferos</span>
-                        <span id="count-mamiferos" class="text-[10px] bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">1 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🐍 Reptiles</span>
-                        <span id="count-reptiles" class="text-[10px] bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
-                    </button>
+                <!-- CONTENEDOR INFERIOR: Categorías de Especies o Lista de Sitios -->
+                <nav id="sidebar-nav-container" class="flex flex-col space-y-1">
+                    <!-- Se llena dinámicamente por JS según el modo activo -->
                 </nav>
 
             </aside>
@@ -272,83 +251,102 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar / Editar Especie -->
+    <!-- Modal para Agregar / Editar Registro (Adaptable a Especie o Sitio) -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <h2 id="modal-title-text" class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
+            <h2 id="modal-title-text" class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie</h2>
             <form id="new-record-form" onsubmit="handleSaveRecord(event)" class="space-y-2.5 handwritten text-lg text-[#3a1d0c]">
-                <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
-                    <select id="modal-cat" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
-                        <option value="anfibios" selected>Anfibios</option>
-                        <option value="aves">Aves</option>
-                        <option value="flora">Flora & Musgos</option>
-                        <option value="geologia">Geología</option>
-                        <option value="hongos">Hongos</option>
-                        <option value="invertebrados">Invertebrados</option>
-                        <option value="mamiferos">Mamíferos</option>
-                        <option value="reptiles">Reptiles</option>
-                    </select>
+                
+                <!-- Campos específicos para Especies -->
+                <div id="form-species-fields" class="space-y-2.5">
+                    <div>
+                        <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
+                        <select id="modal-cat" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
+                            <option value="anfibios" selected>Anfibios</option>
+                            <option value="aves">Aves</option>
+                            <option value="flora">Flora & Musgos</option>
+                            <option value="geologia">Geología</option>
+                            <option value="hongos">Hongos</option>
+                            <option value="invertebrados">Invertebrados</option>
+                            <option value="mamiferos">Mamíferos</option>
+                            <option value="reptiles">Reptiles</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block typewriter text-xs font-bold uppercase">Nombre Común:</label>
+                        <input type="text" id="modal-common" placeholder="Ej. Quetzal" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                    </div>
+                    <div>
+                        <label class="block typewriter text-xs font-bold uppercase">Nombre Científico:</label>
+                        <input type="text" id="modal-sci" placeholder="Ej. Pharomachrus mocinno" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                    </div>
                 </div>
-                <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Nombre Común:</label>
-                    <input type="text" id="modal-common" required placeholder="Ej. Quetzal" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+
+                <!-- Campos específicos para Sitios / Cerros -->
+                <div id="form-sites-fields" class="space-y-2.5 hidden">
+                    <div>
+                        <label class="block typewriter text-xs font-bold uppercase">Nombre Oficial del Cerro / Sitio:</label>
+                        <input type="text" id="modal-site-name" placeholder="Ej. Cerro Vueltas" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                    </div>
+                    <div>
+                        <label class="block typewriter text-xs font-bold uppercase">Nombre Popular / Histórico:</label>
+                        <input type="text" id="modal-site-popular" placeholder="Ej. Reserva Biológica / Cerro de la Cruz" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                    </div>
                 </div>
-                <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Nombre Científico:</label>
-                    <input type="text" id="modal-sci" required placeholder="Ej. Pharomachrus mocinno" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
-                </div>
+
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block typewriter text-xs font-bold uppercase">Cantón o Comunidad de Avistamiento:</label>
-                        <input type="text" id="modal-loc" required placeholder="Talamanca / Los Santos" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        <label id="label-loc-input" class="block typewriter text-xs font-bold uppercase">Cantón o Ubicación:</label>
+                        <input type="text" id="modal-loc" required placeholder="Dota / Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                     <div>
-                        <label class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
-                        <input type="text" id="modal-clim" placeholder="10°C a 18°C / 85% a 95%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        <label id="label-clim-input" class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
+                        <input type="text" id="modal-clim" placeholder="10°C / 90%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                 </div>
+
+                <!-- Campos de texto dinámicos -->
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Hábitat (Físico):</label>
-                        <input type="text" id="modal-habitat" required placeholder="Bosques nubosos primarios..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label id="modal-l1" class="block typewriter text-[10px] font-bold uppercase">Hábitat (Físico):</label>
+                        <input type="text" id="modal-f1" required placeholder="Bosque nuboso..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Nicho Ecológico (Rol):</label>
-                        <input type="text" id="modal-niche" required placeholder="Frugívoro especializado..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label id="modal-l2" class="block typewriter text-[10px] font-bold uppercase">Nicho Ecológico (Rol):</label>
+                        <input type="text" id="modal-f2" required placeholder="Recarga hídrica..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Morfología:</label>
-                        <input type="text" id="modal-morph" placeholder="Tamaño, plumas..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label id="modal-l3" class="block typewriter text-[10px] font-bold uppercase">Morfología:</label>
+                        <input type="text" id="modal-f3" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Etología:</label>
-                        <input type="text" id="modal-ethology" placeholder="Solitario, migraciones..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label id="modal-l4" class="block typewriter text-[10px] font-bold uppercase">Etología:</label>
+                        <input type="text" id="modal-f4" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Reproducción:</label>
-                        <input type="text" id="modal-repro" placeholder="Anidación en árboles..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label id="modal-l5" class="block typewriter text-[10px] font-bold uppercase">Reproducción:</label>
+                        <input type="text" id="modal-f5" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Cortejo y Dimorfismo:</label>
-                        <input type="text" id="modal-courtship" placeholder="Vuelos nupciales..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label id="modal-l6" class="block typewriter text-[10px] font-bold uppercase">Cortejo y Dimorfismo:</label>
+                        <input type="text" id="modal-f6" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Relaciones (Intra/Inter):</label>
-                        <input type="text" id="modal-relations" placeholder="Competencia, depredación..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label id="modal-l7" class="block typewriter text-[10px] font-bold uppercase">Relaciones:</label>
+                        <input type="text" id="modal-f7" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
-                    <textarea id="modal-science" rows="2" placeholder="Estudio comprobado..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
+                    <label id="modal-l8" class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
+                    <textarea id="modal-science" rows="2" placeholder="Información comprobada..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Opcional, ej. img/img1.png):</label>
-                    <input type="text" id="modal-img-url" placeholder="img/img1.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
+                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Opcional, ej. img/cerro1.png):</label>
+                    <input type="text" id="modal-img-url" placeholder="img/cerro1.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm cursor-pointer">Cancelar</button>
@@ -358,9 +356,9 @@
         </div>
     </div>
 
-    <!-- Script con Sincronización Inteligente por Archivo JSON -->
+    <!-- Script de Gestión e Integración Dual -->
     <script>
-        const initialDatabaseTemplate = {
+        const initialSpeciesDB = {
             anfibios: [
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -388,31 +386,14 @@
                     hum: "85% a 95%",
                     name: "Quetzal, Quetzal mesoamericano",
                     sci: "Pharomachrus mocinno (Subespecie regional: Pharomachrus mocinno costaricensis)",
-                    habitat: "Bosques nubosos primarios y secundarios maduros, densamente cargados de musgos, bromelias y plantas epífitas, frecuentando el dosel y los bordes del bosque.",
-                    niche: "Frugívoro especializado y dispersor clave de semillas (principalmente de la familia Lauraceae, como aguacatillos silvestres); clave para la regeneración y salud del ecosistema de bosque nuboso.",
-                    morph: "Ave de mediano tamaño (36 a 40 cm de longitud corporal). El macho posee plumas cobertoras supracaudales extraordinariamente alargadas (hasta 64 cm adicionales), cabeza con penacho erecto y plumaje verde esmeralda/iridiscente con pecho y vientre rojo carmesí. La hembra es de tonos más opacos, cabeza café-grisácea y sin cola larga.",
-                    ethology: "Solitario o en parejas fuera de la época reproductiva; hábitos diurnos y de conducta relativamente críptica a pesar de sus colores. Realizan migraciones altitudinales cortas siguiendo la fructificación de sus alimentos.",
-                    repro: "Monógamo estacional. Anidan en cavidades descompuestas de árboles muertos (toconas) excavadas por ambos sexos. Ponen de 1 a 2 huevos de color azul pálido, con incubación compartida entre el macho y la hembra.",
-                    courtship: "El cortejo incluye vuelos acrobáticos espectaculares del macho sobre el dosel acompañados de llamados melodiosos. Marcado dimorfismo sexual en la longitud de la cola, brillo del plumaje (verde iridiscente vs. café-grisáceo) y coloración del pico (amarillo en machos adultos, negruzco en hembras).",
-                    relations: "Interacciones de competencia pacífica con otras aves frugívoras en árboles con frutos de lauráceas; vulnerable a la depredación de nidos por tucanetes, aves de presa y mamíferos arborícolas.",
-                    science: "Especie altamente sensible a la alteración del hábitat y fragmentación del bosque nuboso. Depende estrictamente de la disponibilidad de árboles maduros para anidar y de corredores biológicos altitudinales funcionales para su supervivencia a largo plazo.",
-                    img: ""
-                },
-                {
-                    title: "Guía Taxonómica - Aves",
-                    loc: "San Gerardo de Dota",
-                    temp: "16°C",
-                    hum: "88%",
-                    name: "Colibrí Volcánico",
-                    sci: "Selasphorus flammula",
-                    habitat: "Matorrales de altura y páramo.",
-                    niche: "Nectarívoro especializado y polinizador clave de plantas de Ericaceae.",
-                    morph: "Tamaño diminuto, pico corto y recto.",
-                    ethology: "Muy activo, soporta temperaturas bajo cero mediante letargo.",
-                    repro: "Nido en taza copa sobre arbustos.",
-                    courtship: "Vuelos en picada en forma de 'U' y despliegue de garganta.",
-                    relations: "Competencia interespecífica por recursos florales en alta montaña.",
-                    science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
+                    habitat: "Bosques nubosos primarios y secundarios maduros, densamente cargados de musgos, bromelias y plantas epífitas.",
+                    niche: "Frugívoro especializado y dispersor clave de semillas (principalmente de la familia Lauraceae).",
+                    morph: "Ave de mediano tamaño con plumas cobertoras supracaudales extraordinariamente alargadas en machos.",
+                    ethology: "Solitario o en parejas fuera de la época reproductiva; migraciones altitudinales cortas.",
+                    repro: "Monógamo estacional. Anidan en cavidades descompuestas de árboles muertos.",
+                    courtship: "Vuelos acrobáticos espectaculares del macho sobre el dosel.",
+                    relations: "Competencia pacífica con otras aves frugívoras en árboles con frutos de lauráceas.",
+                    science: "Especie altamente sensible a la alteración del hábitat y fragmentación del bosque nuboso.",
                     img: ""
                 }
             ],
@@ -431,7 +412,7 @@
                     repro: "Reproducción por esporas y fragmentación.",
                     courtship: "No aplica.",
                     relations: "Epifitismo nodriza; alberga comunidades enteras de tardígrados e insectos.",
-                    science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos de la zona cafetalera.",
+                    science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos locales.",
                     img: ""
                 }
             ],
@@ -450,7 +431,7 @@
                     repro: "Emplazamiento magmático miocénico.",
                     courtship: "No aplica.",
                     relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
-                    science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
+                    science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años).",
                     img: ""
                 }
             ],
@@ -470,26 +451,26 @@
                     repro: "Vivíparo con reproducción especializada.",
                     courtship: "Transferencia de espermatóforos en la superficie cutánea.",
                     relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
-                    science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
+                    science: "Fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
                     img: ""
                 }
             ],
             mamiferos: [
                 {
                     title: "Guía Taxonómica - Mamíferos",
-                    loc: "Cordillera de Talamanca y Zona de los Santos (Tarrazú, Dota, León Cortés)",
+                    loc: "Cordillera de Talamanca y Zona de los Santos",
                     temp: "12°C a 20°C",
                     hum: "80% a 95%",
-                    name: "Puma, León de montaña, León breñero",
-                    sci: "Puma concolor (Subespecie regional: Puma concolor costaricensis)",
-                    habitat: "Bosques primarios y secundarios densos, áreas de bosque nuboso, matorrales de altura y zonas de transición agrícola en terrenos quebrados o montañosos.",
-                    niche: "Superdepredador tope y carnívoro obligado; clave en la regulación poblacional de mamíferos medianos y herbívoros, manteniendo el equilibrio trófico del ecosistema.",
-                    morph: "Felino grande de complexión esbelta; cabeza pequeña, patas largas y potentes extremidades traseras para el salto. Pelaje uniforme café amarillento a rojizo en el dorso y blanquecino en el vientre; cola larga con punta oscura. Altura al hombro de 60 a 80 cm y peso entre 50 y 90 kg (machos mayores que las hembras).",
-                    ethology: "Solitario, altamente territorial, elusivo y de hábitos principalmente crepusculares y nocturnos. Amplios rangos de acción que patrulla marcando con orina y rasguños en árboles.",
-                    repro: "Polígamo. Periodo de gestación de aproximadamente 90 días, con camadas de 1 a 4 crías nacidas en madrigueras protegidas (cuevas o raíces densas).",
-                    courtship: "Las hembras en celo emiten vocalizaciones fuertes y agudas (similares a gritos o llamados intensos) para atraer a los machos. Fuerte dimorfismo sexual en tamaño y peso (machos superan marcadamente a las hembras). Las crías nacen con manchas oscuras y anillos en la cola que pierden al crecer.",
-                    relations: "Solitario fuera de la época reproductiva. Competencia indirecta por espacio con el jaguar (Panthera onca) en zonas limítrofes, y relación de depredador sobre presas locales como saínos, pizotes, guatuzas y lagartomas.",
-                    science: "Especie altamente adaptable pero vulnerable a la fragmentación de hábitats y la cacería de represalia por depredación de ganado. Funciona como indicador biológico de la salud y conectividad de los corredores biológicos en Talamanca.",
+                    name: "Puma, León de montaña",
+                    sci: "Puma concolor costaricensis",
+                    habitat: "Bosques primarios y secundarios densos, áreas de bosque nuboso.",
+                    niche: "Superdepredador tope y carnívoro obligado en el equilibrio trófico.",
+                    morph: "Felino grande de complexión esbelta; pelaje uniforme café amarillento.",
+                    ethology: "Solitario, altamente territorial y de hábitos crepusculares y nocturnos.",
+                    repro: "Periodo de gestación de aproximadamente 90 días, camadas de 1 a 4 crías.",
+                    courtship: "Hembras en celo emiten vocalizaciones fuertes para atraer machos.",
+                    relations: "Competencia de espacio con jaguares y depredación sobre presas locales.",
+                    science: "Indicador biológico de la salud y conectividad de los corredores biológicos.",
                     img: ""
                 }
             ],
@@ -508,19 +489,87 @@
                     repro: "Vivípara; da a luz crías desarrolladas.",
                     courtship: "Rituales de proximidad química y combate ritual.",
                     relations: "Controlador natural de roedores en zonas de altura.",
-                    science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
+                    science: "Su veneno contiene péptidos hemotóxicos locales.",
                     img: ""
                 }
             ]
         };
 
-        let database = JSON.parse(localStorage.getItem('losSantosStudyDB'));
-        if (!database) {
-            database = initialDatabaseTemplate;
-            localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
+        // Base de datos precargada para Sitios y Cerros Emblemáticos
+        const initialSitesDB = [
+            {
+                title: "Sitio Emblemático - Talamanca",
+                name: "Cerro Vueltas",
+                popularName: "Reserva Biológica Cerro Vueltas",
+                loc: "Dota / Cordillera de Talamanca (Km 74 Panamericana)",
+                alt: "3,156 m s. n. m.",
+                temp: "10°C a 14°C",
+                hum: "90% a 98%",
+                history: "Ubicado estratégicamente al lado de la Carretera Panamericana Sur. Su nombre histórico proviene de las cerradas y múltiples curvas (vueltas) que realizaban los vehículos para superar su empinada altitud.",
+                geology: "Sustrato de rocas ígneas y suelos ácidos altamente orgánicos que forman una esponja natural para la recarga de mantos acuíferos.",
+                ecology: "Bosque nuboso alto, robledales de altura dominados por Quercus costaricensis y transición hacia matorral de páramo.",
+                floraFauna: "Roble encino, musgos esfagnos, colibríes de altura, quetzales y rica avifauna endémica de Talamanca.",
+                special: "Impresionante mirador natural, punto clave de investigación científica sobre captación de neblina e hidrografía regional."
+            },
+            {
+                title: "Sitio Emblemático - Tarrazú",
+                name: "Cerro Placas",
+                popularName: "Cerro San Jerónimo",
+                loc: "San Jerónimo de Tarrazú",
+                alt: "2,120 m s. n. m.",
+                temp: "15°C a 19°C",
+                hum: "85% a 92%",
+                history: "Considerado el punto geográfico más alto del cantón de Tarrazú. Funciona como una divisoria de aguas natural y conecta visualmente la cordillera con las cuencas del Pacífico.",
+                geology: "Formaciones montañosas abruptas modeladas por procesos tectónicos y fuerte escorrentía hacia la cuenca del río Pirrís.",
+                ecology: "Bosques semimaduros, parches de bosque primario y colindancias con cafetales de altura.",
+                floraFauna: "Arbustos nativos de altura, aves de sotobosque, felinos menores y gran diversidad de insectos.",
+                special: "Destino predilecto para el ecoturismo, senderismo de aventura y rutas de turismo comunitario en la Zona de Los Santos."
+            },
+            {
+                title: "Sitio Emblemático - León Cortés",
+                name: "Cerro Abejonal",
+                popularName: "El Abejonal",
+                loc: "San Antonio / San Pablo de León Cortés",
+                alt: "2,029 m s. n. m.",
+                temp: "16°C a 20°C",
+                hum: "82% a 90%",
+                history: "Tradicionalmente conocido como el cerro más alto de San Pablo. Su nombre popular se debe a que durante el mes de mayo el sitio se llena de gran cantidad de abejones (escarabajos melolóntidos).",
+                geology: "Elevación prominente con vistas panorámicas hacia los valles de San Pablo y San Marcos de Tarrazú.",
+                ecology: "Ecosistemas de transición agrícola y boscosa, con corredores biológicos locales activos.",
+                floraFauna: "Árboles frutales silvestres, aves migratorias, colibríes y abundante entomofauna estacional.",
+                special: "Tradicional destino de paseo familiar, caminatas recreativas comunitarias y contacto directo con la cultura local."
+            },
+            {
+                title: "Sitio Emblemático - Tarrazú",
+                name: "Cerro La Trinidad",
+                popularName: "Cerro de la Cruz",
+                loc: "San Marcos de Tarrazú",
+                alt: "1,944 m s. n. m.",
+                temp: "16°C a 21°C",
+                hum: "80% a 88%",
+                history: "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
+                geology: "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
+                ecology: "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
+                floraFauna: "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
+                special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria."
+            }
+        ];
+
+        // Sincronización con localStorage
+        let speciesDatabase = JSON.parse(localStorage.getItem('losSantosSpeciesDB'));
+        if (!speciesDatabase) {
+            speciesDatabase = initialSpeciesDB;
+            localStorage.setItem('losSantosSpeciesDB', JSON.stringify(speciesDatabase));
         }
 
-        let currentCategoryKey = 'anfibios';
+        let sitesDatabase = JSON.parse(localStorage.getItem('losSantosSitesDB'));
+        if (!sitesDatabase) {
+            sitesDatabase = initialSitesDB;
+            localStorage.setItem('losSantosSitesDB', JSON.stringify(sitesDatabase));
+        }
+
+        let currentMode = 'species'; // 'species' o 'sites'
+        let currentCategoryKey = 'anfibios'; // Para especies
         let currentIndex = 0;
         let nightVisionActive = true;
         let isEditing = false;
@@ -528,7 +577,7 @@
         function openApp() {
             document.getElementById('cover-view').classList.add('hidden');
             document.getElementById('app-view').classList.remove('hidden');
-            switchCategory('anfibios');
+            switchAppMode('species');
         }
 
         function returnToCover() {
@@ -549,146 +598,302 @@
             }
         }
 
-        function switchCategory(categoryKey) {
-            currentCategoryKey = categoryKey;
+        function switchAppMode(mode) {
+            currentMode = mode;
             currentIndex = 0;
-            
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('ring-2', 'ring-white');
-                btn.style.opacity = '0.75';
-            });
-            
-            const activeBtn = document.getElementById(`tab-${categoryKey}`);
-            if(activeBtn) {
-                activeBtn.style.opacity = '1';
-                activeBtn.classList.add('ring-2', 'ring-white');
-            }
 
-            renderCurrentSpecimen();
-            updateCategoryCounts();
-        }
+            const btnSpecies = document.getElementById('mode-btn-species');
+            const btnSites = document.getElementById('mode-btn-sites');
 
-        function nextSpeciesInCurrentCategory() {
-            const list = database[currentCategoryKey];
-            if (list && list.length > 0) {
-                currentIndex = (currentIndex + 1) % list.length;
-                renderCurrentSpecimen();
-            }
-        }
-
-        function renderCurrentSpecimen() {
-            const list = database[currentCategoryKey];
-            if (!list || list.length === 0) {
-                document.getElementById('journal-title').innerText = `Guía Taxonómica - ${currentCategoryKey.charAt(0).toUpperCase() + currentCategoryKey.slice(1)}`;
-                document.getElementById('meta-loc').innerText = "Sin registros";
-                document.getElementById('meta-temp').innerText = "--";
-                document.getElementById('meta-hum').innerText = "--";
-                document.getElementById('specimen-common').innerText = "No hay especies registradas";
-                document.getElementById('specimen-sci').innerText = "Utiliza el botón 'Agregar Nueva Especie'";
-                document.getElementById('specimen-habitat').innerText = "-";
-                document.getElementById('specimen-niche').innerText = "-";
-                document.getElementById('field-morph').innerText = "-";
-                document.getElementById('field-ethology').innerText = "-";
-                document.getElementById('field-repro').innerText = "-";
-                document.getElementById('field-courtship').innerText = "-";
-                document.getElementById('field-relations').innerText = "-";
-                document.getElementById('field-science').innerText = "Agrega tu primer registro para comenzar el estudio.";
+            if (mode === 'species') {
+                btnSpecies.className = "typewriter text-xs py-2 px-3 rounded-xl font-bold uppercase border transition shadow cursor-pointer bg-[#8b2500] text-white border-[#d4af37]";
+                btnSites.className = "typewriter text-xs py-2 px-3 rounded-xl font-bold uppercase border transition shadow cursor-pointer bg-[#3a2212] text-[#d8c5aa] border-[#70492c]";
                 
-                const imgEl = document.getElementById('specimen-img');
-                const placeholder = document.getElementById('img-placeholder');
-                imgEl.classList.add('hidden');
-                placeholder.classList.remove('hidden');
+                document.getElementById('sidebar-title').innerText = "Taxonomía Regional";
+                document.getElementById('loc-title-label').innerText = "📍 Avistamiento Registrado en:";
+                document.getElementById('next-label').innerText = "Especie";
+                document.getElementById('add-label').innerText = "Nueva Especie";
+                
+                renderSidebarSpeciesTabs();
+                renderCurrentRecord();
+            } else {
+                btnSites.className = "typewriter text-xs py-2 px-3 rounded-xl font-bold uppercase border transition shadow cursor-pointer bg-[#8b2500] text-white border-[#d4af37]";
+                btnSpecies.className = "typewriter text-xs py-2 px-3 rounded-xl font-bold uppercase border transition shadow cursor-pointer bg-[#3a2212] text-[#d8c5aa] border-[#70492c]";
+                
+                document.getElementById('sidebar-title').innerText = "Sitios Emblemáticos";
+                document.getElementById('loc-title-label').innerText = "📍 Ubicación Geográfica:";
+                document.getElementById('next-label').innerText = "Cerro";
+                document.getElementById('add-label').innerText = "Nuevo Sitio / Cerro";
 
-                document.getElementById('regional-canton-display').innerText = "Zona de Los Santos";
-                document.getElementById('counter-display').innerText = "0/0";
-                document.getElementById('record-count').innerText = "Ficha #0 / 0";
-                return;
+                renderSidebarSitesList();
+                renderCurrentRecord();
             }
-            
-            if (currentIndex >= list.length) currentIndex = 0;
-            const data = list[currentIndex];
-            
-            document.getElementById('journal-title').innerText = data.title;
-            document.getElementById('meta-loc').innerText = data.loc;
-            document.getElementById('meta-temp').innerText = data.temp;
-            document.getElementById('meta-hum').innerText = data.hum;
-            
-            document.getElementById('specimen-common').innerText = data.name || "Sin registrar.";
-            document.getElementById('specimen-sci').innerText = data.sci || "Sin registrar.";
-            document.getElementById('specimen-habitat').innerText = data.habitat || "Sin registrar.";
-            document.getElementById('specimen-niche').innerText = data.niche || "Sin registrar.";
-            
-            document.getElementById('field-morph').innerText = data.morph || "Sin registrar.";
-            document.getElementById('field-ethology').innerText = data.ethology || "Sin registrar.";
-            document.getElementById('field-repro').innerText = data.repro || "Sin registrar.";
-            document.getElementById('field-courtship').innerText = data.courtship || "Sin registrar.";
-            document.getElementById('field-relations').innerText = data.relations || "Sin registrar.";
-            document.getElementById('field-science').innerText = data.science || "Información científica en proceso de investigación.";
-            
+        }
+
+        function renderSidebarSpeciesTabs() {
+            const nav = document.getElementById('sidebar-nav-container');
+            const categories = [
+                {key: 'anfibios', label: '🐸 Anfibios', color: '#17a2b8'},
+                {key: 'aves', label: '🦅 Aves', color: '#8b0000'},
+                {key: 'flora', label: '🌿 Flora & Musgos', color: '#388e3c'},
+                {key: 'geologia', label: '🪨 Geología', color: '#795548'},
+                {key: 'hongos', label: '🍄 Hongos', color: '#6d4c41'},
+                {key: 'invertebrados', label: '🦂 Invertebrados', color: '#7b1fa2'},
+                {key: 'mamiferos', label: '🦌 Mamíferos', color: '#c65102'},
+                {key: 'reptiles', label: '🐍 Reptiles', color: '#b58500'}
+            ];
+
+            nav.innerHTML = categories.map(cat => {
+                const count = speciesDatabase[cat.key] ? speciesDatabase[cat.key].length : 0;
+                const isActive = (currentCategoryKey === cat.key);
+                return `
+                    <button type="button" onclick="switchCategory('${cat.key}')" id="tab-${cat.key}" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-white/20 text-white font-semibold transition-all cursor-pointer" style="background-color: ${cat.color}; opacity: ${isActive ? '1' : '0.75'}; ${isActive ? 'ring-2 ring-white;' : ''}">
+                        <span class="typewriter text-xs">${cat.label}</span>
+                        <span class="text-[10px] bg-black/30 px-2 py-0.5 rounded-full text-white">${count} spp</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderSidebarSitesList() {
+            const nav = document.getElementById('sidebar-nav-container');
+            nav.innerHTML = `
+                <div class="bg-[#1f140f] p-2 rounded border border-[#4a3424] space-y-1">
+                    <span class="typewriter text-[10px] uppercase text-[#d4af37] font-bold block">Listado de Sitios:</span>
+                    <div class="max-h-48 overflow-y-auto space-y-1">
+                        ${sitesDatabase.map((site, idx) => `
+                            <button type="button" onclick="selectSiteIndex(${idx})" class="w-full text-left p-1.5 rounded text-xs typewriter transition cursor-pointer ${idx === currentIndex ? 'bg-[#8b2500] text-white font-bold' : 'bg-[#2a1b14] text-[#d8c5aa] hover:bg-[#3d271d]'}" title="${site.name}">
+                                🏔️ ${site.name}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchCategory(catKey) {
+            currentCategoryKey = catKey;
+            currentIndex = 0;
+            renderSidebarSpeciesTabs();
+            renderCurrentRecord();
+        }
+
+        function selectSiteIndex(idx) {
+            currentIndex = idx;
+            renderSidebarSitesList();
+            renderCurrentRecord();
+        }
+
+        function nextRecord() {
+            if (currentMode === 'species') {
+                const list = speciesDatabase[currentCategoryKey];
+                if (list && list.length > 0) {
+                    currentIndex = (currentIndex + 1) % list.length;
+                    renderCurrentRecord();
+                }
+            } else {
+                if (sitesDatabase && sitesDatabase.length > 0) {
+                    currentIndex = (currentIndex + 1) % sitesDatabase.length;
+                    renderSidebarSitesList();
+                    renderCurrentRecord();
+                }
+            }
+        }
+
+        function renderCurrentRecord() {
+            if (currentMode === 'species') {
+                const list = speciesDatabase[currentCategoryKey];
+                if (!list || list.length === 0) {
+                    document.getElementById('journal-title').innerText = `Guía Taxonómica - ${currentCategoryKey}`;
+                    document.getElementById('meta-loc').innerText = "Sin registros";
+                    document.getElementById('meta-temp').innerText = "--";
+                    document.getElementById('meta-hum').innerText = "--";
+                    document.getElementById('specimen-common').innerText = "No hay registros";
+                    document.getElementById('specimen-sci').innerText = "Utiliza el botón 'Agregar'";
+                    document.getElementById('specimen-habitat').innerText = "-";
+                    document.getElementById('specimen-niche').innerText = "-";
+                    document.getElementById('field-morph').innerText = "-";
+                    document.getElementById('field-ethology').innerText = "-";
+                    document.getElementById('field-repro').innerText = "-";
+                    document.getElementById('field-courtship').innerText = "-";
+                    document.getElementById('field-relations').innerText = "-";
+                    document.getElementById('field-science').innerText = "Agrega tu primer registro.";
+                    document.getElementById('regional-canton-display').innerText = "Zona de Los Santos";
+                    document.getElementById('counter-display').innerText = "0/0";
+                    document.getElementById('record-count').innerText = "Ficha #0 / 0";
+                    return;
+                }
+                if (currentIndex >= list.length) currentIndex = 0;
+                const data = list[currentIndex];
+
+                document.getElementById('journal-title').innerText = data.title;
+                document.getElementById('meta-loc').innerText = data.loc;
+                document.getElementById('meta-temp').innerText = data.temp;
+                document.getElementById('meta-hum').innerText = data.hum;
+
+                // Etiquetas modo especies
+                document.getElementById('label-f1').innerText = "Nombre Común:";
+                document.getElementById('label-f2').innerText = "Nombre Científico:";
+                document.getElementById('label-f3').innerText = "Hábitat (Físico):";
+                document.getElementById('label-f4').innerText = "Nicho Ecológico (Rol):";
+
+                document.getElementById('specimen-common').innerText = data.name || "-";
+                document.getElementById('specimen-sci').innerText = data.sci || "-";
+                document.getElementById('specimen-habitat').innerText = data.habitat || "-";
+                document.getElementById('specimen-niche').innerText = data.niche || "-";
+
+                document.getElementById('block-t1').innerText = "🧬 Morfología:";
+                document.getElementById('block-t2').innerText = "🦉 Etología:";
+                document.getElementById('block-t3').innerText = "🌱 Reproducción:";
+                document.getElementById('block-t4').innerText = "💞 Cortejo y Dimorfismo:";
+                document.getElementById('block-t5').innerText = "🌐 Relaciones (Intra/Inter):";
+                document.getElementById('block-t6').innerText = "🔬 Investigación Científica Comprobada:";
+
+                document.getElementById('field-morph').innerText = data.morph || "-";
+                document.getElementById('field-ethology').innerText = data.ethology || "-";
+                document.getElementById('field-repro').innerText = data.repro || "-";
+                document.getElementById('field-courtship').innerText = data.courtship || "-";
+                document.getElementById('field-relations').innerText = data.relations || "-";
+                document.getElementById('field-science').innerText = data.science || "-";
+
+                handleImageDisplay(data.img);
+                document.getElementById('regional-canton-display').innerText = data.loc || "Zona de Los Santos";
+                document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
+                document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
+
+            } else {
+                // Modo Sitios / Cerros
+                if (!sitesDatabase || sitesDatabase.length === 0) return;
+                if (currentIndex >= sitesDatabase.length) currentIndex = 0;
+                const site = sitesDatabase[currentIndex];
+
+                document.getElementById('journal-title').innerText = site.title;
+                document.getElementById('meta-loc').innerText = site.loc;
+                document.getElementById('meta-temp').innerText = site.temp;
+                document.getElementById('meta-hum').innerText = site.hum;
+
+                // Etiquetas modo sitios
+                document.getElementById('label-f1').innerText = "Nombre Oficial:";
+                document.getElementById('label-f2').innerText = "Nombre Popular / Histórico:";
+                document.getElementById('label-f3').innerText = "Altitud:";
+                document.getElementById('label-f4').innerText = "Ubicación / Región:";
+
+                document.getElementById('specimen-common').innerText = site.name || "-";
+                document.getElementById('specimen-sci').innerText = site.popularName || "-";
+                document.getElementById('specimen-habitat').innerText = site.alt || "-";
+                document.getElementById('specimen-niche').innerText = site.loc || "-";
+
+                document.getElementById('block-t1').innerText = "📜 Toponimia e Historia:";
+                document.getElementById('block-t2').innerText = "🪨 Contexto Geológico:";
+                document.getElementById('block-t3').innerText = "🌿 Ecosistema y Bosque:";
+                document.getElementById('block-t4').innerText = "🦜 Flora y Fauna Destacada:";
+                document.getElementById('block-t5').innerText = "⭐ Características Especiales:";
+                document.getElementById('block-t6').innerText = "💡 Valor Educativo / Turístico:";
+
+                document.getElementById('field-morph').innerText = site.history || "-";
+                document.getElementById('field-ethology').innerText = site.geology || "-";
+                document.getElementById('field-repro').innerText = site.ecology || "-";
+                document.getElementById('field-courtship').innerText = site.floraFauna || "-";
+                document.getElementById('field-relations').innerText = site.special || "-";
+                document.getElementById('field-science').innerText = "Zona estratégica para el conocimiento geográfico e histórico de la Cordillera de Talamanca y sus comunidades.";
+
+                handleImageDisplay(site.img);
+                document.getElementById('regional-canton-display').innerText = site.loc || "Zona de Los Santos";
+                document.getElementById('counter-display').innerText = `${currentIndex + 1}/${sitesDatabase.length}`;
+                document.getElementById('record-count').innerText = `Sitio #${currentIndex + 1} / ${sitesDatabase.length}`;
+            }
+        }
+
+        function handleImageDisplay(imgPath) {
             const imgEl = document.getElementById('specimen-img');
             const placeholder = document.getElementById('img-placeholder');
 
-            if (data.img && data.img.trim() !== "") {
-                imgEl.src = data.img;
+            if (imgPath && imgPath.trim() !== "") {
+                imgEl.src = imgPath;
                 imgEl.classList.remove('hidden');
                 placeholder.classList.add('hidden');
-                
                 imgEl.onerror = function() {
                     this.classList.add('hidden');
                     placeholder.classList.remove('hidden');
-                    placeholder.innerHTML = `⚠️ No se encontró: ${data.img}<br><span class="text-[9px] typewriter">Sube el archivo a la carpeta img/</span>`;
+                    placeholder.innerHTML = `⚠️ No se encontró: ${imgPath}<br><span class="text-[9px] typewriter">Verifica la ruta del archivo</span>`;
                 };
             } else {
                 imgEl.classList.add('hidden');
                 placeholder.classList.remove('hidden');
-                placeholder.innerHTML = `📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>`;
-            }
-            
-            document.getElementById('regional-canton-display').innerText = data.loc || "Zona de Los Santos";
-
-            document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
-            document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
-        }
-
-        function updateCategoryCounts() {
-            for (let key in database) {
-                const badge = document.getElementById(`count-${key}`);
-                if(badge) {
-                    badge.innerText = `${database[key].length} spp`;
-                }
+                placeholder.innerHTML = `📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/cerro1.png)</span>`;
             }
         }
 
         function openAddModal() {
             isEditing = false;
-            document.getElementById('modal-title-text').innerText = "Agregar Nueva Especie a la Guía";
             document.getElementById('new-record-form').reset();
-            document.getElementById('modal-cat').value = currentCategoryKey;
+            
+            const spFields = document.getElementById('form-species-fields');
+            const stFields = document.getElementById('form-sites-fields');
+
+            if (currentMode === 'species') {
+                document.getElementById('modal-title-text').innerText = "Agregar Nueva Especie";
+                spFields.classList.remove('hidden');
+                stFields.classList.add('hidden');
+                document.getElementById('modal-cat').value = currentCategoryKey;
+            } else {
+                document.getElementById('modal-title-text').innerText = "Agregar Nuevo Sitio / Cerro";
+                spFields.classList.add('hidden');
+                stFields.classList.remove('hidden');
+            }
             document.getElementById('add-modal').classList.remove('hidden');
         }
 
         function openEditModal() {
-            const list = database[currentCategoryKey];
-            if (!list || list.length === 0) return;
-            const data = list[currentIndex];
-
             isEditing = true;
-            document.getElementById('modal-title-text').innerText = "Editar Ficha Actual";
-            document.getElementById('modal-cat').value = currentCategoryKey;
-            document.getElementById('modal-common').value = data.name || "";
-            document.getElementById('modal-sci').value = data.sci || "";
-            document.getElementById('modal-loc').value = data.loc || "";
-            document.getElementById('modal-clim').value = `${data.temp || '18°C'} / ${data.hum || '90%'}`;
-            document.getElementById('modal-habitat').value = data.habitat || "";
-            document.getElementById('modal-niche').value = data.niche || "";
-            document.getElementById('modal-morph').value = data.morph || "";
-            document.getElementById('modal-ethology').value = data.ethology || "";
-            document.getElementById('modal-repro').value = data.repro || "";
-            document.getElementById('modal-courtship').value = data.courtship || "";
-            document.getElementById('modal-relations').value = data.relations || "";
-            document.getElementById('modal-science').value = data.science || "";
-            document.getElementById('modal-img-url').value = data.img || "";
+            const spFields = document.getElementById('form-species-fields');
+            const stFields = document.getElementById('form-sites-fields');
 
+            if (currentMode === 'species') {
+                const list = speciesDatabase[currentCategoryKey];
+                if (!list || list.length === 0) return;
+                const data = list[currentIndex];
+
+                document.getElementById('modal-title-text').innerText = "Editar Ficha de Especie";
+                spFields.classList.remove('hidden');
+                stFields.classList.add('hidden');
+
+                document.getElementById('modal-cat').value = currentCategoryKey;
+                document.getElementById('modal-common').value = data.name || "";
+                document.getElementById('modal-sci').value = data.sci || "";
+                document.getElementById('modal-loc').value = data.loc || "";
+                document.getElementById('modal-clim').value = `${data.temp || ''} / ${data.hum || ''}`;
+                document.getElementById('modal-f1').value = data.habitat || "";
+                document.getElementById('modal-f2').value = data.niche || "";
+                document.getElementById('modal-f3').value = data.morph || "";
+                document.getElementById('modal-f4').value = data.ethology || "";
+                document.getElementById('modal-f5').value = data.repro || "";
+                document.getElementById('modal-f6').value = data.courtship || "";
+                document.getElementById('modal-f7').value = data.relations || "";
+                document.getElementById('modal-science').value = data.science || "";
+                document.getElementById('modal-img-url').value = data.img || "";
+            } else {
+                if (!sitesDatabase || sitesDatabase.length === 0) return;
+                const site = sitesDatabase[currentIndex];
+
+                document.getElementById('modal-title-text').innerText = "Editar Ficha de Sitio / Cerro";
+                spFields.classList.add('hidden');
+                stFields.classList.remove('hidden');
+
+                document.getElementById('modal-site-name').value = site.name || "";
+                document.getElementById('modal-site-popular').value = site.popularName || "";
+                document.getElementById('modal-loc').value = site.loc || "";
+                document.getElementById('modal-clim').value = `${site.alt || ''} | ${site.temp || ''} / ${site.hum || ''}`;
+                document.getElementById('modal-f1').value = site.history || "";
+                document.getElementById('modal-f2').value = site.geology || "";
+                document.getElementById('modal-f3').value = site.ecology || "";
+                document.getElementById('modal-f4').value = site.floraFauna || "";
+                document.getElementById('modal-f5').value = site.special || "";
+                document.getElementById('modal-f6').value = "";
+                document.getElementById('modal-f7').value = "";
+                document.getElementById('modal-science').value = "";
+                document.getElementById('modal-img-url').value = site.img || "";
+            }
             document.getElementById('add-modal').classList.remove('hidden');
         }
 
@@ -696,103 +901,136 @@
             document.getElementById('add-modal').classList.add('hidden');
         }
 
-        function deleteCurrentSpecimen() {
-            const list = database[currentCategoryKey];
-            if (!list || list.length === 0) return;
-
-            if (confirm(`¿Estás seguro de eliminar la ficha de "${list[currentIndex].name}"?`)) {
-                list.splice(currentIndex, 1);
-                if (currentIndex >= list.length) {
-                    currentIndex = Math.max(0, list.length - 1);
+        function deleteCurrentRecord() {
+            if (currentMode === 'species') {
+                const list = speciesDatabase[currentCategoryKey];
+                if (!list || list.length === 0) return;
+                if (confirm(`¿Estás seguro de eliminar la ficha de "${list[currentIndex].name}"?`)) {
+                    list.splice(currentIndex, 1);
+                    if (currentIndex >= list.length) currentIndex = Math.max(0, list.length - 1);
+                    localStorage.setItem('losSantosSpeciesDB', JSON.stringify(speciesDatabase));
+                    renderSidebarSpeciesTabs();
+                    renderCurrentRecord();
+                    alert("¡Ficha eliminada correctamente!");
                 }
-                localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
-                renderCurrentSpecimen();
-                updateCategoryCounts();
-                alert("¡Ficha eliminada correctamente!");
+            } else {
+                if (!sitesDatabase || sitesDatabase.length === 0) return;
+                if (confirm(`¿Estás seguro de eliminar el sitio "${sitesDatabase[currentIndex].name}"?`)) {
+                    sitesDatabase.splice(currentIndex, 1);
+                    if (currentIndex >= sitesDatabase.length) currentIndex = Math.max(0, sitesDatabase.length - 1);
+                    localStorage.setItem('losSantosSitesDB', JSON.stringify(sitesDatabase));
+                    renderSidebarSitesList();
+                    renderCurrentRecord();
+                    alert("¡Sitio eliminado correctamente!");
+                }
             }
         }
 
         function handleSaveRecord(event) {
             event.preventDefault();
-            const cat = document.getElementById('modal-cat').value;
-            const common = document.getElementById('modal-common').value;
-            const sci = document.getElementById('modal-sci').value;
+            const climRaw = document.getElementById('modal-clim').value.split('/');
             const loc = document.getElementById('modal-loc').value;
-            const clim = document.getElementById('modal-clim').value.split('/');
-            const temp = clim[0] ? clim[0].trim() : "18°C";
-            const hum = clim[1] ? clim[1].trim() : "90%";
-            const habitat = document.getElementById('modal-habitat').value;
-            const niche = document.getElementById('modal-niche').value;
-            const morph = document.getElementById('modal-morph').value;
-            const ethology = document.getElementById('modal-ethology').value;
-            const repro = document.getElementById('modal-repro').value;
-            const courtship = document.getElementById('modal-courtship').value;
-            const relations = document.getElementById('modal-relations').value;
-            const science = document.getElementById('modal-science').value;
             const imgUrl = document.getElementById('modal-img-url').value;
 
-            const entryData = {
-                title: `Guía Taxonómica - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
-                loc: loc,
-                temp: temp,
-                hum: hum,
-                name: common,
-                sci: sci,
-                habitat: habitat,
-                niche: niche,
-                morph: morph,
-                ethology: ethology,
-                repro: repro,
-                courtship: courtship,
-                relations: relations,
-                science: science,
-                img: imgUrl ? imgUrl.trim() : ""
-            };
+            if (currentMode === 'species') {
+                const cat = document.getElementById('modal-cat').value;
+                const common = document.getElementById('modal-common').value;
+                const sci = document.getElementById('modal-sci').value;
+                const temp = climRaw[0] ? climRaw[0].trim() : "18°C";
+                const hum = climRaw[1] ? climRaw[1].trim() : "90%";
 
-            if (!database[cat]) {
-                database[cat] = [];
-            }
+                const entryData = {
+                    title: `Guía Taxonómica - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
+                    loc: loc,
+                    temp: temp,
+                    hum: hum,
+                    name: common,
+                    sci: sci,
+                    habitat: document.getElementById('modal-f1').value,
+                    niche: document.getElementById('modal-f2').value,
+                    morph: document.getElementById('modal-f3').value,
+                    ethology: document.getElementById('modal-f4').value,
+                    repro: document.getElementById('modal-f5').value,
+                    courtship: document.getElementById('modal-f6').value,
+                    relations: document.getElementById('modal-f7').value,
+                    science: document.getElementById('modal-science').value,
+                    img: imgUrl ? imgUrl.trim() : ""
+                };
 
-            if (isEditing) {
-                if (currentCategoryKey !== cat) {
-                    database[currentCategoryKey].splice(currentIndex, 1);
-                    database[cat].push(entryData);
-                    currentCategoryKey = cat;
-                    currentIndex = database[cat].length - 1;
+                if (!speciesDatabase[cat]) speciesDatabase[cat] = [];
+
+                if (isEditing) {
+                    if (currentCategoryKey !== cat) {
+                        speciesDatabase[currentCategoryKey].splice(currentIndex, 1);
+                        speciesDatabase[cat].push(entryData);
+                        currentCategoryKey = cat;
+                        currentIndex = speciesDatabase[cat].length - 1;
+                    } else {
+                        speciesDatabase[currentCategoryKey][currentIndex] = entryData;
+                    }
+                    alert("¡Ficha actualizada con éxito!");
                 } else {
-                    database[currentCategoryKey][currentIndex] = entryData;
+                    speciesDatabase[cat].push(entryData);
+                    currentCategoryKey = cat;
+                    currentIndex = speciesDatabase[cat].length - 1;
+                    alert("¡Nueva especie agregada!");
                 }
-                alert("¡Ficha actualizada con éxito!");
+
+                localStorage.setItem('losSantosSpeciesDB', JSON.stringify(speciesDatabase));
+                closeAddModal();
+                renderSidebarSpeciesTabs();
+                renderCurrentRecord();
+
             } else {
-                database[cat].push(entryData);
-                currentCategoryKey = cat;
-                currentIndex = database[cat].length - 1;
-                alert("¡Nueva especie agregada a tu guía de estudio!");
+                // Guardar Sitio
+                const siteName = document.getElementById('modal-site-name').value;
+                const sitePopular = document.getElementById('modal-site-popular').value;
+                const climParts = document.getElementById('modal-clim').value.split('|');
+                const alt = climParts[0] ? climParts[0].trim() : "2,000 m s. n. m.";
+                const restClim = climParts[1] ? climParts[1].split('/') : ["15°C", "85%"];
+
+                const siteData = {
+                    title: "Sitio Emblemático - Talamanca",
+                    name: siteName,
+                    popularName: sitePopular,
+                    loc: loc,
+                    alt: alt,
+                    temp: restClim[0] ? restClim[0].trim() : "15°C",
+                    hum: restClim[1] ? restClim[1].trim() : "85%",
+                    history: document.getElementById('modal-f1').value,
+                    geology: document.getElementById('modal-f2').value,
+                    ecology: document.getElementById('modal-f3').value,
+                    floraFauna: document.getElementById('modal-f4').value,
+                    special: document.getElementById('modal-f5').value,
+                    img: imgUrl ? imgUrl.trim() : ""
+                };
+
+                if (isEditing) {
+                    sitesDatabase[currentIndex] = siteData;
+                    alert("¡Sitio actualizado con éxito!");
+                } else {
+                    sitesDatabase.push(siteData);
+                    currentIndex = sitesDatabase.length - 1;
+                    alert("¡Nuevo sitio agregado!");
+                }
+
+                localStorage.setItem('losSantosSitesDB', JSON.stringify(sitesDatabase));
+                closeAddModal();
+                renderSidebarSitesList();
+                renderCurrentRecord();
             }
-
-            localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
-            closeAddModal();
-            document.getElementById('new-record-form').reset();
-
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('ring-2', 'ring-white');
-                btn.style.opacity = '0.75';
-            });
-            const activeBtn = document.getElementById(`tab-${currentCategoryKey}`);
-            if(activeBtn) {
-                activeBtn.style.opacity = '1';
-                activeBtn.classList.add('ring-2', 'ring-white');
-            }
-
-            renderCurrentSpecimen();
-            updateCategoryCounts();
         }
 
+        // Exportación y Respaldo Dual (Especies y Sitios)
         function exportJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(database, null, 2));
+            const masterBackup = {
+                species: speciesDatabase,
+                sites: sitesDatabase
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(masterBackup, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "bitacora_los_santos_backup.json");
+            downloadAnchor.setAttribute("download", "bitacora_completa_los_santos_backup.json");
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
@@ -804,15 +1042,22 @@
                 fileReader.readAsText(event.target.files[0], "UTF-8");
                 fileReader.onload = function (e) {
                     try {
-                        const importedDB = JSON.parse(e.target.result);
-                        if (importedDB && typeof importedDB === 'object') {
-                            database = importedDB;
-                            localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
-                            switchCategory(Object.keys(database)[0] || 'anfibios');
-                            updateCategoryCounts();
-                            alert("¡Progreso y datos sincronizados con éxito en este dispositivo!");
+                        const imported = JSON.parse(e.target.result);
+                        if (imported && imported.species && imported.sites) {
+                            speciesDatabase = imported.species;
+                            sitesDatabase = imported.sites;
+                            localStorage.setItem('losSantosSpeciesDB', JSON.stringify(speciesDatabase));
+                            localStorage.setItem('losSantosSitesDB', JSON.stringify(sitesDatabase));
+                            switchAppMode(currentMode);
+                            alert("¡Datos y respaldo sincronizados con éxito!");
+                        } else if (imported && typeof imported === 'object') {
+                            // Compatibilidad con formato antiguo de especies
+                            speciesDatabase = imported;
+                            localStorage.setItem('losSantosSpeciesDB', JSON.stringify(speciesDatabase));
+                            switchAppMode('species');
+                            alert("¡Especies sincronizadas con éxito!");
                         } else {
-                            alert("El archivo de respaldo no tiene un formato válido.");
+                            alert("El archivo no tiene un formato válido.");
                         }
                     } catch (error) {
                         alert("Error al leer el archivo JSON.");
@@ -822,36 +1067,34 @@
         }
 
         function exportCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Nicho,Morfologia,Etologia,Reproduccion,CortejoDimorfismo,Relaciones,DatoCientifico\n";
-            for (let cat in database) {
-                database[cat].forEach(item => {
+            let csvContent = "data:text/csv;charset=utf-8,Tipo,NombreO_Categoria,NombreComun_Popular,Cientifico_Altitud,Localidad,Temperatura,Humedad,Detalle1,Detalle2,Detalle3,Detalle4,Detalle5\n";
+            for (let cat in speciesDatabase) {
+                speciesDatabase[cat].forEach(item => {
                     let row = [
-                        cat,
-                        `"${item.name}"`,
-                        `"${item.sci}"`,
-                        `"${item.loc}"`,
-                        `"${item.temp}"`,
-                        `"${item.hum}"`,
-                        `"${item.habitat || ''}"`,
-                        `"${item.niche || ''}"`,
-                        `"${item.morph || ''}"`,
-                        `"${item.ethology || ''}"`,
-                        `"${item.repro || ''}"`,
-                        `"${item.courtship || ''}"`,
-                        `"${item.relations || ''}"`,
-                        `"${item.science || ''}"`
+                        "Especie", cat, `"${item.name}"`, `"${item.sci}"`, `"${item.loc}"`, `"${item.temp}"`, `"${item.hum}"`, `"${item.habitat || ''}"`, `"${item.niche || ''}"`, `"${item.morph || ''}"`, `"${item.ethology || ''}"`, `"${item.science || ''}"`
                     ].join(",");
                     csvContent += row + "\r\n";
                 });
             }
+            sitesDatabase.forEach(site => {
+                let row = [
+                    "Sitio", "Cerro", `"${site.name}"`, `"${site.popularName}"`, `"${site.loc}"`, `"${site.temp}"`, `"${site.hum}"`, `"${site.alt}"`, `"${site.history || ''}"`, `"${site.geology || ''}"`, `"${site.ecology || ''}"`, `"${site.special || ''}"`
+                ].join(",");
+                csvContent += row + "\r\n";
+            });
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "guia_estudio_los_santos.csv");
+            link.setAttribute("download", "reporte_general_los_santos.csv");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
+
+        // Inicializar vista al cargar
+        window.onload = function() {
+            switchAppMode('species');
+        };
     </script>
 </body>
 </html>
