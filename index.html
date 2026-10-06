@@ -8,10 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Special+Elite&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Leaflet CSS para el Mapa Satelital Interactivo -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -42,13 +38,6 @@
             stroke-width: 1.5;
             stroke-dasharray: 3,2;
             fill: none;
-        }
-        #sat-map {
-            border: 2px solid #8b5a2b;
-            border-radius: 6px;
-            height: 120px;
-            width: 100%;
-            z-index: 10;
         }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(139, 37, 0, 0.4); border-radius: 4px; }
@@ -178,7 +167,7 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Mapa Satelital -->
+            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Avistamientos Regionales -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
                 <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
@@ -217,13 +206,11 @@
                     </button>
                 </nav>
 
-                <!-- MAPA SATELITAL INTERACTIVO SEGURO -->
-                <div class="flex flex-col space-y-1">
-                    <div class="flex justify-between items-center text-[10px] typewriter font-bold text-[#f3e9dc] bg-[#1f140f] px-2 py-0.5 rounded">
-                        <span>🗺 Satélite Los Santos</span>
-                        <span id="map-canton-tag" class="text-[9px] bg-red-800 text-white px-1 rounded">Tarrazú</span>
-                    </div>
-                    <div id="sat-map"></div>
+                <!-- PANEL DE CANTÓN / COMUNIDAD DE AVISTAMIENTO -->
+                <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center space-y-1 shadow-inner">
+                    <span class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">📍 Avistamiento Registrado en:</span>
+                    <p id="regional-canton-display" class="handwritten text-lg font-bold text-[#f3e9dc]">San Lorenzo de Tarrazú</p>
+                    <p class="text-[9px] typewriter text-[#d8c5aa] opacity-75">Zona de Los Santos, C.R.</p>
                 </div>
 
                 <!-- Botones de Estudio, Editar y Eliminar -->
@@ -276,8 +263,8 @@
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block typewriter text-xs font-bold uppercase">Distribución / Cantón:</label>
-                        <input type="text" id="modal-loc" required placeholder="Tarrazú / San Lorenzo" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        <label class="block typewriter text-xs font-bold uppercase">Cantón o Comunidad de Avistamiento:</label>
+                        <input type="text" id="modal-loc" required placeholder="San Lorenzo de Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                     <div>
                         <label class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
@@ -318,16 +305,6 @@
                         <input type="text" id="modal-relations" placeholder="Competencia, mutualismo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Latitud (Coordenada):</label>
-                        <input type="number" step="any" id="modal-lat" placeholder="9.651" value="9.65" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
-                    </div>
-                    <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Longitud (Coordenada):</label>
-                        <input type="number" step="any" id="modal-lng" placeholder="-84.000" value="-84.00" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
-                    </div>
-                </div>
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
                     <textarea id="modal-science" rows="2" placeholder="Estudio comprobado..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
@@ -344,7 +321,7 @@
         </div>
     </div>
 
-    <!-- Script de Estudio Académico Seguro -->
+    <!-- Script de Estudio Académico -->
     <script>
         const defaultDatabase = {
             aves: [
@@ -364,7 +341,6 @@
                     relations: "Mutualismo con árboles de Lauraceae; competencia territorial entre machos.",
                     science: "Estudios ornitológicos en Talamanca confirman que el Quetzal es vital para la regeneración del bosque primario nuboso.",
                     img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.565, -83.750],
                     annots: ["Cresta verde", "Cola caudal", "Dimorfismo", "Dispersor"]
                 },
                 {
@@ -383,7 +359,6 @@
                     relations: "Competencia interespecífica por recursos florales en alta montaña.",
                     science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
                     img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.550, -83.800],
                     annots: ["Garganta fucsia", "Pico recto", "Tasa metabólica", "Polinizador"]
                 }
             ],
@@ -404,7 +379,6 @@
                     relations: "Depredador tope que controla poblaciones de ungulados y roedores.",
                     science: "Monitoreos con cámaras trampa comprueban que el puma mantiene el equilibrio estructural de los bosques nubosos.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.590, -83.850],
                     annots: ["Garras retráctiles", "Paso amplio", "Excreta con pelo", "Depredador tope"]
                 }
             ],
@@ -425,7 +399,6 @@
                     relations: "Competencia acústica intraespecífica y depredación de artrópodos.",
                     science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
                     img: "img/rana_nacientes.jpg.jpeg",
-                    coords: [9.651, -84.032],
                     annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica", "Sensible"]
                 },
                 {
@@ -444,7 +417,6 @@
                     relations: "Presa de serpientes arborícolas y aves nocturnas.",
                     science: "Sus ojos escarlata actúan como mecanismo de defensa por sobresalto (deimatic display).",
                     img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.620, -83.910],
                     annots: ["Ojos rojos", "Parotoides", "Termorregulación", "Arborícola"]
                 },
                 {
@@ -463,7 +435,6 @@
                     relations: "Competencia con otros anfibios terrestres por recursos de hojarasca.",
                     science: "Adaptación evolutiva a torrentes fríos de altura al omitir la fase acuática libre.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.630, -83.960],
                     annots: ["Dorso rugoso", "Sin membranas", "Desarrollo directo", "Bioindicador"]
                 }
             ],
@@ -484,7 +455,6 @@
                     relations: "Controlador natural de roedores en zonas de altura.",
                     science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
                     img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.690, -83.920],
                     annots: ["Cabeza triangular", "Foseta loreal", "Hemotóxico", "Controlador"]
                 }
             ],
@@ -505,7 +475,6 @@
                     relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
                     science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
                     img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.580, -83.880],
                     annots: ["Piel terciopelo", "Papilas de baba", "Antenas", "Fósil viviente"]
                 }
             ],
@@ -526,7 +495,6 @@
                     relations: "Epifitismo nodriza; alberga comunidades enteras de tardígrados e insectos.",
                     science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos de la zona cafetalera.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.520, -83.820],
                     annots: ["Retención hídrica", "Microecosistema", "Filidios", "Epífita nodriza"]
                 }
             ],
@@ -547,7 +515,6 @@
                     relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
                     science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
                     img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
-                    coords: [9.710, -83.850],
                     annots: ["Matriz cristalina", "Cuarzo biotita", "Magmático", "Erosión"]
                 }
             ]
@@ -558,26 +525,6 @@
         let currentIndex = 0;
         let nightVisionActive = true;
         let isEditing = false;
-        let satMap = null;
-        let currentMarker = null;
-
-        // Inicializador seguro del mapa satelital (Protegido contra fallos de red)
-        function initSatelliteMap() {
-            try {
-                if (!satMap && typeof L !== 'undefined') {
-                    satMap = L.map('sat-map', {
-                        zoomControl: false,
-                        attributionControl: false
-                    }).setView([9.63, -83.95], 10);
-
-                    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                        maxZoom: 18
-                    }).addTo(satMap);
-                }
-            } catch (e) {
-                console.log("Mapa satelital operando en modo offline o no disponible.");
-            }
-        }
 
         function toggleNightVision() {
             nightVisionActive = !nightVisionActive;
@@ -645,21 +592,8 @@
             const imgEl = document.getElementById('specimen-img');
             imgEl.src = data.img || "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
             
-            // Actualizar marcador satelital de forma segura
-            if (satMap) {
-                const coords = data.coords || [9.63, -83.95];
-                try {
-                    if (currentMarker) {
-                        satMap.removeLayer(currentMarker);
-                    }
-                    currentMarker = L.marker(coords).addTo(satMap)
-                        .bindPopup(`<b>${data.name}</b><br>${data.loc}`);
-                    satMap.setView(coords, 11);
-                    satMap.invalidateSize();
-                } catch(err) {}
-            }
-
-            document.getElementById('map-canton-tag').innerText = data.loc.includes('Dota') ? 'Dota' : (data.loc.includes('Tarrazú') ? 'Tarrazú' : 'León Cortés');
+            // Actualizar panel de avistamiento regional
+            document.getElementById('regional-canton-display').innerText = data.loc || "Zona de Los Santos";
 
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
             document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
@@ -693,8 +627,6 @@
             document.getElementById('modal-title-text').innerText = "Agregar Nueva Especie a la Guía";
             document.getElementById('new-record-form').reset();
             document.getElementById('modal-cat').value = currentCategoryKey;
-            document.getElementById('modal-lat').value = "9.63";
-            document.getElementById('modal-lng').value = "-83.95";
             document.getElementById('add-modal').classList.remove('hidden');
         }
 
@@ -719,8 +651,6 @@
             document.getElementById('modal-relations').value = data.relations || "";
             document.getElementById('modal-science').value = data.science || "";
             document.getElementById('modal-img-url').value = data.img || "";
-            document.getElementById('modal-lat').value = data.coords ? data.coords[0] : 9.63;
-            document.getElementById('modal-lng').value = data.coords ? data.coords[1] : -83.95;
 
             document.getElementById('add-modal').classList.remove('hidden');
         }
@@ -763,8 +693,6 @@
             const relations = document.getElementById('modal-relations').value;
             const science = document.getElementById('modal-science').value;
             const imgUrl = document.getElementById('modal-img-url').value;
-            const lat = parseFloat(document.getElementById('modal-lat').value) || 9.63;
-            const lng = parseFloat(document.getElementById('modal-lng').value) || -83.95;
 
             const entryData = {
                 title: `Guía Taxonómica - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
@@ -782,7 +710,6 @@
                 relations: relations,
                 science: science,
                 img: imgUrl,
-                coords: [lat, lng],
                 annots: [common, habitat, loc, sci]
             };
 
@@ -807,7 +734,6 @@
             switchCategory(currentCategoryKey);
             renderCurrentSpecimen();
             updateCategoryCounts();
-            if (satMap) { setTimeout(() => { satMap.invalidateSize(); }, 200); }
         }
 
         function exportCSV() {
@@ -843,10 +769,8 @@
         }
 
         window.onload = function() {
-            initSatelliteMap();
             switchCategory('anfibios');
             updateCategoryCounts();
-            if (satMap) { setTimeout(() => { satMap.invalidateSize(); }, 300); }
         };
     </script>
 </body>
