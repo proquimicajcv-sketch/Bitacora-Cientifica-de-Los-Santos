@@ -39,6 +39,13 @@
             stroke-dasharray: 3,2;
             fill: none;
         }
+        /* Estilo visual para el mini mapa de Los Santos */
+        .santos-map {
+            background-color: #e5d4bc;
+            background-image: radial-gradient(#b08d57 0.75px, transparent 0.75px);
+            background-size: 12px 12px;
+            border: 2px dashed #8b5a2b;
+        }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(139, 37, 0, 0.4); border-radius: 4px; }
     </style>
@@ -83,7 +90,7 @@
                     
                     <div id="journal-meta" class="handwritten text-base text-[#4a2e18] font-bold mb-3 flex flex-wrap gap-3 bg-[#e8dbcc]/60 p-2 rounded border border-[#d2b896]">
                         <span>📍 Distribución: <span id="meta-loc">San Lorenzo de Tarrazú</span></span>
-                        <span>🌡️ Nicho: <span id="meta-temp">19°C</span></span>
+                        <span>🌡️ Nicho Térmico: <span id="meta-temp">19°C</span></span>
                         <span>💧 Humedad: <span id="meta-hum">95%</span></span>
                     </div>
                 </div>
@@ -91,7 +98,7 @@
                 <!-- Contenido Central -->
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
-                        <div class="relative w-full h-40 sm:h-48 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
+                        <div class="relative w-full h-36 sm:h-44 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
                             <img id="specimen-img" src="https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                             
                             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
@@ -109,17 +116,17 @@
                     </div>
 
                     <div class="w-full md:w-1/2 flex flex-col justify-center space-y-1.5">
-                        <div class="bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
+                        <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
                             <h3 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Especie:</h3>
-                            <p id="specimen-sci" class="handwritten text-lg font-bold text-[#8b2500]">Rana de las Nacientes</p>
+                            <p id="specimen-sci" class="handwritten text-base font-bold text-[#8b2500]">Rana de las Nacientes</p>
                         </div>
-                        <div class="bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Microhábitat:</h4>
-                            <p id="specimen-habitat" class="handwritten text-sm text-[#3a2212]">Vegetación arbustiva y riachuelos cercanos a nacientes.</p>
+                        <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
+                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Hábitat (Físico):</h4>
+                            <p id="specimen-habitat" class="handwritten text-xs text-[#3a2212]">Vegetación arbustiva y riachuelos en zona cafetalera.</p>
                         </div>
-                        <div class="bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Estado IUCN:</h4>
-                            <p id="specimen-iucn" class="handwritten text-sm text-[#2d5a27] font-bold">En Estudio / Endémica</p>
+                        <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
+                            <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Nicho Ecológico (Rol):</h4>
+                            <p id="specimen-niche" class="handwritten text-xs text-[#3a2212]">Depredador nocturno de insectos y bioindicador de agua.</p>
                         </div>
                     </div>
                 </div>
@@ -128,25 +135,23 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-1">
                     <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
                         <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🧬 Morfología:</h5>
-                        <p id="field-morph" class="handwritten text-sm text-[#2d1c0e] leading-tight">Tamaño <4cm, coloración verdosa críptica.</p>
+                        <p id="field-morph" class="handwritten text-xs text-[#2d1c0e] leading-tight">Tamaño <4cm, coloración verdosa críptica.</p>
                     </div>
                     <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
                         <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🦉 Etología:</h5>
-                        <p id="field-ethology" class="handwritten text-sm text-[#2d1c0e] leading-tight">Hábitos nocturnos y arborícolas.</p>
+                        <p id="field-ethology" class="handwritten text-xs text-[#2d1c0e] leading-tight">Hábitos nocturnos y arborícolas.</p>
                     </div>
                     <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
                         <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌱 Reproducción:</h5>
-                        <p id="field-repro" class="handwritten text-sm text-[#2d1c0e] leading-tight">Puesta en vegetación sobre agua.</p>
+                        <p id="field-repro" class="handwritten text-xs text-[#2d1c0e] leading-tight">Puesta en vegetación sobre agua.</p>
                     </div>
                 </div>
 
-                <!-- Nueva Sección: Datos Científicos Curiosos e Investigaciones -->
-                <div class="mt-2 bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
-                    <h5 class="typewriter text-xs font-bold text-[#7a1f00] uppercase mb-1 flex items-center gap-1">
-                        🔬 Investigación y Dato Científico Comprobado:
-                    </h5>
-                    <p id="field-science" class="handwritten text-base text-[#2d1c0e] leading-snug">
-                        Investigaciones herpetológicas en la Cordillera de Talamanca demuestran que las especies de altura desarrollan alta sensibilidad a los cambios microclimáticos, sirviendo como bioindicadores clave de la pureza de las fuentes de agua en cuencas cafetaleras.
+                <!-- Dato Científico Comprobado -->
+                <div class="mt-1 bg-[#f0e3d0] p-2 rounded border border-[#cca878]">
+                    <h5 class="typewriter text-[10px] font-bold text-[#7a1f00] uppercase mb-0.5">🔬 Investigación Científica Comprobada:</h5>
+                    <p id="field-science" class="handwritten text-xs text-[#2d1c0e] leading-snug">
+                        Alta sensibilidad a cambios microclimáticos, sirviendo como bioindicador de la pureza de agua en cuencas.
                     </p>
                 </div>
 
@@ -157,47 +162,66 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio y Taxonomía -->
+            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Mini-Mapa -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
-                <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center shadow-inner">
+                <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
                     <p class="handwritten text-xs text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
                 </div>
 
                 <!-- Botones de Pestañas -->
-                <nav id="category-tabs" class="flex flex-col space-y-1.5">
-                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all">
+                <nav id="category-tabs" class="flex flex-col space-y-1">
+                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all">
                         <span class="typewriter text-xs">🦅 Aves</span>
                         <span id="count-aves" class="text-[10px] bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
                     </button>
-                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all">
+                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all">
                         <span class="typewriter text-xs">🦌 Mamíferos</span>
                         <span id="count-mamiferos" class="text-[10px] bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all">
+                    <button onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all">
                         <span class="typewriter text-xs">🐸 Anfibios</span>
                         <span id="count-anfibios" class="text-[10px] bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">3 spp</span>
                     </button>
-                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all">
+                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all">
                         <span class="typewriter text-xs">🐍 Reptiles</span>
                         <span id="count-reptiles" class="text-[10px] bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all">
+                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all">
                         <span class="typewriter text-xs">🦂 Invertebrados</span>
                         <span id="count-invertebrados" class="text-[10px] bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold transition-all">
+                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold transition-all">
                         <span class="typewriter text-xs">🌿 Flora & Musgos</span>
                         <span id="count-flora" class="text-[10px] bg-green-950 px-2 py-0.5 rounded-full text-green-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-2 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all">
+                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all">
                         <span class="typewriter text-xs">🪨 Geología</span>
                         <span id="count-geologia" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 muestra</span>
                     </button>
                 </nav>
 
+                <!-- Mini-Mapa Científico de la Zona de Los Santos -->
+                <div class="santos-map p-2 rounded-lg text-center relative shadow-inner overflow-hidden h-28 flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-[10px] typewriter font-bold text-[#3a1d0c] border-b border-[#8b5a2b]/40 pb-0.5">
+                        <span>🗺️ Mapa Los Santos</span>
+                        <span id="map-canton-tag" class="text-[9px] bg-[#3a1d0c] text-[#f3e9dc] px-1 rounded">Tarrazú</span>
+                    </div>
+                    <!-- Contenedor del mapa con la "X" de hallazgo científico comprobado -->
+                    <div class="relative flex-1 flex items-center justify-center">
+                        <span class="absolute text-[10px] typewriter text-[#5c3a21] top-1 left-2">Dota</span>
+                        <span class="absolute text-[10px] typewriter text-[#5c3a21] bottom-1 left-4">Tarrazú</span>
+                        <span class="absolute text-[10px] typewriter text-[#5c3a21] top-2 right-2">León Cortés</span>
+                        <!-- Marcador "X" dinámico de hallazgo comprobado -->
+                        <div id="map-marker" class="absolute text-red-700 font-extrabold text-lg animate-pulse" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            📍<span class="text-xs bg-red-950 text-white px-1 rounded ml-0.5">X</span>
+                        </div>
+                    </div>
+                    <div class="text-[9px] handwritten text-[#4a2e18]">Hallazgos científicos comprobados</div>
+                </div>
+
                 <!-- Botones de Estudio -->
-                <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center space-y-1.5">
+                <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1">
                     <button onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow">
                         🔄 Siguiente Especie (<span id="counter-display">1/3</span>)
                     </button>
@@ -211,7 +235,7 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar Nueva Especie con URL y Datos Científicos -->
+    <!-- Modal para Agregar Nueva Especie con Hábitat y Nicho -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
@@ -246,9 +270,15 @@
                         <input type="text" id="modal-clim" placeholder="19°C / 95%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                 </div>
-                <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Microhábitat:</label>
-                    <input type="text" id="modal-hab" placeholder="Zona de nacientes de agua" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block typewriter text-[10px] font-bold uppercase">Hábitat (Físico):</label>
+                        <input type="text" id="modal-habitat" required placeholder="Bosque nuboso primario" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                    </div>
+                    <div>
+                        <label class="block typewriter text-[10px] font-bold uppercase">Nicho Ecológico (Rol):</label>
+                        <input type="text" id="modal-niche" required placeholder="Depredador / Polinizador" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                    </div>
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div>
@@ -266,7 +296,7 @@
                 </div>
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
-                    <textarea id="modal-science" rows="2" placeholder="Estudio comprobado, rol ecológico..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
+                    <textarea id="modal-science" rows="2" placeholder="Estudio comprobado..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">URL de Imagen:</label>
@@ -291,13 +321,14 @@
                     hum: "92%",
                     name: "Quetzal Resplandeciente",
                     sci: "Pharomachrus mocinno",
-                    habitat: "Dosel de bosque nuboso primario.",
-                    iucn: "Casi Amenazado (NT)",
+                    habitat: "Dosel de bosque nuboso primario con aguacatillos silvestres.",
+                    niche: "Frugívoro selectivo y principal dispersor de semillas de Lauraceae.",
                     morph: "Plumaje verde iridiscente, cola muy desarrollada en machos.",
-                    ethology: "Diurno, solitario o en parejas, territorial en época reproductiva.",
+                    ethology: "Diurno, territorial en época reproductiva.",
                     repro: "Anida en cavidades de árboles muertos; puesta de 2 huevos.",
-                    science: "Estudios ornitológicos en Talamanca confirman que el Quetzal es el principal dispersor de semillas de la familia Lauraceae (como el aguacatillo), siendo vital para la regeneración del bosque primario nuboso.",
+                    science: "Estudios ornitológicos en Talamanca confirman que el Quetzal es vital para la regeneración del bosque primario nuboso.",
                     img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "30%", left: "40%" },
                     annots: ["Cresta verde", "Cola caudal", "Dimorfismo", "Dispersor"]
                 },
                 {
@@ -307,13 +338,14 @@
                     hum: "88%",
                     name: "Colibrí Volcánico",
                     sci: "Selasphorus flammula",
-                    habitat: "Matorrales de altura y páramo.",
-                    iucn: "Preocupación Menor (LC)",
+                    habitat: "Matorrales de altura y páramo arbustivo.",
+                    niche: "Nectarívoro especializado y polinizador clave de plantas de Ericaceae.",
                     morph: "Tamaño diminuto, pico corto y recto.",
-                    ethology: "Muy activo, tolera temperaturas bajas mediante sopor nocturno.",
-                    repro: "Nido en forma de taza copa sobre arbustos de Ericaceae.",
-                    science: "Investigaciones fisiológicas demuestran que entran en un estado de letargo o sopor nocturno, reduciendo drásticamente su temperatura corporal para conservar energía a más de 3,000 msnm.",
+                    ethology: "Muy activo, soporta temperaturas bajo cero mediante letargo.",
+                    repro: "Nido en taza copa sobre arbustos.",
+                    science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
                     img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "20%", left: "70%" },
                     annots: ["Garganta fucsia", "Pico recto", "Tasa metabólica", "Polinizador"]
                 }
             ],
@@ -325,13 +357,14 @@
                     hum: "90%",
                     name: "Puma",
                     sci: "Puma concolor",
-                    habitat: "Senderos de bosque secundario y primario.",
-                    iucn: "Preocupación Menor (LC)",
-                    morph: "Pelaje leonado uniforme, gran musculatura y agilidad.",
-                    ethology: "Solitario, nocturno y crepuscular, amplio ámbito hogareño.",
+                    habitat: "Senderos de bosque secundario y áreas de cuencas.",
+                    niche: "Depredador tope regional que regula poblaciones de herbívoros.",
+                    morph: "Pelaje leonado uniforme, gran musculatura.",
+                    ethology: "Solitario, nocturno y crepuscular.",
                     repro: "Gestión de 90-96 días; camadas de 1 a 4 crías en cuevas.",
-                    science: "Monitoreos con cámaras trampa en el Corredor Biológico Los Santos comprueban que el puma regula las poblaciones de herbívoros medianos, manteniendo el equilibrio estructural de los bosques nubosos.",
+                    science: "Monitoreos con cámaras trampa comprueban que el puma mantiene el equilibrio estructural de los bosques nubosos.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "45%", left: "55%" },
                     annots: ["Garras retráctiles", "Paso amplio", "Excreta con pelo", "Depredador tope"]
                 }
             ],
@@ -343,13 +376,14 @@
                     hum: "95%",
                     name: "Rana de las Nacientes",
                     sci: "Isthmohyla nacientes",
-                    habitat: "Vegetación arbustiva y riachuelos.",
-                    iucn: "En Estudio / Endémica",
+                    habitat: "Vegetación arbustiva y riachuelos en zona cafetalera.",
+                    niche: "Depredador nocturno de insectos y bioindicador de calidad hídrica.",
                     morph: "Tamaño <4cm, coloración verdosa críptica.",
-                    ethology: "Nocturna, arborícola, machos vocalizan cerca de fuentes de agua.",
-                    repro: "Puesta de huevos gelatinosos sobre hojas colgantes en nacientes.",
-                    science: "Investigaciones herpetológicas recientes en las montañas de Los Santos documentan su alta dependencia de microhábitats prístinos asociados a nacientes, siendo altamente vulnerable a la contaminación agrícola.",
+                    ethology: "Nocturna, arborícola, machos vocalizan cerca de nacientes.",
+                    repro: "Puesta de huevos gelatinosos sobre hojas colgantes en agua.",
+                    science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
                     img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "65%", left: "30%" },
                     annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica", "Sensible"]
                 },
                 {
@@ -359,13 +393,14 @@
                     hum: "94%",
                     name: "Rana de Ojos Rojos",
                     sci: "Cruziohyla calcarifer",
-                    habitat: "Estrato arbustivo de bosque nuboso.",
-                    iucn: "Preocupación Menor (LC)",
-                    morph: "Ojos rojos prominentes, color verde brillante con flancos azulados.",
-                    ethology: "Nocturna; despliegue ocular repentino para asustar depredadores.",
-                    repro: "Reproducción explosiva en charcas temporales tras lluvias.",
-                    science: "Estudios de comportamiento visual comprueban que sus ojos rojos escarlata actúan como un mecanismo de defensa por 'deimatic display' (sobresalto), desorientando temporalmente a los depredadores nocturnos.",
+                    habitat: "Estrato arbustivo de bosque nuboso primario.",
+                    niche: "Insectívoro arborícola nocturno.",
+                    morph: "Ojos rojos prominentes, verde brillante con flancos azulados.",
+                    ethology: "Despliegue ocular repentino para asustar depredadores.",
+                    repro: "Reproducción explosiva en charcas temporales.",
+                    science: "Sus ojos escarlata actúan como mecanismo de defensa por sobresalto (deimatic display).",
                     img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "35%", left: "65%" },
                     annots: ["Ojos rojos", "Parotoides", "Termorregulación", "Arborícola"]
                 },
                 {
@@ -375,13 +410,14 @@
                     hum: "96%",
                     name: "Rana de Hojarasca",
                     sci: "Craugastor escoces",
-                    habitat: "Suelo de bosque nuboso bajo briófitos.",
-                    iucn: "En Peligro (EN)",
-                    morph: "Dorso rugoso críptico, ausencia de membranas natatorias.",
-                    ethology: "Terrestre, hábitos crípticos ocultos entre la hojarasca.",
-                    repro: "Desarrollo directo (eclosionan directamente pequeños anuros).",
-                    science: "A diferencia de la mayoría de anfibios, carecen de fase acuática de renacuajo; los huevos terrestres completan su metamorfosis dentro de la cápsula, una adaptación evolutiva a los torrentes fríos de altura.",
+                    habitat: "Suelo de bosque nuboso húmedo bajo briófitos.",
+                    niche: "Depredador de invertebrados del suelo y hojarasca.",
+                    morph: "Dorso rugoso críptico, sin membranas natatorias.",
+                    ethology: "Terrestre, hábitos crípticos ocultos.",
+                    repro: "Desarrollo directo dentro del huevo (sin fase de renacuajo).",
+                    science: "Adaptación evolutiva a torrentes fríos de altura al omitir la fase acuática libre.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "75%", left: "45%" },
                     annots: ["Dorso rugoso", "Sin membranas", "Desarrollo directo", "Bioindicador"]
                 }
             ],
@@ -394,12 +430,13 @@
                     name: "Víbora Mano de Piedra",
                     sci: "Atropoides nummifer",
                     habitat: "Bordes de bosque con rocas y troncos.",
-                    iucn: "Preocupación Menor (LC)",
-                    morph: "Cabeza ancha triangular, escamas quilladas robustas.",
-                    ethology: "Depredador de emboscada, nocturna y crepuscular.",
-                    repro: "Vivípara; da a luz crías desarrolladas directamente.",
-                    science: "Análisis toxicológicos demuestran que su veneno posee complejos péptidos hemotóxicos locales que afectan la coagulación, cumpliendo un rol ecológico estricto en el control de poblaciones de roedores en zonas montañosas.",
+                    niche: "Depredador de emboscada que controla roedores silvestres.",
+                    morph: "Cabeza triangular ancha, escamas quilladas robustas.",
+                    ethology: "Nocturna y crepuscular, termorregulando sobre rocas.",
+                    repro: "Vivípara; da a luz crías desarrolladas.",
+                    science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
                     img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "25%", left: "50%" },
                     annots: ["Cabeza triangular", "Foseta loreal", "Hemotóxico", "Controlador"]
                 }
             ],
@@ -411,13 +448,14 @@
                     hum: "98%",
                     name: "Gusano Terciopelo",
                     sci: "Peripatus soltani",
-                    habitat: "Bajo corteza en descomposición de robles.",
-                    iucn: "Datos Insuficientes (DD)",
-                    morph: "Cuerpo vermiforme aterciopelado, múltiples pares de lobópodos.",
-                    ethology: "Nocturno, expulsa chorros de baba adhesiva para cazar presas.",
+                    habitat: "Bajo corteza en descomposición de robles húmedos.",
+                    niche: "Depredador nocturno especializado de insectos pequeños.",
+                    morph: "Cuerpo vermiforme aterciopelado con múltiples lobópodos.",
+                    ethology: "Expulsa chorros de baba adhesiva para inmovilizar presas.",
                     repro: "Vivíparo con reproducción especializada.",
-                    science: "Considerados verdaderos 'fósiles vivientes', anatomistas eINVESTIGADORES han comprobado que su estructura corporal externa e interna ha permanecido casi inalterada durante más de 500 millones de años.",
+                    science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
                     img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "40%", left: "75%" },
                     annots: ["Piel terciopelo", "Papilas de baba", "Antenas", "Fósil viviente"]
                 }
             ],
@@ -429,13 +467,14 @@
                     hum: "95%",
                     name: "Musgos y Epífitas",
                     sci: "Sphagnum spp. & Bromeliaceae",
-                    habitat: "Troncos de Quercus costaricensis.",
-                    iucn: "Preocupación Menor (LC)",
-                    morph: "Estructuras filoides sin nervio central verdadero, alta capilaridad.",
-                    ethology: "Crecimiento lento dependiente de la humedad horizontal de neblina.",
+                    habitat: "Troncos y ramas de Quercus costaricensis.",
+                    niche: "Retenedor hídrico y hábitat de microinvertebrados de altura.",
+                    morph: "Filidios sin nervio central, alta capilaridad.",
+                    ethology: "Crecimiento lento dependiente de la neblina horizontal.",
                     repro: "Reproducción por esporas y fragmentación.",
-                    science: "Estudios hidrológicos en cuencas altas de Costa Rica comprueban que las alfombras de briófitos y musgos capturan hasta un 50% del agua de neblina horizontal, recargando los mantos acuíferos que alimentan las zonas de cultivo de café.",
+                    science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos de la zona cafetalera.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "50%", left: "20%" },
                     annots: ["Retención hídrica", "Microecosistema", "Filidios", "Epífita nodriza"]
                 }
             ],
@@ -447,13 +486,14 @@
                     hum: "80%",
                     name: "Complejo Ígneo Talamanca",
                     sci: "Granodiorita",
-                    habitat: "Taludes de alta pendiente.",
-                    iucn: "No Aplica",
-                    morph: "Matriz cristalina fanerítica con cuarzo, feldespato y biotita.",
-                    ethology: "Sometido a intensa meteorización por gradiente altitudinal y frío.",
-                    repro: "Formación geológica por emplazamiento magmático miocénico.",
-                    science: "Geólogos datan el alzamiento de la Cordillera de Talamanca durante el Mioceno (hace ~10-5 millones de años), un evento tectónico clave que generó los puentes terrestres y nichos de altura actuales.",
+                    habitat: "Taludes de alta pendiente en formaciones montañosas.",
+                    niche: "Sustrato mineral base que define el relieve y los suelos ácidos de Los Santos.",
+                    morph: "Matriz cristalina fanerítica con cuarzo y biotita.",
+                    ethology: "Sometido a intensa meteorización por gradiente altitudinal.",
+                    repro: "Emplazamiento magmático miocénico.",
+                    science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
                     img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
+                    mapPos: { top: "15%", left: "45%" },
                     annots: ["Matriz cristalina", "Cuarzo biotita", "Magmático", "Erosión"]
                 }
             ]
@@ -517,17 +557,31 @@
             document.getElementById('meta-hum').innerText = data.hum;
             
             document.getElementById('specimen-sci').innerText = data.name;
-            document.getElementById('specimen-habitat').innerText = data.habitat;
+            document.getElementById('specimen-habitat').innerText = data.habitat || "Sin registrar.";
+            document.getElementById('specimen-niche').innerText = data.niche || "Sin registrar.";
             document.getElementById('specimen-iucn').innerText = data.iucn || "No especificado";
             
             document.getElementById('field-morph').innerText = data.morph || "Sin registrar.";
             document.getElementById('field-ethology').innerText = data.ethology || "Sin registrar.";
             document.getElementById('field-repro').innerText = data.repro || "Sin registrar.";
-            document.getElementById('field-science').innerText = data.science || "Información científica en proceso de investigación para esta especie.";
+            document.getElementById('field-science').innerText = data.science || "Información científica en proceso de investigación.";
             
             const imgEl = document.getElementById('specimen-img');
             imgEl.src = data.img || "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
             
+            // Actualizar posición del marcador "X" en el mini-mapa
+            const marker = document.getElementById('map-marker');
+            if (data.mapPos) {
+                marker.style.top = data.mapPos.top;
+                marker.style.left = data.mapPos.left;
+            } else {
+                marker.style.top = "50%";
+                marker.style.left = "50%";
+            }
+
+            // Etiqueta del cantón en el mapa
+            document.getElementById('map-canton-tag').innerText = data.loc.includes('Dota') ? 'Dota' : (data.loc.includes('Tarrazú') ? 'Tarrazú' : 'Talamanca');
+
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
             document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
 
@@ -536,7 +590,7 @@
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
                 document.getElementById('annot-3'),
-                document.getElementById('annot-4']
+                document.getElementById('annot-4')
             ];
 
             annotElements.forEach((el, idx) => {
@@ -572,7 +626,8 @@
             const clim = document.getElementById('modal-clim').value.split('/');
             const temp = clim[0] ? clim[0].trim() : "18°C";
             const hum = clim[1] ? clim[1].trim() : "90%";
-            const hab = document.getElementById('modal-hab').value;
+            const habitat = document.getElementById('modal-habitat').value;
+            const niche = document.getElementById('modal-niche').value;
             const morph = document.getElementById('modal-morph').value;
             const ethology = document.getElementById('modal-ethology').value;
             const repro = document.getElementById('modal-repro').value;
@@ -586,14 +641,16 @@
                 hum: hum,
                 name: common,
                 sci: sci,
-                habitat: hab,
+                habitat: habitat,
+                niche: niche,
                 iucn: "En Estudio / Endémica",
                 morph: morph,
                 ethology: ethology,
                 repro: repro,
                 science: science,
                 img: imgUrl,
-                annots: [common, hab, loc, sci]
+                mapPos: { top: `${Math.floor(Math.random() * 60) + 20}%`, left: `${Math.floor(Math.random() * 60) + 20}%` },
+                annots: [common, habitat, loc, sci]
             };
 
             if (!database[cat]) {
@@ -614,7 +671,7 @@
         }
 
         function exportCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Morfologia,Etologia,Reproduccion,DatoCientifico\n";
+            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Nicho Ecologico,Morfologia,Etologia,Reproduccion,DatoCientifico\n";
             for (let cat in database) {
                 database[cat].forEach(item => {
                     let row = [
@@ -624,7 +681,8 @@
                         `"${item.loc}"`,
                         `"${item.temp}"`,
                         `"${item.hum}"`,
-                        `"${item.habitat}"`,
+                        `"${item.habitat || ''}"`,
+                        `"${item.niche || ''}"`,
                         `"${item.morph || ''}"`,
                         `"${item.ethology || ''}"`,
                         `"${item.repro || ''}"`,
