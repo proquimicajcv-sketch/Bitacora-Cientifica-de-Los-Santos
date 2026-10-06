@@ -110,7 +110,7 @@
                     <!-- Tarjeta de ilustración con anotaciones SVG interactiva -->
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-48 sm:h-56 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="img/rana_nacientes.jpg" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
+                            <img id="specimen-img" src="img/rana_nacientes.jpq.jpeg" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                             
                             <!-- SVG con líneas de anotación científica apuntando a partes del organismo -->
                             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
@@ -313,8 +313,8 @@
                     <textarea id="modal-notes" rows="2" placeholder="Detalles del hallazgo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Ej. img/rana_nacientes.jpg):</label>
-                    <input type="text" id="modal-img" placeholder="img/rana_nacientes.jpg" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                    <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (Ej. img/rana_nacientes.jpq.jpeg):</label>
+                    <input type="text" id="modal-img" placeholder="img/rana_nacientes.jpq.jpeg" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm">Cancelar</button>
@@ -382,7 +382,7 @@
                     habitat: "Vegetación arbustiva y riachuelos cercanos a nacientes de agua en zona cafetalera.",
                     iucn: "Datos Insuficientes / En Estudio",
                     notes: "Hallazgo en San Lorenzo de Tarrazú. Nueva especie arborícola y diminuta descrita en las montañas de Los Santos. Localizada en vegetación próxima a nacientes de agua. Bioindicador local de alta sensibilidad.",
-                    img: "img/rana_nacientes.jpg",
+                    img: "img/rana_nacientes.jpq.jpeg",
                     annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica de altura", "Isthmohyla nacientes"]
                 },
                 {
@@ -543,7 +543,7 @@
             document.getElementById('specimen-habitat').innerText = data.habitat;
             document.getElementById('specimen-iucn').innerText = data.iucn || "No especificado";
             document.getElementById('field-notes').innerText = data.notes;
-            document.getElementById('specimen-img').src = data.img || "img/rana_nacientes.jpg";
+            document.getElementById('specimen-img').src = data.img || "img/rana_nacientes.jpq.jpeg";
             
             // Actualizar contador del botón rotativo
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
@@ -597,7 +597,7 @@
                 habitat: hab,
                 iucn: "Sin Evaluar (NE)",
                 notes: notes,
-                img: imgInput && imgInput.trim() !== "" ? imgInput : "img/rana_nacientes.jpg",
+                img: imgInput && imgInput.trim() !== "" ? imgInput : "img/rana_nacientes.jpq.jpeg",
                 annots: [common, hab, loc, sci]
             };
 
