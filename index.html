@@ -39,7 +39,6 @@
             stroke-dasharray: 3,2;
             fill: none;
         }
-        /* Estilo visual para el mini mapa de Los Santos */
         .santos-map {
             background-color: #e5d4bc;
             background-image: radial-gradient(#b08d57 0.75px, transparent 0.75px);
@@ -126,7 +125,7 @@
                         </div>
                         <div class="bg-[#f0e3d0] p-1.5 rounded border border-[#cca878]">
                             <h4 class="typewriter text-[10px] font-bold text-[#5c3a21] uppercase">Nicho Ecológico (Rol):</h4>
-                            <p id="specimen-niche" class="handwritten text-xs text-[#3a2212]">Depredador nocturno de insectos y bioindicador de agua.</p>
+                            <p id="specimen-niche" class="handwritten text-xs text-[#3a2212]">Depredador nocturno de insectos y bioindicador.</p>
                         </div>
                     </div>
                 </div>
@@ -144,6 +143,18 @@
                     <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
                         <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌱 Reproducción:</h5>
                         <p id="field-repro" class="handwritten text-xs text-[#2d1c0e] leading-tight">Puesta en vegetación sobre agua.</p>
+                    </div>
+                </div>
+
+                <!-- Relaciones y Dimorfismo Sexual -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 my-1">
+                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">💞 Cortejo y Dimorfismo:</h5>
+                        <p id="field-courtship" class="handwritten text-xs text-[#2d1c0e] leading-tight">Machos con vocalización y garganta translúcida.</p>
+                    </div>
+                    <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
+                        <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🌐 Relaciones (Intra/Inter):</h5>
+                        <p id="field-relations" class="handwritten text-xs text-[#2d1c0e] leading-tight">Competencia territorial y depredación de artrópodos.</p>
                     </div>
                 </div>
 
@@ -207,12 +218,10 @@
                         <span>🗺️ Mapa Los Santos</span>
                         <span id="map-canton-tag" class="text-[9px] bg-[#3a1d0c] text-[#f3e9dc] px-1 rounded">Tarrazú</span>
                     </div>
-                    <!-- Contenedor del mapa con la "X" de hallazgo científico comprobado -->
                     <div class="relative flex-1 flex items-center justify-center">
                         <span class="absolute text-[10px] typewriter text-[#5c3a21] top-1 left-2">Dota</span>
                         <span class="absolute text-[10px] typewriter text-[#5c3a21] bottom-1 left-4">Tarrazú</span>
                         <span class="absolute text-[10px] typewriter text-[#5c3a21] top-2 right-2">León Cortés</span>
-                        <!-- Marcador "X" dinámico de hallazgo comprobado -->
                         <div id="map-marker" class="absolute text-red-700 font-extrabold text-lg animate-pulse" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
                             📍<span class="text-xs bg-red-950 text-white px-1 rounded ml-0.5">X</span>
                         </div>
@@ -235,7 +244,7 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar Nueva Especie con Hábitat y Nicho -->
+    <!-- Modal para Agregar Nueva Especie con Relaciones y Dimorfismo -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
@@ -294,6 +303,16 @@
                         <input type="text" id="modal-repro" placeholder="Puesta, huevos..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block typewriter text-[10px] font-bold uppercase">Cortejo y Dimorfismo:</label>
+                        <input type="text" id="modal-courtship" placeholder="Cantos, diferencias sexuales..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                    </div>
+                    <div>
+                        <label class="block typewriter text-[10px] font-bold uppercase">Relaciones (Intra/Inter):</label>
+                        <input type="text" id="modal-relations" placeholder="Competencia, simbiosis..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                    </div>
+                </div>
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
                     <textarea id="modal-science" rows="2" placeholder="Estudio comprobado..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
@@ -326,6 +345,8 @@
                     morph: "Plumaje verde iridiscente, cola muy desarrollada en machos.",
                     ethology: "Diurno, territorial en época reproductiva.",
                     repro: "Anida en cavidades de árboles muertos; puesta de 2 huevos.",
+                    courtship: "Vuelo nupcial acrobático y vocalizaciones suaves en pareja. Dimorfismo evidente (macho con cola caudal larga).",
+                    relations: "Interespecífica: Mutualismo con árboles de Lauraceae. Intraespecífica: Territorialidad estricta entre machos.",
                     science: "Estudios ornitológicos en Talamanca confirman que el Quetzal es vital para la regeneración del bosque primario nuboso.",
                     img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "30%", left: "40%" },
@@ -338,11 +359,13 @@
                     hum: "88%",
                     name: "Colibrí Volcánico",
                     sci: "Selasphorus flammula",
-                    habitat: "Matorrales de altura y páramo arbustivo.",
+                    habitat: "Matorrales de altura y páramo.",
                     niche: "Nectarívoro especializado y polinizador clave de plantas de Ericaceae.",
                     morph: "Tamaño diminuto, pico corto y recto.",
                     ethology: "Muy activo, soporta temperaturas bajo cero mediante letargo.",
                     repro: "Nido en taza copa sobre arbustos.",
+                    courtship: "Cortejo con vuelos en picada en forma de 'U' y despliegue de garganta iridiscente.",
+                    relations: "Fuerte competencia interespecífica con otros colibríes por el territorio floral.",
                     science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
                     img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "20%", left: "70%" },
@@ -362,6 +385,8 @@
                     morph: "Pelaje leonado uniforme, gran musculatura.",
                     ethology: "Solitario, nocturno y crepuscular.",
                     repro: "Gestión de 90-96 días; camadas de 1 a 4 crías en cuevas.",
+                    courtship: "Vocalizaciones audibles y marcaje de olor territorial para atraer parejas durante el celo.",
+                    relations: "Interespecífica: Depredador tope que controla ungulados. Intraespecífica: Solitarios, evitan encuentros directos salvo apareamiento.",
                     science: "Monitoreos con cámaras trampa comprueban que el puma mantiene el equilibrio estructural de los bosques nubosos.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "45%", left: "55%" },
@@ -376,11 +401,13 @@
                     hum: "95%",
                     name: "Rana de las Nacientes",
                     sci: "Isthmohyla nacientes",
-                    habitat: "Vegetación arbustiva y riachuelos en zona cafetalera.",
-                    niche: "Depredador nocturno de insectos y bioindicador de calidad hídrica.",
+                    habitat: "Vegetación arbustiva y riachuelos.",
+                    niche: "Depredador nocturno de insectos y bioindicador.",
                     morph: "Tamaño <4cm, coloración verdosa críptica.",
                     ethology: "Nocturna, arborícola, machos vocalizan cerca de nacientes.",
                     repro: "Puesta de huevos gelatinosos sobre hojas colgantes en agua.",
+                    courtship: "Canto nupcial nocturno en coros y dimorfismo con sacos vocales desarrollados en machos.",
+                    relations: "Intraespecífica: Competencia acústica por cantos de apareamiento. Interespecífica: Depredación sobre artrópodos menores.",
                     science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
                     img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "65%", left: "30%" },
@@ -398,6 +425,8 @@
                     morph: "Ojos rojos prominentes, verde brillante con flancos azulados.",
                     ethology: "Despliegue ocular repentino para asustar depredadores.",
                     repro: "Reproducción explosiva en charcas temporales.",
+                    courtship: "Reunión masiva en vegetación colgante sobre charcas tras lluvias intensas.",
+                    relations: "Presa de serpientes arborícolas y aves nocturnas; depredador de insectos.",
                     science: "Sus ojos escarlata actúan como mecanismo de defensa por sobresalto (deimatic display).",
                     img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "35%", left: "65%" },
@@ -415,6 +444,8 @@
                     morph: "Dorso rugoso críptico, sin membranas natatorias.",
                     ethology: "Terrestre, hábitos crípticos ocultos.",
                     repro: "Desarrollo directo dentro del huevo (sin fase de renacuajo).",
+                    courtship: "Cortes silenciosos o llamadas de corto alcance en el suelo del bosque.",
+                    relations: "Competencia con otros anfibios terrestres por recursos de hojarasca.",
                     science: "Adaptación evolutiva a torrentes fríos de altura al omitir la fase acuática libre.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "75%", left: "45%" },
@@ -434,6 +465,8 @@
                     morph: "Cabeza triangular ancha, escamas quilladas robustas.",
                     ethology: "Nocturna y crepuscular, termorregulando sobre rocas.",
                     repro: "Vivípara; da a luz crías desarrolladas.",
+                    courtship: "Rituales de combate y proximidad química mediante feromonas.",
+                    relations: "Depredador de roedores y aves ground-nesting; presa ocasional de rapaces.",
                     science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
                     img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "25%", left: "50%" },
@@ -453,6 +486,8 @@
                     morph: "Cuerpo vermiforme aterciopelado con múltiples lobópodos.",
                     ethology: "Expulsa chorros de baba adhesiva para inmovilizar presas.",
                     repro: "Vivíparo con reproducción especializada.",
+                    courtship: "Transferencia indirecta o directa de espermatóforos en la superficie cutánea.",
+                    relations: "Endemismo estricto; interacciones directas con microfauna de descomposición.",
                     science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
                     img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "40%", left: "75%" },
@@ -472,6 +507,8 @@
                     morph: "Filidios sin nervio central, alta capilaridad.",
                     ethology: "Crecimiento lento dependiente de la neblina horizontal.",
                     repro: "Reproducción por esporas y fragmentación.",
+                    courtship: "No aplica (reproducción asexual y por esporas).",
+                    relations: "Simbiosis y epifitismo nodriza; alberga comunidades enteras de tardígrados e insectos.",
                     science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos de la zona cafetalera.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "50%", left: "20%" },
@@ -491,6 +528,8 @@
                     morph: "Matriz cristalina fanerítica con cuarzo y biotita.",
                     ethology: "Sometido a intensa meteorización por gradiente altitudinal.",
                     repro: "Emplazamiento magmático miocénico.",
+                    courtship: "No aplica (origen abiótico/tectónico).",
+                    relations: "Sustento físico para el desarrollo de la cobertura vegetal y los microhábitats edáficos.",
                     science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
                     img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
                     mapPos: { top: "15%", left: "45%" },
@@ -559,17 +598,17 @@
             document.getElementById('specimen-sci').innerText = data.name;
             document.getElementById('specimen-habitat').innerText = data.habitat || "Sin registrar.";
             document.getElementById('specimen-niche').innerText = data.niche || "Sin registrar.";
-            document.getElementById('specimen-iucn').innerText = data.iucn || "No especificado";
             
             document.getElementById('field-morph').innerText = data.morph || "Sin registrar.";
             document.getElementById('field-ethology').innerText = data.ethology || "Sin registrar.";
             document.getElementById('field-repro').innerText = data.repro || "Sin registrar.";
+            document.getElementById('field-courtship').innerText = data.courtship || "Sin registrar.";
+            document.getElementById('field-relations').innerText = data.relations || "Sin registrar.";
             document.getElementById('field-science').innerText = data.science || "Información científica en proceso de investigación.";
             
             const imgEl = document.getElementById('specimen-img');
             imgEl.src = data.img || "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80";
             
-            // Actualizar posición del marcador "X" en el mini-mapa
             const marker = document.getElementById('map-marker');
             if (data.mapPos) {
                 marker.style.top = data.mapPos.top;
@@ -579,7 +618,6 @@
                 marker.style.left = "50%";
             }
 
-            // Etiqueta del cantón en el mapa
             document.getElementById('map-canton-tag').innerText = data.loc.includes('Dota') ? 'Dota' : (data.loc.includes('Tarrazú') ? 'Tarrazú' : 'Talamanca');
 
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
@@ -631,6 +669,8 @@
             const morph = document.getElementById('modal-morph').value;
             const ethology = document.getElementById('modal-ethology').value;
             const repro = document.getElementById('modal-repro').value;
+            const courtship = document.getElementById('modal-courtship').value;
+            const relations = document.getElementById('modal-relations').value;
             const science = document.getElementById('modal-science').value;
             const imgUrl = document.getElementById('modal-img-url').value;
 
@@ -643,10 +683,11 @@
                 sci: sci,
                 habitat: habitat,
                 niche: niche,
-                iucn: "En Estudio / Endémica",
                 morph: morph,
                 ethology: ethology,
                 repro: repro,
+                courtship: courtship,
+                relations: relations,
                 science: science,
                 img: imgUrl,
                 mapPos: { top: `${Math.floor(Math.random() * 60) + 20}%`, left: `${Math.floor(Math.random() * 60) + 20}%` },
@@ -671,7 +712,7 @@
         }
 
         function exportCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Nicho Ecologico,Morfologia,Etologia,Reproduccion,DatoCientifico\n";
+            let csvContent = "data:text/csv;charset=utf-8,Categoria,NombreComun,Cientifico,Localidad,Temperatura,Humedad,Habitat,Nicho,Morfologia,Etologia,Reproduccion,CortejoDimorfismo,Relaciones,DatoCientifico\n";
             for (let cat in database) {
                 database[cat].forEach(item => {
                     let row = [
@@ -686,6 +727,8 @@
                         `"${item.morph || ''}"`,
                         `"${item.ethology || ''}"`,
                         `"${item.repro || ''}"`,
+                        `"${item.courtship || ''}"`,
+                        `"${item.relations || ''}"`,
                         `"${item.science || ''}"`
                     ].join(",");
                     csvContent += row + "\r\n";
