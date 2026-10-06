@@ -197,14 +197,41 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Avistamientos -->
+            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Avistamientos (Diseño Invertido) -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
-                <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
-                    <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
-                    <p class="handwritten text-xs text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
+                <div class="space-y-2">
+                    <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
+                        <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
+                        <p class="handwritten text-xs text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
+                    </div>
+
+                    <!-- PANEL DE CANTÓN / COMUNIDAD -->
+                    <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center space-y-1 shadow-inner">
+                        <span class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">📍 Avistamiento Registrado en:</span>
+                        <p id="regional-canton-display" class="handwritten text-lg font-bold text-[#f3e9dc]">San Lorenzo de Tarrazú</p>
+                        <p class="text-[9px] typewriter text-[#d8c5aa] opacity-75">Zona de Los Santos, C.R.</p>
+                    </div>
+
+                    <!-- Botones de Estudio, Editar y Eliminar -->
+                    <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1">
+                        <button type="button" onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow cursor-pointer">
+                            🔄 Siguiente Especie (<span id="counter-display">1/3</span>)
+                        </button>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button type="button" onclick="openEditModal()" class="bg-[#5c3a21] hover:bg-[#70492c] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#8b5a2b] transition shadow font-bold cursor-pointer">
+                                ✏️ Editar Ficha
+                            </button>
+                            <button type="button" onclick="deleteCurrentSpecimen()" class="bg-[#5c1800] hover:bg-[#8b2500] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#a82d00] transition shadow font-bold cursor-pointer">
+                                🗑️ Eliminar
+                            </button>
+                        </div>
+                        <button type="button" onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#5c1800] transition shadow font-bold cursor-pointer">
+                            ➕ Agregar Nueva Especie
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Botones de Pestañas en ORDEN ALFABÉTICO -->
+                <!-- Botones de Pestañas en ORDEN ALFABÉTICO (ahora abajo) -->
                 <nav id="category-tabs" class="flex flex-col space-y-1">
                     <button type="button" onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all cursor-pointer">
                         <span class="typewriter text-xs">🐸 Anfibios</span>
@@ -239,31 +266,6 @@
                         <span id="count-reptiles" class="text-[10px] bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
                     </button>
                 </nav>
-
-                <!-- PANEL DE CANTÓN / COMUNIDAD -->
-                <div class="bg-[#1f140f] p-2.5 rounded-lg border border-[#4a3424] text-center space-y-1 shadow-inner">
-                    <span class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">📍 Avistamiento Registrado en:</span>
-                    <p id="regional-canton-display" class="handwritten text-lg font-bold text-[#f3e9dc]">San Lorenzo de Tarrazú</p>
-                    <p class="text-[9px] typewriter text-[#d8c5aa] opacity-75">Zona de Los Santos, C.R.</p>
-                </div>
-
-                <!-- Botones de Estudio, Editar y Eliminar -->
-                <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1">
-                    <button type="button" onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow cursor-pointer">
-                        🔄 Siguiente Especie (<span id="counter-display">1/3</span>)
-                    </button>
-                    <div class="grid grid-cols-2 gap-1">
-                        <button type="button" onclick="openEditModal()" class="bg-[#5c3a21] hover:bg-[#70492c] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#8b5a2b] transition shadow font-bold cursor-pointer">
-                            ✏️ Editar Ficha
-                        </button>
-                        <button type="button" onclick="deleteCurrentSpecimen()" class="bg-[#5c1800] hover:bg-[#8b2500] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#a82d00] transition shadow font-bold cursor-pointer">
-                            🗑️ Eliminar
-                        </button>
-                    </div>
-                    <button type="button" onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#5c1800] transition shadow font-bold cursor-pointer">
-                        ➕ Agregar Nueva Especie
-                    </button>
-                </div>
 
             </aside>
 
@@ -512,7 +514,6 @@
             ]
         };
 
-        // Mantener la base de datos local si ya existe para no perder ningún avance
         let database = JSON.parse(localStorage.getItem('losSantosStudyDB'));
         if (!database) {
             database = initialDatabaseTemplate;
@@ -773,7 +774,6 @@
             closeAddModal();
             document.getElementById('new-record-form').reset();
 
-            // Mantiene la vista fija en la categoría y tarjeta actual sin reiniciar
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('ring-2', 'ring-white');
                 btn.style.opacity = '0.75';
@@ -788,7 +788,6 @@
             updateCategoryCounts();
         }
 
-        // Funciones para Sincronizar entre dispositivos mediante archivo JSON
         function exportJSON() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(database, null, 2));
             const downloadAnchor = document.createElement('a');
