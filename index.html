@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitácora de Los Santos - Expedición Científica</title>
-    <!-- Tailwind CSS for modern responsive utility classes -->
+    <title>Guía de Estudio - Especies de Los Santos</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for rustic handwritten and clean field notes -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Special+Elite&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,24 +15,17 @@
             color: #2b1d0c;
             overflow-x: hidden;
         }
-        .handwritten {
-            font-family: 'Caveat', cursive;
-        }
-        .typewriter {
-            font-family: 'Special Elite', monospace;
-        }
-        /* Custom Night Vision Red Filter effect */
+        .handwritten { font-family: 'Caveat', cursive; }
+        .typewriter { font-family: 'Special Elite', monospace; }
         .night-vision-overlay {
             background: radial-gradient(circle, rgba(160, 15, 15, 0.18) 0%, rgba(35, 3, 3, 0.90) 90%);
             box-shadow: inset 0 0 70px rgba(90, 0, 0, 0.85);
         }
-        /* Rugged tablet casing border effect */
         .tablet-case {
             background: linear-gradient(135deg, #222222 0%, #111111 50%, #1a1a1a 100%);
             border: 6px solid #2f2a24;
             box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0,0,0,0.8);
         }
-        /* Paper texture styling */
         .paper-texture {
             background-color: #f3e9dc;
             background-image: 
@@ -40,42 +33,34 @@
                 repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(180, 150, 120, 0.1) 25px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 35px rgba(130, 95, 60, 0.15);
         }
-        /* Handwritten annotation lines & pointers */
         .pointer-line {
             stroke: #8b2500;
             stroke-width: 1.5;
             stroke-dasharray: 3,2;
             fill: none;
         }
-        /* Custom scrollbars */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(139, 37, 0, 0.4);
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: rgba(139, 37, 0, 0.4); border-radius: 4px; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-2 sm:p-6 relative select-none">
 
-    <!-- Fondo ambiental nocturno de bosque nuboso con vegetación borrosa -->
+    <!-- Fondo ambiental -->
     <div class="absolute inset-0 z-0 bg-cover bg-center opacity-40 pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1511497584788-876761142212?auto=format&fit=crop&w=2000&q=80');"></div>
     <div class="absolute inset-0 z-0 bg-gradient-to-t from-[#020503] via-[#08140c]/80 to-[#020503]"></div>
 
-    <!-- Contenedor principal de la tableta de campo -->
+    <!-- Contenedor Principal de la Tableta -->
     <main class="relative z-10 w-full max-w-5xl tablet-case rounded-2xl p-3 sm:p-5 text-red-500">
         
-        <!-- Luz ambiental nocturna roja -->
+        <!-- Filtro Visión Nocturna -->
         <div id="night-overlay" class="night-vision-overlay absolute inset-0 rounded-2xl pointer-events-none z-20 transition-opacity duration-300"></div>
 
-        <!-- Pantalla interna de la tableta -->
         <div class="relative z-30 flex flex-col lg:flex-row gap-4 h-full min-h-[620px] bg-[#2a1b14] p-3 sm:p-4 rounded-xl border border-[#443325]">
 
-            <!-- LADO IZQUIERDO: La libreta de papel con anotaciones científicas -->
+            <!-- LADO IZQUIERDO: Cuaderno de Estudio -->
             <div class="flex-1 paper-texture rounded-lg p-4 sm:p-6 relative flex flex-col justify-between overflow-y-auto border border-[#d8c5aa]">
                 
-                <!-- Botón superior derecho para visión nocturna y exportar CSV -->
+                <!-- Botón superior -->
                 <div class="absolute top-2 right-4 flex items-center gap-2 z-30">
                     <button onclick="toggleNightVision()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3d271d] text-[#f3e9dc] px-2 py-1 rounded border border-[#70492c] hover:bg-[#523528] transition shadow">
                         🌙 <span id="nv-text">Modo Noche: ON</span>
@@ -85,34 +70,29 @@
                     </button>
                 </div>
 
-                <!-- Sello o marca de agua de la estación -->
                 <div class="absolute top-8 right-4 text-[10px] sm:text-xs typewriter uppercase tracking-widest text-[#8b5a2b] opacity-65 font-bold">
-                    Est. Los Santos • Zona Tarrazú-Dota
+                    Guía de Estudio • Zona Los Santos
                 </div>
 
-                <!-- Cabecera de la Bitácora -->
+                <!-- Cabecera -->
                 <div>
                     <h1 id="journal-title" class="typewriter text-lg sm:text-2xl font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-2">
-                        Bitácora de Los Santos - Anfibios
+                        Guía Taxonómica - Anfibios
                     </h1>
                     
-                    <!-- Datos climáticos de campo -->
                     <div id="journal-meta" class="handwritten text-base sm:text-lg text-[#4a2e18] font-bold mb-3 flex flex-wrap gap-4 bg-[#e8dbcc]/60 p-2 rounded border border-[#d2b896]">
-                        <span>📍 Localidad: <span id="meta-loc">Arroyo del Diablo, 21:30h</span></span>
-                        <span>🌡️ Temp: <span id="meta-temp">22°C</span></span>
-                        <span>💧 Humedad: <span id="meta-hum">94%</span></span>
+                        <span>📍 Distribución: <span id="meta-loc">San Lorenzo de Tarrazú</span></span>
+                        <span>🌡️ Nicho Térmico: <span id="meta-temp">19°C</span></span>
+                        <span>💧 Humedad Ideal: <span id="meta-hum">95%</span></span>
                     </div>
                 </div>
 
-                <!-- CONTENIDO CENTRAL DINÁMICO (Ilustración y Notas Científicas) -->
+                <!-- Contenido Central -->
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
-                    
-                    <!-- Tarjeta de ilustración con anotaciones SVG interactiva -->
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-48 sm:h-56 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
                             <img id="specimen-img" src="img/rana_nacientes.jpq.jpeg" onerror="this.src='https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80'" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                             
-                            <!-- SVG con líneas de anotación científica -->
                             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
                                 <path id="line-1" d="M 90,80 Q 60,60 30,50" class="pointer-line" />
                                 <path id="line-2" d="M 180,70 Q 210,50 240,40" class="pointer-line" />
@@ -121,68 +101,45 @@
                             </svg>
                         </div>
 
-                        <!-- Etiquetas escritas a mano apuntando con flechas -->
-                        <div class="absolute top-1 left-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-1">
-                            Ojos rojos nocturnos
-                        </div>
-                        <div class="absolute top-2 right-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-2">
-                            Glándulas parotoides difusas
-                        </div>
-                        <div class="absolute bottom-16 right-1 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-3">
-                            Adaptación: Termorregulación
-                        </div>
-                        <div class="absolute bottom-1 left-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-4">
-                            Cruziohyla calcarifer
-                        </div>
+                        <div class="absolute top-1 left-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-1">Tamaño diminuto</div>
+                        <div class="absolute top-2 right-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-2">Garganta translúcida</div>
+                        <div class="absolute bottom-16 right-1 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-3">Endémica de altura</div>
+                        <div class="absolute bottom-1 left-2 handwritten text-xs font-bold text-[#7a1f00] bg-[#f5e6d0]/90 px-1 rounded shadow-sm" id="annot-4">Isthmohyla nacientes</div>
                     </div>
 
-                    <!-- Descripción taxonómica rápida y características -->
                     <div class="w-full md:w-1/2 flex flex-col justify-center space-y-2">
                         <div class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
-                            <h3 id="specimen-name" class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Especie Focal:</h3>
-                            <p id="specimen-sci" class="handwritten text-xl font-bold text-[#8b2500]">Cruziohyla calcarifer</p>
+                            <h3 id="specimen-name" class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Especie en Estudio:</h3>
+                            <p id="specimen-sci" class="handwritten text-xl font-bold text-[#8b2500]">Rana de las Nacientes</p>
                         </div>
                         <div class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
-                            <h4 class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Microhábitat Registrado:</h4>
-                            <p id="specimen-habitat" class="handwritten text-base text-[#3a2212]">Estrato arbustivo de bosque nuboso primario, 1,600 msnm.</p>
+                            <h4 class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Microhábitat Típico:</h4>
+                            <p id="specimen-habitat" class="handwritten text-base text-[#3a2212]">Vegetación arbustiva y riachuelos cercanos a nacientes.</p>
                         </div>
                         <div class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878]">
                             <h4 class="typewriter text-xs font-bold text-[#5c3a21] uppercase">Estado IUCN:</h4>
-                            <p id="specimen-iucn" class="handwritten text-base text-[#2d5a27] font-bold">Preocupación Menor (LC)</p>
+                            <p id="specimen-iucn" class="handwritten text-base text-[#2d5a27] font-bold">En Estudio / Endémica</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sección inferior: Notas detalladas de campo -->
+                <!-- Notas de Estudio -->
                 <div class="mt-2 bg-[#f6eddf] p-3 rounded border border-[#d2b896]">
-                    <h4 class="typewriter text-xs font-bold text-[#633e21] mb-1 uppercase tracking-wider">📝 Observaciones de Campo y Nota Científica:</h4>
+                    <h4 class="typewriter text-xs font-bold text-[#633e21] mb-1 uppercase tracking-wider">📚 Notas Taxonómicas y de Estudio:</h4>
                     <p id="field-notes" class="handwritten text-base sm:text-lg text-[#2d1c0e] leading-snug">
-                        Hallazgo sobre hoja de Psychotria sp. junto al Arroyo del Diablo. Comportamiento activo, vocalizando durante evento de lluvia ligero.
+                        Especie arborícola y diminuta descrita en las montañas de Los Santos. Se localiza en vegetación próxima a nacientes de agua. Bioindicador local de alta sensibilidad.
                     </p>
                 </div>
 
-                <!-- Pie de página de la libreta -->
+                <!-- Pie de página -->
                 <div class="mt-3 pt-2 border-t border-[#d2b896] flex flex-wrap justify-between items-center text-xs typewriter text-[#70492c] gap-2">
-                    <span>Expedición: Cordillera de Talamanca</span>
-                    <div class="flex items-center gap-1">
-                        <span>Cantón/Sitio:</span>
-                        <select id="canton-selector" class="bg-[#e8dbcc] border border-[#b08d57] text-[#3a1d0c] rounded px-1 py-0.5 text-xs typewriter font-bold outline-none cursor-pointer">
-                            <option value="Tarrazú (San Marcos)">Tarrazú (San Marcos)</option>
-                            <option value="San Lorenzo de Tarrazú" selected>San Lorenzo de Tarrazú</option>
-                            <option value="Dota (San Gerardo)">Dota (San Gerardo)</option>
-                            <option value="León Cortés (San Pablo)">León Cortés (San Pablo)</option>
-                        </select>
-                    </div>
-                    <button onclick="simulateAudio()" class="bg-[#d2b896] hover:bg-[#c2a886] text-[#3a1d0c] px-2 py-0.5 rounded border border-[#b08d57] transition shadow flex items-center gap-1">
-                        🔊 Simular Audio
-                    </button>
-                    <span id="record-count">Registro #1 / 2026</span>
+                    <span>Región: Cordillera de Talamanca</span>
+                    <span id="record-count">Ficha #1 / 2026</span>
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Control y Pestañas de Taxonomía -->
+            <!-- LADO DERECHO: Panel de Estudio y Taxonomía -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-3">
-                
                 <div class="bg-[#1f140f] p-3 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
                     <p class="handwritten text-sm text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
@@ -190,11 +147,11 @@
 
                 <!-- Botones de Pestañas -->
                 <nav id="category-tabs" class="flex flex-col space-y-2">
-                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold shadow-md transition-all">
+                    <button onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all">
                         <span class="typewriter text-sm">🦅 Aves</span>
                         <span id="count-aves" class="text-xs bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
                     </button>
-                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold shadow-md transition-all">
+                    <button onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all">
                         <span class="typewriter text-sm">🦌 Mamíferos</span>
                         <span id="count-mamiferos" class="text-xs bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">1 spp</span>
                     </button>
@@ -202,35 +159,31 @@
                         <span class="typewriter text-sm">🐸 Anfibios</span>
                         <span id="count-anfibios" class="text-xs bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">3 spp</span>
                     </button>
-                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold shadow-md transition-all">
+                    <button onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all">
                         <span class="typewriter text-sm">🐍 Reptiles</span>
                         <span id="count-reptiles" class="text-xs bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold shadow-md transition-all">
+                    <button onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all">
                         <span class="typewriter text-sm">🦂 Invertebrados</span>
                         <span id="count-invertebrados" class="text-xs bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold shadow-md transition-all">
+                    <button onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold transition-all">
                         <span class="typewriter text-sm">🌿 Flora & Musgos</span>
                         <span id="count-flora" class="text-xs bg-green-950 px-2 py-0.5 rounded-full text-green-200">1 spp</span>
                     </button>
-                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold shadow-md transition-all">
+                    <button onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-2.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all">
                         <span class="typewriter text-sm">🪨 Geología</span>
                         <span id="count-geologia" class="text-xs bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 muestra</span>
                     </button>
                 </nav>
 
-                <!-- Estado y botones de acción -->
+                <!-- Botones de Estudio -->
                 <div class="bg-[#1f140f] p-3 rounded-lg border border-[#4a3424] text-center space-y-2">
-                    <div class="flex items-center justify-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-                        <span class="typewriter text-[11px] text-[#e0a96d]">GPS San Lorenzo Activo</span>
-                    </div>
                     <button onclick="nextSpeciesInCurrentCategory()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-2 px-3 rounded border border-[#70492c] transition shadow">
-                        🔄 Siguiente (<span id="counter-display">1/3</span>)
+                        🔄 Siguiente Especie (<span id="counter-display">1/3</span>)
                     </button>
                     <button onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-2 px-3 rounded border border-[#5c1800] transition shadow font-bold">
-                        ➕ Registrar Hallazgo
+                        ➕ Agregar Nueva Especie
                     </button>
                 </div>
 
@@ -239,10 +192,10 @@
         </div>
     </main>
 
-    <!-- Modal para Nuevo Registro con Selector de Imagen Local -->
+    <!-- Modal para Agregar Nueva Especie al Estudio -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Registrar Nuevo Especimen / Muestra</h2>
+            <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie para Estudio</h2>
             <form id="new-record-form" onsubmit="handleNewRecord(event)" class="space-y-3 handwritten text-lg text-[#3a1d0c]">
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
@@ -257,7 +210,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Nombre Científico / Especie:</label>
+                    <label class="block typewriter text-xs font-bold uppercase">Nombre Científico:</label>
                     <input type="text" id="modal-sci" required placeholder="Ej. Isthmohyla nacientes" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div>
@@ -266,11 +219,11 @@
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block typewriter text-xs font-bold uppercase">Localidad / Sitio:</label>
+                        <label class="block typewriter text-xs font-bold uppercase">Distribución / Zona:</label>
                         <input type="text" id="modal-loc" required placeholder="San Lorenzo de Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                     <div>
-                        <label class="block typewriter text-xs font-bold uppercase">Temperatura / Humedad:</label>
+                        <label class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
                         <input type="text" id="modal-clim" placeholder="19°C / 95%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                 </div>
@@ -279,27 +232,27 @@
                     <input type="text" id="modal-hab" placeholder="Zona de nacientes de agua" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Observaciones y Nota Científica:</label>
-                    <textarea id="modal-notes" rows="2" placeholder="Detalles del hallazgo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
+                    <label class="block typewriter text-xs font-bold uppercase">Notas Taxonómicas y de Estudio:</label>
+                    <textarea id="modal-notes" rows="2" placeholder="Características morfológicas, comportamiento..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
                 </div>
                 <div>
-                    <label class="block typewriter text-xs font-bold uppercase">Adjuntar Fotografía desde tu dispositivo:</label>
+                    <label class="block typewriter text-xs font-bold uppercase">Fotografía desde el iPad:</label>
                     <input type="file" id="modal-img-file" accept="image/*" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter cursor-pointer">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddModal()" class="bg-[#795548] text-white px-4 py-1 rounded typewriter text-sm">Cancelar</button>
-                    <button type="submit" class="bg-[#8b2500] text-white px-4 py-1 rounded typewriter text-sm font-bold">Guardar en Bitácora</button>
+                    <button type="submit" class="bg-[#8b2500] text-white px-4 py-1 rounded typewriter text-sm font-bold">Guardar Especie</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Script interactivo principal -->
+    <!-- Script de Estudio -->
     <script>
         const defaultDatabase = {
             aves: [
                 {
-                    title: "Bitácora de Los Santos - Aves",
+                    title: "Guía Taxonómica - Aves",
                     loc: "Cerro de la Muerte, 3,100 msnm",
                     temp: "11°C",
                     hum: "92%",
@@ -307,12 +260,12 @@
                     sci: "Pharomachrus mocinno",
                     habitat: "Dosel de bosque nuboso primario.",
                     iucn: "Casi Amenazado (NT)",
-                    notes: "Avistamiento en pareja alimentándose de frutos de Lauraceae.",
+                    notes: "Dispersor primario de semillas de Lauraceae en el bosque altitudinal.",
                     img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
                     annots: ["Cresta verde metalizada", "Cola caudal desarrollada", "Dimorfismo sexual", "Dispersor de semillas"]
                 },
                 {
-                    title: "Bitácora de Los Santos - Aves",
+                    title: "Guía Taxonómica - Aves",
                     loc: "San Gerardo de Dota, 2,200 msnm",
                     temp: "16°C",
                     hum: "88%",
@@ -320,14 +273,14 @@
                     sci: "Selasphorus flammula",
                     habitat: "Matorrales de altura.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Muy activo en inflorescencias de Ericaceae.",
+                    notes: "Adaptaciones metabólicas para soportar temperaturas bajo cero.",
                     img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
                     annots: ["Garganta iridiscente", "Pico corto y recto", "Alta tasa metabólica", "Polinizador de altura"]
                 }
             ],
             mamiferos: [
                 {
-                    title: "Bitácora de Los Santos - Mamíferos",
+                    title: "Guía Taxonómica - Mamíferos",
                     loc: "Reserva Los Quetzales, 2,500 msnm",
                     temp: "14°C",
                     hum: "90%",
@@ -335,14 +288,14 @@
                     sci: "Puma concolor",
                     habitat: "Senderos de bosque secundario.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Registro indirecto mediante huellas en lodo arcilloso.",
+                    notes: "Depredador tope regional y clave para el Corredor Biológico Los Santos.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
                     annots: ["Marcas de garras", "Amplitud de paso", "Excreta con pelo", "Depredador tope"]
                 }
             ],
             anfibios: [
                 {
-                    title: "Bitácora de Los Santos - Anfibios",
+                    title: "Guía Taxonómica - Anfibios",
                     loc: "San Lorenzo de Tarrazú, 1,550 msnm",
                     temp: "19°C",
                     hum: "95%",
@@ -350,12 +303,12 @@
                     sci: "Isthmohyla nacientes",
                     habitat: "Vegetación arbustiva y riachuelos cercanos a nacientes de agua.",
                     iucn: "En Estudio / Endémica",
-                    notes: "Hallazgo en San Lorenzo de Tarrazú. Especie arborícola y diminuta de las montañas de Los Santos. Localizada en vegetación próxima a nacientes de agua. Bioindicador local de alta sensibilidad.",
+                    notes: "Especie arborícola y diminuta de las montañas de Los Santos. Localizada en vegetación próxima a nacientes de agua. Bioindicador local de alta sensibilidad.",
                     img: "img/rana_nacientes.jpq.jpeg",
                     annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica de altura", "Isthmohyla nacientes"]
                 },
                 {
-                    title: "Bitácora de Los Santos - Anfibios",
+                    title: "Guía Taxonómica - Anfibios",
                     loc: "Arroyo del Diablo, Dota",
                     temp: "22°C",
                     hum: "94%",
@@ -363,12 +316,12 @@
                     sci: "Cruziohyla calcarifer",
                     habitat: "Estrato arbustivo de bosque nuboso primario.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Vocalizando durante evento de lluvia ligero.",
+                    notes: "Vocalizando durante evento de lluvia ligero. Sonido grave y pulsado.",
                     img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
                     annots: ["Ojos rojos nocturnos", "Glándulas parotoides", "Termorregulación", "Cruziohyla calcarifer"]
                 },
                 {
-                    title: "Bitácora de Los Santos - Anfibios",
+                    title: "Guía Taxonómica - Anfibios",
                     loc: "Quebrada San Pablo, Tarrazú",
                     temp: "17°C",
                     hum: "96%",
@@ -383,7 +336,7 @@
             ],
             reptiles: [
                 {
-                    title: "Bitácora de Los Santos - Reptiles",
+                    title: "Guía Taxonómica - Reptiles",
                     loc: "Cerro Vueltas, 2,300 msnm",
                     temp: "18°C",
                     hum: "85%",
@@ -391,14 +344,14 @@
                     sci: "Atropoides nummifer",
                     habitat: "Bordes de bosque con rocas y troncos.",
                     iucn: "Preocupación Menor (LC)",
-                    notes: "Juvenil termorregulando sobre piedra sedimentaria.",
+                    notes: "Controlador natural de roedores en zonas agrícolas de altura.",
                     img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
                     annots: ["Cabeza triangular", "Escamas quilladas", "Foseta loreal", "Veneno hemotóxico"]
                 }
             ],
             invertebrados: [
                 {
-                    title: "Bitácora de Los Santos - Invertebrados",
+                    title: "Guía Taxonómica - Invertebrados",
                     loc: "Bosque Nuboso de Dota",
                     temp: "15°C",
                     hum: "98%",
@@ -413,7 +366,7 @@
             ],
             flora: [
                 {
-                    title: "Bitácora de Los Santos - Flora & Musgos",
+                    title: "Guía Taxonómica - Flora & Musgos",
                     loc: "Río Savegre, 1,900 msnm",
                     temp: "19°C",
                     hum: "95%",
@@ -428,7 +381,7 @@
             ],
             geologia: [
                 {
-                    title: "Bitácora de Los Santos - Geología",
+                    title: "Guía Taxonómica - Geología",
                     loc: "Carretera Interamericana Sur",
                     temp: "13°C",
                     hum: "80%",
@@ -443,7 +396,7 @@
             ]
         };
 
-        let database = JSON.parse(localStorage.getItem('losSantosDatabase')) || defaultDatabase;
+        let database = JSON.parse(localStorage.getItem('losSantosStudyDB')) || defaultDatabase;
         let currentCategoryKey = 'anfibios';
         let currentIndex = 0;
         let nightVisionActive = true;
@@ -500,7 +453,7 @@
             document.getElementById('meta-temp').innerText = data.temp;
             document.getElementById('meta-hum').innerText = data.hum;
             
-            document.getElementById('specimen-name').innerText = "Especie Focal (" + currentCategoryKey.toUpperCase() + "):";
+            document.getElementById('specimen-name').innerText = "Especie en Estudio (" + currentCategoryKey.toUpperCase() + "):";
             document.getElementById('specimen-sci').innerText = data.name;
             document.getElementById('specimen-habitat').innerText = data.habitat;
             document.getElementById('specimen-iucn').innerText = data.iucn || "No especificado";
@@ -510,14 +463,14 @@
             imgEl.src = data.img || "img/rana_nacientes.jpq.jpeg";
             
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
-            document.getElementById('record-count').innerText = `Registro #${currentIndex + 1} / ${list.length}`;
+            document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
 
             const annots = data.annots || ["Rasgo 1", "Rasgo 2", "Rasgo 3", "Rasgo 4"];
             const annotElements = [
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
                 document.getElementById('annot-3'),
-                document.getElementById('annot-4']
+                document.getElementById('annot-4')
             ];
 
             annotElements.forEach((el, idx) => {
@@ -570,14 +523,14 @@
 
         function saveRecordEntry(cat, sci, common, loc, temp, hum, hab, notes, imgSrc) {
             const newEntry = {
-                title: `Bitácora de Los Santos - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
+                title: `Guía Taxonómica - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
                 loc: loc,
                 temp: temp,
                 hum: hum,
                 name: common,
                 sci: sci,
                 habitat: hab,
-                iucn: "Sin Evaluar (NE)",
+                iucn: "En Estudio / Endémica",
                 notes: notes,
                 img: imgSrc,
                 annots: [common, hab, loc, sci]
@@ -588,7 +541,7 @@
             }
             database[cat].push(newEntry);
 
-            localStorage.setItem('losSantosDatabase', JSON.stringify(database));
+            localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
 
             closeAddModal();
             document.getElementById('new-record-form').reset();
@@ -597,11 +550,7 @@
             currentIndex = database[cat].length - 1;
             renderCurrentSpecimen();
             updateCategoryCounts();
-            alert("¡Nuevo hallazgo registrado con éxito!");
-        }
-
-        function simulateAudio() {
-            alert("🔊 Reproduciendo archivo de audio grabado en campo: Frecuencias y llamada de vocalización registrada en Los Santos.");
+            alert("¡Nueva especie agregada a tu guía de estudio!");
         }
 
         function exportCSV() {
@@ -624,7 +573,7 @@
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "bitacora_los_santos.csv");
+            link.setAttribute("download", "guia_estudio_los_santos.csv");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
