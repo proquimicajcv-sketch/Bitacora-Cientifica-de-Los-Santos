@@ -76,7 +76,7 @@
                 📖 Abrir Cuaderno de Estudio
             </button>
             <button type="button" onclick="resetDatabase()" class="text-[10px] typewriter text-[#d8c5aa] hover:text-white underline cursor-pointer mt-1">
-                🔄 Forzar Actualización / Limpiar Caché Local
+                🔄 Forzar Actualización / Sincronizar Dispositivos
             </button>
         </div>
     </div>
@@ -205,7 +205,7 @@
                 <nav id="category-tabs" class="flex flex-col space-y-1">
                     <button type="button" onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all cursor-pointer">
                         <span class="typewriter text-xs">🐸 Anfibios</span>
-                        <span id="count-anfibios" class="text-[10px] bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">3 spp</span>
+                        <span id="count-anfibios" class="text-[10px] bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">1 spp</span>
                     </button>
                     <button type="button" onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all cursor-pointer">
                         <span class="typewriter text-xs">🦅 Aves</span>
@@ -353,9 +353,9 @@
         </div>
     </div>
 
-    <!-- Script principal con imágenes totalmente opcionales y vacías por defecto -->
+    <!-- Script con Sincronización Inteligente sin sobrescribir el progreso -->
     <script>
-        const defaultDatabase = {
+        const exactCurrentDatabase = {
             anfibios: [
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -372,40 +372,6 @@
                     courtship: "Canto nupcial en coros; machos con sacos vocales desarrollados.",
                     relations: "Competencia acústica intraespecífica y depredación de artrópodos.",
                     science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
-                    img: ""
-                },
-                {
-                    title: "Guía Taxonómica - Anfibios",
-                    loc: "Arroyo del Diablo, Dota",
-                    temp: "22°C",
-                    hum: "94%",
-                    name: "Rana de Ojos Rojos",
-                    sci: "Cruziohyla calcarifer",
-                    habitat: "Estrato arbustivo de bosque nuboso primario.",
-                    niche: "Insectívoro arborícola nocturno.",
-                    morph: "Ojos rojos prominentes, verde brillante con flancos azulados.",
-                    ethology: "Despliegue ocular repentino para asustar depredadores.",
-                    repro: "Reproducción explosiva en charcas temporales.",
-                    courtship: "Reunión masiva en vegetación colgante sobre charcas tras lluvias.",
-                    relations: "Presa de serpientes arborícolas y aves nocturnas.",
-                    science: "Sus ojos escarlata actúan como mecanismo de defensa por sobresalto (deimatic display).",
-                    img: ""
-                },
-                {
-                    title: "Guía Taxonómica - Anfibios",
-                    loc: "Quebrada San Pablo, Tarrazú",
-                    temp: "17°C",
-                    hum: "96%",
-                    name: "Rana de Hojarasca",
-                    sci: "Craugastor escoces",
-                    habitat: "Suelo de bosque nuboso húmedo bajo briófitos.",
-                    niche: "Depredador de invertebrados del suelo y hojarasca.",
-                    morph: "Dorso rugoso críptico, sin membranas natatorias.",
-                    ethology: "Terrestre, hábitos crípticos ocultos.",
-                    repro: "Desarrollo directo dentro del huevo (sin fase de renacuajo).",
-                    courtship: "Llamadas de corto alcance en el suelo del bosque.",
-                    relations: "Competencia con otros anfibios terrestres por recursos de hojarasca.",
-                    science: "Adaptación evolutiva a torrentes fríos de altura al omitir la fase acuática libre.",
                     img: ""
                 }
             ],
@@ -543,27 +509,18 @@
             ]
         };
 
-        let database;
-        try {
-            database = JSON.parse(localStorage.getItem('losSantosStudyDB')) || defaultDatabase;
-        } catch(e) {
-            database = defaultDatabase;
+        // Inteligencia de guardado: Si ya existe una base de datos en el navegador, la respeta y no la sobrescribe. 
+        // Si no existe (primera vez), carga esta estructura limpia sin imágenes predeterminadas.
+        let database = JSON.parse(localStorage.getItem('losSantosStudyDB'));
+        if (!database) {
+            database = exactCurrentDatabase;
+            localStorage.setItem('losSantosStudyDB', JSON.stringify(database));
         }
 
         let currentCategoryKey = 'anfibios';
         let currentIndex = 0;
         let nightVisionActive = true;
         let isEditing = false;
-
-        function resetDatabase() {
-            if (confirm("¿Deseas restablecer los datos originales de la guía y limpiar la caché?")) {
-                localStorage.removeItem('losSantosStudyDB');
-                database = JSON.parse(JSON.stringify(defaultDatabase));
-                switchCategory('anfibios');
-                updateCategoryCounts();
-                alert("¡Base de datos restablecida con éxito!");
-            }
-        }
 
         function openApp() {
             document.getElementById('cover-view').classList.add('hidden');
