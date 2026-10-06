@@ -75,7 +75,9 @@
             <button type="button" onclick="openApp()" class="w-full max-w-xs bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] typewriter text-sm sm:text-base font-bold py-3 px-6 rounded-xl border-2 border-[#d4af37] shadow-2xl transition transform hover:scale-105 cursor-pointer">
                 📖 Abrir Cuaderno de Estudio
             </button>
-            <span class="typewriter text-[10px] text-[#b08d57]">Versión 2026 • Almacenamiento Local Activo</span>
+            <button type="button" onclick="resetDatabase()" class="text-[10px] typewriter text-[#d8c5aa] hover:text-white underline cursor-pointer mt-1">
+                🔄 Forzar Actualización / Limpiar Caché Local
+            </button>
         </div>
     </div>
 
@@ -122,7 +124,7 @@
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="img/rana_nacientes.jpg.jpeg" onerror="this.src='https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80'" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
+                            <img id="specimen-img" src="https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80" onerror="this.src='https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80'" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                         </div>
                     </div>
 
@@ -367,7 +369,7 @@
                     courtship: "Canto nupcial en coros; machos con sacos vocales desarrollados.",
                     relations: "Competencia acústica intraespecífica y depredación de artrópodos.",
                     science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
-                    img: "img/rana_nacientes.jpg.jpeg"
+                    img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80"
                 },
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -550,10 +552,20 @@
         let nightVisionActive = true;
         let isEditing = false;
 
+        function resetDatabase() {
+            if (confirm("¿Deseas restablecer los datos originales de la guía y limpiar la caché?")) {
+                localStorage.removeItem('losSantosStudyDB');
+                database = JSON.parse(JSON.stringify(defaultDatabase));
+                switchCategory('anfibios');
+                updateCategoryCounts();
+                alert("¡Base de datos restablecida con éxito!");
+            }
+        }
+
         function openApp() {
             document.getElementById('cover-view').classList.add('hidden');
             document.getElementById('app-view').classList.remove('hidden');
-            switchCategory('anfibios'); // Siempre inicia en la primera categoría alfabética (Anfibios)
+            switchCategory('anfibios');
         }
 
         function returnToCover() {
@@ -604,7 +616,6 @@
         function renderCurrentSpecimen() {
             const list = database[currentCategoryKey];
             if (!list || list.length === 0) {
-                // Si la categoría está vacía (como Hongos inicialmente), mostrar mensaje limpio
                 document.getElementById('journal-title').innerText = `Guía Taxonómica - ${currentCategoryKey.charAt(0).toUpperCase() + currentCategoryKey.slice(1)}`;
                 document.getElementById('meta-loc').innerText = "Sin registros";
                 document.getElementById('meta-temp').innerText = "--";
