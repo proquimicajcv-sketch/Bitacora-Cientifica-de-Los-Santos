@@ -1,4 +1,4 @@
-}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -113,7 +113,7 @@
                     
                     <div id="journal-meta" class="handwritten text-base text-[#4a2e18] font-bold mb-3 flex flex-wrap gap-3 bg-[#e8dbcc]/60 p-2 rounded border border-[#d2b896]">
                         <span>📍 Distribución: <span id="meta-loc">San Lorenzo de Tarrazú</span></span>
-                        <span>🌡️️ Nicho Térmico: <span id="meta-temp">19°C</span></span>
+                        <span>🌡 Nicho Térmico: <span id="meta-temp">19°C</span></span>
                         <span>💧 Humedad: <span id="meta-hum">95%</span></span>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
                     <p class="handwritten text-xs text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
                 </div>
 
-                <!-- Botones de Pestañas (Incluyendo HONGOS 🍄) -->
+                <!-- Botones de Pestañas -->
                 <nav id="category-tabs" class="flex flex-col space-y-1">
                     <button type="button" onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all cursor-pointer">
                         <span class="typewriter text-xs">🦅 Aves</span>
@@ -282,54 +282,54 @@
                 </div>
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Nombre Común:</label>
-                    <input type="text" id="modal-common" required placeholder="Ej. Hongo luminoso" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                    <input type="text" id="modal-common" required placeholder="Ej. Puma" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Nombre Científico:</label>
-                    <input type="text" id="modal-sci" required placeholder="Ej. Mycena luxaeterna" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                    <input type="text" id="modal-sci" required placeholder="Ej. Puma concolor" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block typewriter text-xs font-bold uppercase">Cantón o Comunidad de Avistamiento:</label>
-                        <input type="text" id="modal-loc" required placeholder="San Lorenzo de Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        <input type="text" id="modal-loc" required placeholder="Tarrazú, Dota, León Cortés" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                     <div>
                         <label class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
-                        <input type="text" id="modal-clim" placeholder="19°C / 95%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        <input type="text" id="modal-clim" placeholder="12°C a 20°C / 80% a 95%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Hábitat (Físico):</label>
-                        <input type="text" id="modal-habitat" required placeholder="Bosque nuboso primario" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-habitat" required placeholder="Bosques primarios y secundarios..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Nicho Ecológico (Rol):</label>
-                        <input type="text" id="modal-niche" required placeholder="Descomponedor / Micorriza" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-niche" required placeholder="Superdepredador tope..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Morfología:</label>
-                        <input type="text" id="modal-morph" placeholder="Tamaño, color..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-morph" placeholder="Complexión, peso..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Etología:</label>
-                        <input type="text" id="modal-ethology" placeholder="Hábitos, canto..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-ethology" placeholder="Solitario, territorial..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Reproducción:</label>
-                        <input type="text" id="modal-repro" placeholder="Esporas..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-repro" placeholder="Gestación, crías..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block typewriter text-[10px] font-bold uppercase">Cortejo / Estructura:</label>
-                        <input type="text" id="modal-courtship" placeholder="Fructificación..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label class="block typewriter text-[10px] font-bold uppercase">Cortejo y Dimorfismo:</label>
+                        <input type="text" id="modal-courtship" placeholder="Vocalizaciones, dimorfismo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Relaciones (Intra/Inter):</label>
-                        <input type="text" id="modal-relations" placeholder="Simbiosis con raíces..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-relations" placeholder="Competencia, presas..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
                 <div>
@@ -348,7 +348,7 @@
         </div>
     </div>
 
-    <!-- Script principal -->
+    <!-- Script principal con Puma integrado -->
     <script>
         const defaultDatabase = {
             aves: [
@@ -390,19 +390,19 @@
             mamiferos: [
                 {
                     title: "Guía Taxonómica - Mamíferos",
-                    loc: "Reserva Los Quetzales, Dota",
-                    temp: "14°C",
-                    hum: "90%",
-                    name: "Puma",
-                    sci: "Puma concolor",
-                    habitat: "Senderos de bosque secundario y áreas de cuencas.",
-                    niche: "Depredador tope regional que regula poblaciones de herbívoros.",
-                    morph: "Pelaje leonado uniforme, gran musculatura.",
-                    ethology: "Solitario, nocturno y crepuscular.",
-                    repro: "Gestión de 90-96 días; camadas de 1 a 4 crías en cuevas.",
-                    courtship: "Marcaje territorial por olor y vocalizaciones en celo.",
-                    relations: "Depredador tope que controla poblaciones de ungulados y roedores.",
-                    science: "Monitoreos con cámaras trampa comprueban que el puma mantiene el equilibrio estructural de los bosques nubosos.",
+                    loc: "Cordillera de Talamanca y Zona de los Santos (Tarrazú, Dota, León Cortés)",
+                    temp: "12°C a 20°C",
+                    hum: "80% a 95%",
+                    name: "Puma, León de montaña, León breñero",
+                    sci: "Puma concolor (Subespecie regional: Puma concolor costaricensis)",
+                    habitat: "Bosques primarios y secundarios densos, áreas de bosque nuboso, matorrales de altura y zonas de transición agrícola en terrenos quebrados o montañosos.",
+                    niche: "Superdepredador tope y carnívoro obligado; clave en la regulación poblacional de mamíferos medianos y herbívoros, manteniendo el equilibrio trófico del ecosistema.",
+                    morph: "Felino grande de complexión esbelta; cabeza pequeña, patas largas y potentes extremidades traseras para el salto. Pelaje uniforme café amarillento a rojizo en el dorso y blanquecino en el vientre; cola larga con punta oscura. Altura al hombro de 60 a 80 cm y peso entre 50 y 90 kg (machos mayores que las hembras).",
+                    ethology: "Solitario, altamente territorial, elusivo y de hábitos principalmente crepusculares y nocturnos. Amplios rangos de acción que patrulla marcando con orina y rasguños en árboles.",
+                    repro: "Polígamo. Periodo de gestación de aproximadamente 90 días, con camadas de 1 a 4 crías nacidas en madrigueras protegidas (cuevas o raíces densas).",
+                    courtship: "Las hembras en celo emiten vocalizaciones fuertes y agudas (similares a gritos o llamados intensos) para atraer a los machos. Fuerte dimorfismo sexual en tamaño y peso (machos superan marcadamente a las hembras). Las crías nacen con manchas oscuras y anillos en la cola que pierden al crecer.",
+                    relations: "Solitario fuera de la época reproductiva. Competencia indirecta por espacio con el jaguar (Panthera onca) en zonas limítrofes, y relación de depredador sobre presas locales como saínos, pizotes, guatuzas y lagartomas.",
+                    science: "Especie altamente adaptable pero vulnerable a la fragmentación de hábitats y la cacería de represalia por depredación de ganado. Funciona como indicador biológico de la salud y conectividad de los corredores biológicos en Talamanca.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80"
                 }
             ],
