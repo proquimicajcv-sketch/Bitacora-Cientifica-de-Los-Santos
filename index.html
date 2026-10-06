@@ -189,46 +189,46 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Avistamientos -->
+            <!-- LADO DERECHO: Panel de Estudio, Taxonomía Ordenada Alfabéticamente y Avistamientos -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
                 <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
                     <p class="handwritten text-xs text-[#d8c5aa]">Tarrazú • Dota • León Cortés</p>
                 </div>
 
-                <!-- Botones de Pestañas -->
+                <!-- Botones de Pestañas en ORDEN ALFABÉTICO -->
                 <nav id="category-tabs" class="flex flex-col space-y-1">
-                    <button type="button" onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🦅 Aves</span>
-                        <span id="count-aves" class="text-[10px] bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🦌 Mamíferos</span>
-                        <span id="count-mamiferos" class="text-[10px] bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">1 spp</span>
-                    </button>
                     <button type="button" onclick="switchCategory('anfibios')" id="tab-anfibios" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-cyan-500/80 bg-[#17a2b8] text-white font-semibold shadow-lg ring-2 ring-cyan-300 transition-all cursor-pointer">
                         <span class="typewriter text-xs">🐸 Anfibios</span>
                         <span id="count-anfibios" class="text-[10px] bg-cyan-950 px-2 py-0.5 rounded-full text-cyan-200">3 spp</span>
                     </button>
-                    <button type="button" onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🐍 Reptiles</span>
-                        <span id="count-reptiles" class="text-[10px] bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
-                    </button>
-                    <button type="button" onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🦂 Invertebrados</span>
-                        <span id="count-invertebrados" class="text-[10px] bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">1 spp</span>
+                    <button type="button" onclick="switchCategory('aves')" id="tab-aves" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-red-900/50 bg-[#8b0000] text-white font-semibold transition-all cursor-pointer">
+                        <span class="typewriter text-xs">🦅 Aves</span>
+                        <span id="count-aves" class="text-[10px] bg-red-950 px-2 py-0.5 rounded-full text-red-200">2 spp</span>
                     </button>
                     <button type="button" onclick="switchCategory('flora')" id="tab-flora" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-green-900/50 bg-[#388e3c] text-white font-semibold transition-all cursor-pointer">
                         <span class="typewriter text-xs">🌿 Flora & Musgos</span>
                         <span id="count-flora" class="text-[10px] bg-green-950 px-2 py-0.5 rounded-full text-green-200">1 spp</span>
                     </button>
+                    <button type="button" onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all cursor-pointer">
+                        <span class="typewriter text-xs">🪨 Geología</span>
+                        <span id="count-geologia" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 muestra</span>
+                    </button>
                     <button type="button" onclick="switchCategory('hongos')" id="tab-hongos" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-amber-800/50 bg-[#6d4c41] text-white font-semibold transition-all cursor-pointer">
                         <span class="typewriter text-xs">🍄 Hongos</span>
                         <span id="count-hongos" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 spp</span>
                     </button>
-                    <button type="button" onclick="switchCategory('geologia')" id="tab-geologia" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-amber-900/50 bg-[#795548] text-white font-semibold transition-all cursor-pointer">
-                        <span class="typewriter text-xs">🪨 Geología</span>
-                        <span id="count-geologia" class="text-[10px] bg-amber-950 px-2 py-0.5 rounded-full text-amber-200">1 muestra</span>
+                    <button type="button" onclick="switchCategory('invertebrados')" id="tab-invertebrados" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-purple-900/50 bg-[#7b1fa2] text-white font-semibold transition-all cursor-pointer">
+                        <span class="typewriter text-xs">🦂 Invertebrados</span>
+                        <span id="count-invertebrados" class="text-[10px] bg-purple-950 px-2 py-0.5 rounded-full text-purple-200">1 spp</span>
+                    </button>
+                    <button type="button" onclick="switchCategory('mamiferos')" id="tab-mamiferos" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-orange-900/50 bg-[#c65102] text-white font-semibold transition-all cursor-pointer">
+                        <span class="typewriter text-xs">🦌 Mamíferos</span>
+                        <span id="count-mamiferos" class="text-[10px] bg-orange-950 px-2 py-0.5 rounded-full text-orange-200">1 spp</span>
+                    </button>
+                    <button type="button" onclick="switchCategory('reptiles')" id="tab-reptiles" class="tab-btn flex items-center justify-between p-1.5 rounded-xl border border-yellow-800/50 bg-[#b58500] text-white font-semibold transition-all cursor-pointer">
+                        <span class="typewriter text-xs">🐍 Reptiles</span>
+                        <span id="count-reptiles" class="text-[10px] bg-yellow-950 px-2 py-0.5 rounded-full text-yellow-200">1 spp</span>
                     </button>
                 </nav>
 
@@ -249,7 +249,7 @@
                             ✏️ Editar Ficha
                         </button>
                         <button type="button" onclick="deleteCurrentSpecimen()" class="bg-[#5c1800] hover:bg-[#8b2500] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#a82d00] transition shadow font-bold cursor-pointer">
-                            🗑️️ Eliminar
+                            🗑️ Eliminar
                         </button>
                     </div>
                     <button type="button" onclick="openAddModal()" class="w-full bg-[#8b2500] hover:bg-[#a82d00] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#5c1800] transition shadow font-bold cursor-pointer">
@@ -270,14 +270,14 @@
                 <div>
                     <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
                     <select id="modal-cat" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
-                        <option value="aves">Aves</option>
-                        <option value="mamiferos">Mamíferos</option>
                         <option value="anfibios" selected>Anfibios</option>
-                        <option value="reptiles">Reptiles</option>
-                        <option value="invertebrados">Invertebrados</option>
+                        <option value="aves">Aves</option>
                         <option value="flora">Flora & Musgos</option>
-                        <option value="hongos">Hongos</option>
                         <option value="geologia">Geología</option>
+                        <option value="hongos">Hongos</option>
+                        <option value="invertebrados">Invertebrados</option>
+                        <option value="mamiferos">Mamíferos</option>
+                        <option value="reptiles">Reptiles</option>
                     </select>
                 </div>
                 <div>
@@ -351,61 +351,6 @@
     <!-- Script principal -->
     <script>
         const defaultDatabase = {
-            aves: [
-                {
-                    title: "Guía Taxonómica - Aves",
-                    loc: "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
-                    temp: "10°C a 18°C",
-                    hum: "85% a 95%",
-                    name: "Quetzal, Quetzal mesoamericano",
-                    sci: "Pharomachrus mocinno (Subespecie regional: Pharomachrus mocinno costaricensis)",
-                    habitat: "Bosques nubosos primarios y secundarios maduros, densamente cargados de musgos, bromelias y plantas epífitas, frecuentando el dosel y los bordes del bosque.",
-                    niche: "Frugívoro especializado y dispersor clave de semillas (principalmente de la familia Lauraceae, como aguacatillos silvestres); clave para la regeneración y salud del ecosistema de bosque nuboso.",
-                    morph: "Ave de mediano tamaño (36 a 40 cm de longitud corporal). El macho posee plumas cobertoras supracaudales extraordinariamente alargadas (hasta 64 cm adicionales), cabeza con penacho erecto y plumaje verde esmeralda/iridiscente con pecho y vientre rojo carmesí. La hembra es de tonos más opacos, cabeza café-grisácea y sin cola larga.",
-                    ethology: "Solitario o en parejas fuera de la época reproductiva; hábitos diurnos y de conducta relativamente críptica a pesar de sus colores. Realizan migraciones altitudinales cortas siguiendo la fructificación de sus alimentos.",
-                    repro: "Monógamo estacional. Anidan en cavidades descompuestas de árboles muertos (toconas) excavadas por ambos sexos. Ponen de 1 a 2 huevos de color azul pálido, con incubación compartida entre el macho y la hembra.",
-                    courtship: "El cortejo incluye vuelos acrobáticos espectaculares del macho sobre el dosel acompañados de llamados melodiosos. Marcado dimorfismo sexual en la longitud de la cola, brillo del plumaje (verde iridiscente vs. café-grisáceo) y coloración del pico (amarillo en machos adultos, negruzco en hembras).",
-                    relations: "Interacciones de competencia pacífica con otras aves frugívoras en árboles con frutos de lauráceas; vulnerable a la depredación de nidos por tucanetes, aves de presa y mamíferos arborícolas.",
-                    science: "Especie altamente sensible a la alteración del hábitat y fragmentación del bosque nuboso. Depende estrictamente de la disponibilidad de árboles maduros para anidar y de corredores biológicos altitudinales funcionales para su supervivencia a largo plazo.",
-                    img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    title: "Guía Taxonómica - Aves",
-                    loc: "San Gerardo de Dota",
-                    temp: "16°C",
-                    hum: "88%",
-                    name: "Colibrí Volcánico",
-                    sci: "Selasphorus flammula",
-                    habitat: "Matorrales de altura y páramo.",
-                    niche: "Nectarívoro especializado y polinizador clave de plantas de Ericaceae.",
-                    morph: "Tamaño diminuto, pico corto y recto.",
-                    ethology: "Muy activo, soporta temperaturas bajo cero mediante letargo.",
-                    repro: "Nido en taza copa sobre arbustos.",
-                    courtship: "Vuelos en picada en forma de 'U' y despliegue de garganta.",
-                    relations: "Competencia interespecífica por recursos florales en alta montaña.",
-                    science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
-                    img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80"
-                }
-            ],
-            mamiferos: [
-                {
-                    title: "Guía Taxonómica - Mamíferos",
-                    loc: "Cordillera de Talamanca y Zona de los Santos (Tarrazú, Dota, León Cortés)",
-                    temp: "12°C a 20°C",
-                    hum: "80% a 95%",
-                    name: "Puma, León de montaña, León breñero",
-                    sci: "Puma concolor (Subespecie regional: Puma concolor costaricensis)",
-                    habitat: "Bosques primarios y secundarios densos, áreas de bosque nuboso, matorrales de altura y zonas de transición agrícola en terrenos quebrados o montañosos.",
-                    niche: "Superdepredador tope y carnívoro obligado; clave en la regulación poblacional de mamíferos medianos y herbívoros, manteniendo el equilibrio trófico del ecosistema.",
-                    morph: "Felino grande de complexión esbelta; cabeza pequeña, patas largas y potentes extremidades traseras para el salto. Pelaje uniforme café amarillento a rojizo en el dorso y blanquecino en el vientre; cola larga con punta oscura. Altura al hombro de 60 a 80 cm y peso entre 50 y 90 kg (machos mayores que las hembras).",
-                    ethology: "Solitario, altamente territorial, elusivo y de hábitos principalmente crepusculares y nocturnos. Amplios rangos de acción que patrulla marcando con orina y rasguños en árboles.",
-                    repro: "Polígamo. Periodo de gestación de aproximadamente 90 días, con camadas de 1 a 4 crías nacidas en madrigueras protegidas (cuevas o raíces densas).",
-                    courtship: "Las hembras en celo emiten vocalizaciones fuertes y agudas (similares a gritos o llamados intensos) para atraer a los machos. Fuerte dimorfismo sexual en tamaño y peso (machos superan marcadamente a las hembras). Las crías nacen con manchas oscuras y anillos en la cola que pierden al crecer.",
-                    relations: "Solitario fuera de la época reproductiva. Competencia indirecta por espacio con el jaguar (Panthera onca) en zonas limítrofes, y relación de depredador sobre presas locales como saínos, pizotes, guatuzas y lagartomas.",
-                    science: "Especie altamente adaptable pero vulnerable a la fragmentación de hábitats y la cacería de represalia por depredación de ganado. Funciona como indicador biológico de la salud y conectividad de los corredores biológicos en Talamanca.",
-                    img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80"
-                }
-            ],
             anfibios: [
                 {
                     title: "Guía Taxonómica - Anfibios",
@@ -459,42 +404,40 @@
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80"
                 }
             ],
-            reptiles: [
+            aves: [
                 {
-                    title: "Guía Taxonómica - Reptiles",
-                    loc: "Cerro Vueltas, León Cortés",
-                    temp: "18°C",
-                    hum: "85%",
-                    name: "Víbora Mano de Piedra",
-                    sci: "Atropoides nummifer",
-                    habitat: "Bordes de bosque con rocas y troncos.",
-                    niche: "Depredador de emboscada que controla roedores silvestres.",
-                    morph: "Cabeza triangular ancha, escamas quilladas robustas.",
-                    ethology: "Nocturna y crepuscular, termorregulando sobre rocas.",
-                    repro: "Vivípara; da a luz crías desarrolladas.",
-                    courtship: "Rituales de proximidad química y combate ritual.",
-                    relations: "Controlador natural de roedores en zonas de altura.",
-                    science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
-                    img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80"
-                }
-            ],
-            invertebrados: [
+                    title: "Guía Taxonómica - Aves",
+                    loc: "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+                    temp: "10°C a 18°C",
+                    hum: "85% a 95%",
+                    name: "Quetzal, Quetzal mesoamericano",
+                    sci: "Pharomachrus mocinno (Subespecie regional: Pharomachrus mocinno costaricensis)",
+                    habitat: "Bosques nubosos primarios y secundarios maduros, densamente cargados de musgos, bromelias y plantas epífitas, frecuentando el dosel y los bordes del bosque.",
+                    niche: "Frugívoro especializado y dispersor clave de semillas (principalmente de la familia Lauraceae, como aguacatillos silvestres); clave para la regeneración y salud del ecosistema de bosque nuboso.",
+                    morph: "Ave de mediano tamaño (36 a 40 cm de longitud corporal). El macho posee plumas cobertoras supracaudales extraordinariamente alargadas (hasta 64 cm adicionales), cabeza con penacho erecto y plumaje verde esmeralda/iridiscente con pecho y vientre rojo carmesí. La hembra es de tonos más opacos, cabeza café-grisácea y sin cola larga.",
+                    ethology: "Solitario o en parejas fuera de la época reproductiva; hábitos diurnos y de conducta relativamente críptica a pesar de sus colores. Realizan migraciones altitudinales cortas siguiendo la fructificación de sus alimentos.",
+                    repro: "Monógamo estacional. Anidan en cavidades descompuestas de árboles muertos (toconas) excavadas por ambos sexos. Ponen de 1 a 2 huevos de color azul pálido, con incubación compartida entre el macho y la hembra.",
+                    courtship: "El cortejo incluye vuelos acrobáticos espectaculares del macho sobre el dosel acompañados de llamados melodiosos. Marcado dimorfismo sexual en la longitud de la cola, brillo del plumaje (verde iridiscente vs. café-grisáceo) y coloración del pico (amarillo en machos adultos, negruzco en hembras).",
+                    relations: "Interacciones de competencia pacífica con otras aves frugívoras en árboles con frutos de lauráceas; vulnerable a la depredación de nidos por tucanetes, aves de presa y mamíferos arborícolas.",
+                    science: "Especie altamente sensible a la alteración del hábitat y fragmentación del bosque nuboso. Depende estrictamente de la disponibilidad de árboles maduros para anidar y de corredores biológicos altitudinales funcionales para su supervivencia a largo plazo.",
+                    img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80"
+                },
                 {
-                    title: "Guía Taxonómica - Invertebrados",
-                    loc: "Bosque Nuboso de Dota",
-                    temp: "15°C",
-                    hum: "98%",
-                    name: "Gusano Terciopelo",
-                    sci: "Peripatus soltani",
-                    habitat: "Bajo corteza en descomposición de robles húmedos.",
-                    niche: "Depredador nocturno especializado de insectos pequeños.",
-                    morph: "Cuerpo vermiforme aterciopelado con múltiples lobópodos.",
-                    ethology: "Expulsa chorros de baba adhesiva para inmovilizar presas.",
-                    repro: "Vivíparo con reproducción especializada.",
-                    courtship: "Transferencia de espermatóforos en la superficie cutánea.",
-                    relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
-                    science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
-                    img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80"
+                    title: "Guía Taxonómica - Aves",
+                    loc: "San Gerardo de Dota",
+                    temp: "16°C",
+                    hum: "88%",
+                    name: "Colibrí Volcánico",
+                    sci: "Selasphorus flammula",
+                    habitat: "Matorrales de altura y páramo.",
+                    niche: "Nectarívoro especializado y polinizador clave de plantas de Ericaceae.",
+                    morph: "Tamaño diminuto, pico corto y recto.",
+                    ethology: "Muy activo, soporta temperaturas bajo cero mediante letargo.",
+                    repro: "Nido en taza copa sobre arbustos.",
+                    courtship: "Vuelos en picada en forma de 'U' y despliegue de garganta.",
+                    relations: "Competencia interespecífica por recursos florales en alta montaña.",
+                    science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
+                    img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80"
                 }
             ],
             flora: [
@@ -516,6 +459,25 @@
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80"
                 }
             ],
+            geologia: [
+                {
+                    title: "Guía Taxonómica - Geología",
+                    loc: "Carretera Interamericana Sur",
+                    temp: "13°C",
+                    hum: "80%",
+                    name: "Complejo Ígneo Talamanca",
+                    sci: "Granodiorita",
+                    habitat: "Taludes de alta pendiente en formaciones montañosas.",
+                    niche: "Sustrato mineral base que define el relieve y los suelos ácidos de Los Santos.",
+                    morph: "Matriz cristalina fanerítica con cuarzo y biotita.",
+                    ethology: "Sometido a intensa meteorización por gradiente altitudinal.",
+                    repro: "Emplazamiento magmático miocénico.",
+                    courtship: "No aplica.",
+                    relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
+                    science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
+                    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                }
+            ],
             hongos: [
                 {
                     title: "Guía Taxonómica - Hongos",
@@ -535,23 +497,61 @@
                     img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80"
                 }
             ],
-            geologia: [
+            invertebrados: [
                 {
-                    title: "Guía Taxonómica - Geología",
-                    loc: "Carretera Interamericana Sur",
-                    temp: "13°C",
-                    hum: "80%",
-                    name: "Complejo Ígneo Talamanca",
-                    sci: "Granodiorita",
-                    habitat: "Taludes de alta pendiente en formaciones montañosas.",
-                    niche: "Sustrato mineral base que define el relieve y los suelos ácidos de Los Santos.",
-                    morph: "Matriz cristalina fanerítica con cuarzo y biotita.",
-                    ethology: "Sometido a intensa meteorización por gradiente altitudinal.",
-                    repro: "Emplazamiento magmático miocénico.",
-                    courtship: "No aplica.",
-                    relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
-                    science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
-                    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                    title: "Guía Taxonómica - Invertebrados",
+                    loc: "Bosque Nuboso de Dota",
+                    temp: "15°C",
+                    hum: "98%",
+                    name: "Gusano Terciopelo",
+                    sci: "Peripatus soltani",
+                    habitat: "Bajo corteza en descomposición de robles húmedos.",
+                    niche: "Depredador nocturno especializado de insectos pequeños.",
+                    morph: "Cuerpo vermiforme aterciopelado con múltiples lobópodos.",
+                    ethology: "Expulsa chorros de baba adhesiva para inmovilizar presas.",
+                    repro: "Vivíparo con reproducción especializada.",
+                    courtship: "Transferencia de espermatóforos en la superficie cutánea.",
+                    relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
+                    science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
+                    img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80"
+                }
+            ],
+            mamiferos: [
+                {
+                    title: "Guía Taxonómica - Mamíferos",
+                    loc: "Cordillera de Talamanca y Zona de los Santos (Tarrazú, Dota, León Cortés)",
+                    temp: "12°C a 20°C",
+                    hum: "80% a 95%",
+                    name: "Puma, León de montaña, León breñero",
+                    sci: "Puma concolor (Subespecie regional: Puma concolor costaricensis)",
+                    habitat: "Bosques primarios y secundarios densos, áreas de bosque nuboso, matorrales de altura y zonas de transición agrícola en terrenos quebrados o montañosos.",
+                    niche: "Superdepredador tope y carnívoro obligado; clave en la regulación poblacional de mamíferos medianos y herbívoros, manteniendo el equilibrio trófico del ecosistema.",
+                    morph: "Felino grande de complexión esbelta; cabeza pequeña, patas largas y potentes extremidades traseras para el salto. Pelaje uniforme café amarillento a rojizo en el dorso y blanquecino en el vientre; cola larga con punta oscura. Altura al hombro de 60 a 80 cm y peso entre 50 y 90 kg (machos mayores que las hembras).",
+                    ethology: "Solitario, altamente territorial, elusivo y de hábitos principalmente crepusculares y nocturnos. Amplios rangos de acción que patrulla marcando con orina y rasguños en árboles.",
+                    repro: "Polígamo. Periodo de gestación de aproximadamente 90 días, con camadas de 1 a 4 crías nacidas en madrigueras protegidas (cuevas o raíces densas).",
+                    courtship: "Las hembras en celo emiten vocalizaciones fuertes y agudas (similares a gritos o llamados intensos) para atraer a los machos. Fuerte dimorfismo sexual en tamaño y peso (machos superan marcadamente a las hembras). Las crías nacen con manchas oscuras y anillos en la cola que pierden al crecer.",
+                    relations: "Solitario fuera de la época reproductiva. Competencia indirecta por espacio con el jaguar (Panthera onca) en zonas limítrofes, y relación de depredador sobre presas locales como saínos, pizotes, guatuzas y lagartomas.",
+                    science: "Especie altamente adaptable pero vulnerable a la fragmentación de hábitats y la cacería de represalia por depredación de ganado. Funciona como indicador biológico de la salud y conectividad de los corredores biológicos en Talamanca.",
+                    img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80"
+                }
+            ],
+            reptiles: [
+                {
+                    title: "Guía Taxonómica - Reptiles",
+                    loc: "Cerro Vueltas, León Cortés",
+                    temp: "18°C",
+                    hum: "85%",
+                    name: "Víbora Mano de Piedra",
+                    sci: "Atropoides nummifer",
+                    habitat: "Bordes de bosque con rocas y troncos.",
+                    niche: "Depredador de emboscada que controla roedores silvestres.",
+                    morph: "Cabeza triangular ancha, escamas quilladas robustas.",
+                    ethology: "Nocturna y crepuscular, termorregulando sobre rocas.",
+                    repro: "Vivípara; da a luz crías desarrolladas.",
+                    courtship: "Rituales de proximidad química y combate ritual.",
+                    relations: "Controlador natural de roedores en zonas de altura.",
+                    science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
+                    img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80"
                 }
             ]
         };
@@ -563,7 +563,7 @@
             database = defaultDatabase;
         }
 
-        let currentCategoryKey = 'aves';
+        let currentCategoryKey = 'anfibios';
         let currentIndex = 0;
         let nightVisionActive = true;
         let isEditing = false;
@@ -571,7 +571,7 @@
         function openApp() {
             document.getElementById('cover-view').classList.add('hidden');
             document.getElementById('app-view').classList.remove('hidden');
-            switchCategory('aves');
+            switchCategory('anfibios'); // Siempre inicia en la primera categoría alfabética
         }
 
         function returnToCover() {
@@ -756,7 +756,15 @@
             }
 
             if (isEditing) {
-                database[currentCategoryKey][currentIndex] = entryData;
+                // Si cambiamos de categoría al editar, movemos la ficha
+                if (currentCategoryKey !== cat) {
+                    database[currentCategoryKey].splice(currentIndex, 1);
+                    database[cat].push(entryData);
+                    currentCategoryKey = cat;
+                    currentIndex = database[cat].length - 1;
+                } else {
+                    database[currentCategoryKey][currentIndex] = entryData;
+                }
                 alert("¡Ficha actualizada con éxito!");
             } else {
                 database[cat].push(entryData);
@@ -769,7 +777,17 @@
             closeAddModal();
             document.getElementById('new-record-form').reset();
 
-            switchCategory(currentCategoryKey);
+            // Mantenerse en la misma categoría y tarjeta exacta sin reiniciar
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-white');
+                btn.style.opacity = '0.75';
+            });
+            const activeBtn = document.getElementById(`tab-${currentCategoryKey}`);
+            if(activeBtn) {
+                activeBtn.style.opacity = '1';
+                activeBtn.classList.add('ring-2', 'ring-white');
+            }
+
             renderCurrentSpecimen();
             updateCategoryCounts();
         }
@@ -805,11 +823,6 @@
             link.click();
             document.body.removeChild(link);
         }
-
-        window.onload = function() {
-            switchCategory('aves');
-            updateCategoryCounts();
-        };
     </script>
 </body>
 </html>
