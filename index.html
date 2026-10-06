@@ -264,7 +264,6 @@
                             <option value="anfibios" selected>Anfibios</option>
                             <option value="aves">Aves</option>
                             <option value="flora">Flora & Musgos</option>
-                            <option value="geologia">Geología</option>
                             <option value="hongos">Hongos</option>
                             <option value="invertebrados">Invertebrados</option>
                             <option value="mamiferos">Mamíferos</option>
@@ -430,45 +429,8 @@
                     img: "img/img4.png"
                 }
             ],
-            geologia: [
-                {
-                    title: "Guía Taxonómica - Geología",
-                    loc: "Carretera Interamericana Sur",
-                    temp: "13°C",
-                    hum: "80%",
-                    name: "Complejo Ígneo Talamanca",
-                    sci: "Granodiorita",
-                    habitat: "Taludes de alta pendiente en formaciones montañosas.",
-                    niche: "Sustrato mineral base que define el relieve y los suelos ácidos de Los Santos.",
-                    morph: "Matriz cristalina fanerítica con cuarzo y biotita.",
-                    ethology: "Sometido a intensa meteorización por gradiente altitudinal.",
-                    repro: "Emplazamiento magmático miocénico.",
-                    courtship: "No aplica.",
-                    relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
-                    science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
-                    img: "img/img5.png"
-                }
-            ],
             hongos: [],
-            invertebrados: [
-                {
-                    title: "Guía Taxonómica - Invertebrados",
-                    loc: "Bosque Nuboso de Dota",
-                    temp: "15°C",
-                    hum: "98%",
-                    name: "Gusano Terciopelo",
-                    sci: "Peripatus soltani",
-                    habitat: "Bajo corteza en descomposición de robles húmedos.",
-                    niche: "Depredador nocturno especializado de insectos pequeños.",
-                    morph: "Cuerpo vermiforme aterciopelado con múltiples lobópodos.",
-                    ethology: "Expulsa chorros de baba adhesiva para inmovilizar presas.",
-                    repro: "Vivíparo con reproducción especializada.",
-                    courtship: "Transferencia de espermatóforos en la superficie cutánea.",
-                    relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
-                    science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
-                    img: "img/img6.png"
-                }
-            ],
+            invertebrados: [],
             mamiferos: [
                 {
                     title: "Guía Taxonómica - Mamíferos",
@@ -485,7 +447,7 @@
                     courtship: "Las hembras en celo emiten vocalizaciones fuertes y agudas (similares a gritos o llamados intensos) para atraer a los machos. Fuerte dimorfismo sexual en tamaño y peso (machos superan marcadamente a las hembras). Las crías nacen con manchas oscuras y anillos en la cola que pierden al crecer.",
                     relations: "Solitario fuera de la época reproductiva. Competencia indirecta por espacio con el jaguar (Panthera onca) en zonas limítrofes, y relación de depredador sobre presas locales como saínos, pizotes, guatuzas y lagartomas.",
                     science: "Especie altamente adaptable pero vulnerable a la fragmentación de hábitats y la cacería de represalia por depredación de ganado. Funciona como indicador biológico de la salud y conectividad de los corredores biológicos en Talamanca.",
-                    img: "img/img7.png"
+                    img: "img/img6.png"
                 }
             ],
             reptiles: [
@@ -504,7 +466,7 @@
                     courtship: "Rituales de proximidad química y combate ritual.",
                     relations: "Controlador natural de roedores en zonas de altura.",
                     science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
-                    img: "img/img8.png"
+                    img: "img/img7.png"
                 },
                 {
                     title: "Guía Taxonómica - Reptiles",
@@ -521,6 +483,23 @@
                     courtship: "Competencia de machos y marcaje químico por feromonas; los machos suelen alcanzar mayor tamaño promedio.",
                     relations: "Importante eslabón como regulador natural de poblaciones de roedores en los ecosistemas de alta montaña.",
                     science: "Especie venenosa con veneno de acción hemotóxica; endémica de las cordilleras de Talamanca y Central en Costa Rica y oeste de Panamá.",
+                    img: "img/img8.png"
+                },
+                {
+                    title: "Guía Taxonómica - Reptiles",
+                    loc: "Cordillera de Talamanca y Zonas Altas de Los Santos",
+                    temp: "16°C",
+                    hum: "85%",
+                    name: "Lagartija Espinosa",
+                    sci: "Sceloporus zosteraceus",
+                    habitat: "Rocas expuestas, troncos caídos y matorrales de altura en zonas montañosas y bordes de bosque.",
+                    niche: "Insectívoro diurno; cumple un papel clave en el control biológico de poblaciones de insectos y artrópodos.",
+                    morph: "Lagartija robusta con escamas dorsales fuertemente aquilladas y espinosas; coloración general verdosa o café con patrones crípticos para termorregulación.",
+                    ethology: "Hábitos estrictamente diurnos; pasa gran parte del día realizando termorregulación activa sobre rocas expuestas a la radiación solar.",
+                    repro: "Vivípara u ovípara según adaptaciones altitudinales de alta montaña; puesta o alumbramiento protegido en grietas rocosas.",
+                    courtship: "Despliegues visuales mediante flexiones corporales (*push-ups*) y exhibición de colores gulares por parte de los machos.",
+                    relations: "Importante presa para aves rapaces de altura y serpientes arbóreas o terrestres; competencia por espacios óptimos de termorregulación.",
+                    science: "Excelente indicador biológico de la calidad de hábitats abiertos y rocosos expuestos a la luz solar en los gradientes altitudinales de Talamanca.",
                     img: "img/img9.png"
                 }
             ]
@@ -589,13 +568,12 @@
             }
         ];
 
-        // Sincronización inteligente que previene pérdida de datos o imágenes
+        // Sincronización robusta que asegura que los datos base y las imágenes fijas no se pierdan
         let speciesDatabase = JSON.parse(localStorage.getItem('losSantosSpeciesDB'));
         if (!speciesDatabase) {
             speciesDatabase = initialSpeciesDB;
             localStorage.setItem('losSantosSpeciesDB', JSON.stringify(speciesDatabase));
         } else {
-            // Asegurar que categorías y rutas base estén siempre presentes
             for (let cat in initialSpeciesDB) {
                 if (!speciesDatabase[cat]) speciesDatabase[cat] = initialSpeciesDB[cat];
             }
@@ -675,7 +653,6 @@
                 {key: 'anfibios', label: '🐸 Anfibios', color: '#17a2b8'},
                 {key: 'aves', label: '🦅 Aves', color: '#8b0000'},
                 {key: 'flora', label: '🌿 Flora & Musgos', color: '#388e3c'},
-                {key: 'geologia', label: '🪨 Geología', color: '#795548'},
                 {key: 'hongos', label: '🍄 Hongos', color: '#6d4c41'},
                 {key: 'invertebrados', label: '🦂 Invertebrados', color: '#7b1fa2'},
                 {key: 'mamiferos', label: '🦌 Mamíferos', color: '#c65102'},
@@ -702,7 +679,7 @@
                     <div class="max-h-48 overflow-y-auto space-y-1">
                         ${sitesDatabase.map((site, idx) => `
                             <button type="button" onclick="selectSiteIndex(${idx})" class="w-full text-left p-1.5 rounded text-xs typewriter transition cursor-pointer ${idx === currentIndex ? 'bg-[#8b2500] text-white font-bold' : 'bg-[#2a1b14] text-[#d8c5aa] hover:bg-[#3d271d]'}" title="${site.name}">
-                                🏔️️ ${site.name}
+                                🏔 ${site.name}
                             </button>
                         `).join('')}
                     </div>
@@ -760,6 +737,12 @@
                     document.getElementById('regional-canton-display').innerText = "Zona de Los Santos";
                     document.getElementById('counter-display').innerText = "0/0";
                     document.getElementById('record-count').innerText = "Ficha #0 / 0";
+                    
+                    const imgEl = document.getElementById('specimen-img');
+                    const placeholder = document.getElementById('img-placeholder');
+                    imgEl.classList.add('hidden');
+                    placeholder.classList.remove('hidden');
+                    placeholder.innerHTML = `📷 Sin registros<br><span class="text-[10px] typewriter">Agrega especies usando el botón inferior</span>`;
                     return;
                 }
                 if (currentIndex >= list.length) currentIndex = 0;
@@ -851,7 +834,7 @@
                 imgEl.onerror = function() {
                     this.classList.add('hidden');
                     placeholder.classList.remove('hidden');
-                    placeholder.innerHTML = `⚠️ No se encontró: ${imgPath}<br><span class="text-[9px] typewriter">Verifica que el archivo exista en la carpeta img/</span>`;
+                    placeholder.innerHTML = `⚠️ No se encontró: ${imgPath}<br><span class="text-[9px] typewriter">Coloca el archivo en la carpeta img/</span>`;
                 };
             } else {
                 imgEl.classList.add('hidden');
