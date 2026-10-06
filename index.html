@@ -60,23 +60,24 @@
             <!-- LADO IZQUIERDO: Cuaderno de Estudio -->
             <div class="flex-1 paper-texture rounded-lg p-4 sm:p-6 relative flex flex-col justify-between overflow-y-auto border border-[#d8c5aa]">
                 
-                <!-- Botón superior -->
-                <div class="absolute top-2 right-4 flex items-center gap-2 z-30">
-                    <button onclick="toggleNightVision()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3d271d] text-[#f3e9dc] px-2 py-1 rounded border border-[#70492c] hover:bg-[#523528] transition shadow">
-                        🌙 <span id="nv-text">Modo Noche: ON</span>
-                    </button>
-                    <button onclick="exportCSV()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#8b2500] text-[#f3e9dc] px-2 py-1 rounded border border-[#5c1800] hover:bg-[#a82d00] transition shadow">
-                        📥 Exportar CSV
-                    </button>
-                </div>
-
-                <div class="absolute top-8 right-4 text-[10px] sm:text-xs typewriter uppercase tracking-widest text-[#8b5a2b] opacity-65 font-bold">
-                    Guía de Estudio • Zona Los Santos
+                <!-- Barra superior de botones sin superposición -->
+                <div class="flex flex-wrap justify-between items-center border-b border-[#d2b896] pb-2 mb-3 gap-2">
+                    <span class="text-[10px] sm:text-xs typewriter uppercase tracking-widest text-[#8b5a2b] font-bold">
+                        Guía de Estudio • Zona Los Santos
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleNightVision()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#3d271d] text-[#f3e9dc] px-2 py-1 rounded border border-[#70492c] hover:bg-[#523528] transition shadow">
+                            🌙 <span id="nv-text">Modo Noche: ON</span>
+                        </button>
+                        <button onclick="exportCSV()" class="text-[10px] sm:text-xs typewriter uppercase tracking-widest bg-[#8b2500] text-[#f3e9dc] px-2 py-1 rounded border border-[#5c1800] hover:bg-[#a82d00] transition shadow">
+                            📥 CSV
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Cabecera -->
                 <div>
-                    <h1 id="journal-title" class="typewriter text-lg sm:text-2xl font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-2">
+                    <h1 id="journal-title" class="typewriter text-lg sm:text-2xl font-bold text-[#3a1d0c] pb-1 mb-2">
                         Guía Taxonómica - Anfibios
                     </h1>
                     
@@ -470,7 +471,7 @@
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
                 document.getElementById('annot-3'),
-                document.getElementById('annot-4')
+                document.getElementById('annot-4']
             ];
 
             annotElements.forEach((el, idx) => {
