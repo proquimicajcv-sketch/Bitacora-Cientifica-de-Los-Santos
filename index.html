@@ -39,11 +39,11 @@
             stroke-dasharray: 3,2;
             fill: none;
         }
-        .santos-map {
-            background-color: #e5d4bc;
-            background-image: radial-gradient(#b08d57 0.75px, transparent 0.75px);
-            background-size: 12px 12px;
-            border: 2px dashed #8b5a2b;
+        .real-santos-map {
+            border: 2px solid #8b5a2b;
+            position: relative;
+            overflow: hidden;
+            background-color: #1f140f;
         }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(139, 37, 0, 0.4); border-radius: 4px; }
@@ -98,7 +98,7 @@
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-36 sm:h-44 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
+                            <img id="specimen-img" src="img/rana_nacientes.jpg.jpeg" onerror="this.src='https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80'" alt="Organismo" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded">
                             
                             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
                                 <path id="line-1" d="M 90,80 Q 60,60 30,50" class="pointer-line" />
@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <!-- Bloques Detallados de Estudio (Morfología, Etología, Reproducción) -->
+                <!-- Bloques Detallados de Estudio -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-1">
                     <div class="bg-[#f6eddf] p-2 rounded border border-[#d2b896]">
                         <h5 class="typewriter text-[10px] font-bold text-[#633e21] uppercase">🧬 Morfología:</h5>
@@ -173,7 +173,7 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Mini-Mapa -->
+            <!-- LADO DERECHO: Panel de Estudio, Taxonomía y Mapa Oficial de Los Santos -->
             <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
                 <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                     <h2 class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
@@ -212,21 +212,21 @@
                     </button>
                 </nav>
 
-                <!-- Mini-Mapa Científico de la Zona de Los Santos -->
-                <div class="santos-map p-2 rounded-lg text-center relative shadow-inner overflow-hidden h-28 flex flex-col justify-between">
-                    <div class="flex justify-between items-center text-[10px] typewriter font-bold text-[#3a1d0c] border-b border-[#8b5a2b]/40 pb-0.5">
-                        <span>🗺️ Mapa Los Santos</span>
-                        <span id="map-canton-tag" class="text-[9px] bg-[#3a1d0c] text-[#f3e9dc] px-1 rounded">Tarrazú</span>
+                <!-- MAPA OFICIAL DE LOS SANTOS CON MARCADOR "X" DINÁMICO -->
+                <div class="real-santos-map p-1.5 rounded-lg text-center relative shadow-inner h-32 flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-[10px] typewriter font-bold text-[#f3e9dc] bg-black/60 px-1 rounded z-10">
+                        <span>🗺️ Mapa Los Santos[cite: 10]</span>
+                        <span id="map-canton-tag" class="text-[9px] bg-red-800 text-white px-1 rounded">Tarrazú</span>
                     </div>
-                    <div class="relative flex-1 flex items-center justify-center">
-                        <span class="absolute text-[10px] typewriter text-[#5c3a21] top-1 left-2">Dota</span>
-                        <span class="absolute text-[10px] typewriter text-[#5c3a21] bottom-1 left-4">Tarrazú</span>
-                        <span class="absolute text-[10px] typewriter text-[#5c3a21] top-2 right-2">León Cortés</span>
-                        <div id="map-marker" class="absolute text-red-700 font-extrabold text-lg animate-pulse" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            📍<span class="text-xs bg-red-950 text-white px-1 rounded ml-0.5">X</span>
-                        </div>
+                    <!-- Imagen de tu mapa oficial apuntando a img/mapa_los_santos.jpg.jfip -->
+                    <div class="absolute inset-0 pt-5 pb-1 px-1 flex items-center justify-center">
+                        <img src="img/mapa_los_santos.jpg.jfip" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80'" alt="Mapa Los Santos" class="w-full h-full object-cover rounded opacity-85">
                     </div>
-                    <div class="text-[9px] handwritten text-[#4a2e18]">Hallazgos científicos comprobados</div>
+                    <!-- Marcador "X" dinámico de hallazgo científico comprobado -->
+                    <div id="map-marker" class="absolute z-20 text-red-600 font-extrabold text-sm drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] animate-bounce" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        ❌
+                    </div>
+                    <div class="text-[9px] typewriter text-[#f3e9dc] bg-black/60 rounded z-10">Hallazgos Comprobados</div>
                 </div>
 
                 <!-- Botones de Estudio -->
@@ -244,7 +244,7 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar Nueva Especie con Relaciones y Dimorfismo -->
+    <!-- Modal para Agregar Nueva Especie -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <h2 class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie a la Guía</h2>
@@ -271,8 +271,8 @@
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block typewriter text-xs font-bold uppercase">Distribución / Zona:</label>
-                        <input type="text" id="modal-loc" required placeholder="San Lorenzo de Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        <label class="block typewriter text-xs font-bold uppercase">Distribución / Cantón:</label>
+                        <input type="text" id="modal-loc" required placeholder="Tarrazú / San Lorenzo" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
                     <div>
                         <label class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
@@ -306,11 +306,11 @@
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Cortejo y Dimorfismo:</label>
-                        <input type="text" id="modal-courtship" placeholder="Cantos, diferencias sexuales..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-courtship" placeholder="Cantos, dimorfismo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                     <div>
                         <label class="block typewriter text-[10px] font-bold uppercase">Relaciones (Intra/Inter):</label>
-                        <input type="text" id="modal-relations" placeholder="Competencia, simbiosis..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <input type="text" id="modal-relations" placeholder="Competencia, mutualismo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
                     </div>
                 </div>
                 <div>
@@ -335,7 +335,7 @@
             aves: [
                 {
                     title: "Guía Taxonómica - Aves",
-                    loc: "Cerro de la Muerte, 3,100 msnm",
+                    loc: "Cerro de la Muerte, Dota",
                     temp: "11°C",
                     hum: "92%",
                     name: "Quetzal Resplandeciente",
@@ -345,16 +345,16 @@
                     morph: "Plumaje verde iridiscente, cola muy desarrollada en machos.",
                     ethology: "Diurno, territorial en época reproductiva.",
                     repro: "Anida en cavidades de árboles muertos; puesta de 2 huevos.",
-                    courtship: "Vuelo nupcial acrobático y vocalizaciones suaves en pareja. Dimorfismo evidente (macho con cola caudal larga).",
-                    relations: "Interespecífica: Mutualismo con árboles de Lauraceae. Intraespecífica: Territorialidad estricta entre machos.",
+                    courtship: "Vuelo nupcial acrobático y vocalizaciones suaves en pareja.",
+                    relations: "Mutualismo con árboles de Lauraceae; competencia territorial entre machos.",
                     science: "Estudios ornitológicos en Talamanca confirman que el Quetzal es vital para la regeneración del bosque primario nuboso.",
                     img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "30%", left: "40%" },
+                    mapPos: { top: "45%", left: "75%" },
                     annots: ["Cresta verde", "Cola caudal", "Dimorfismo", "Dispersor"]
                 },
                 {
                     title: "Guía Taxonómica - Aves",
-                    loc: "San Gerardo de Dota, 2,200 msnm",
+                    loc: "San Gerardo de Dota",
                     temp: "16°C",
                     hum: "88%",
                     name: "Colibrí Volcánico",
@@ -364,18 +364,18 @@
                     morph: "Tamaño diminuto, pico corto y recto.",
                     ethology: "Muy activo, soporta temperaturas bajo cero mediante letargo.",
                     repro: "Nido en taza copa sobre arbustos.",
-                    courtship: "Cortejo con vuelos en picada en forma de 'U' y despliegue de garganta iridiscente.",
-                    relations: "Fuerte competencia interespecífica con otros colibríes por el territorio floral.",
+                    courtship: "Vuelos en picada en forma de 'U' y despliegue de garganta.",
+                    relations: "Competencia interespecífica por recursos florales en alta montaña.",
                     science: "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
                     img: "https://images.unsplash.com/photo-1565118531796-764fa9c6dfb1?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "20%", left: "70%" },
+                    mapPos: { top: "35%", left: "80%" },
                     annots: ["Garganta fucsia", "Pico recto", "Tasa metabólica", "Polinizador"]
                 }
             ],
             mamiferos: [
                 {
                     title: "Guía Taxonómica - Mamíferos",
-                    loc: "Reserva Los Quetzales, 2,500 msnm",
+                    loc: "Reserva Los Quetzales, Dota",
                     temp: "14°C",
                     hum: "90%",
                     name: "Puma",
@@ -385,18 +385,18 @@
                     morph: "Pelaje leonado uniforme, gran musculatura.",
                     ethology: "Solitario, nocturno y crepuscular.",
                     repro: "Gestión de 90-96 días; camadas de 1 a 4 crías en cuevas.",
-                    courtship: "Vocalizaciones audibles y marcaje de olor territorial para atraer parejas durante el celo.",
-                    relations: "Interespecífica: Depredador tope que controla ungulados. Intraespecífica: Solitarios, evitan encuentros directos salvo apareamiento.",
+                    courtship: "Marcaje territorial por olor y vocalizaciones en celo.",
+                    relations: "Depredador tope que controla poblaciones de ungulados y roedores.",
                     science: "Monitoreos con cámaras trampa comprueban que el puma mantiene el equilibrio estructural de los bosques nubosos.",
                     img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "45%", left: "55%" },
+                    mapPos: { top: "60%", left: "70%" },
                     annots: ["Garras retráctiles", "Paso amplio", "Excreta con pelo", "Depredador tope"]
                 }
             ],
             anfibios: [
                 {
                     title: "Guía Taxonómica - Anfibios",
-                    loc: "San Lorenzo de Tarrazú, 1,550 msnm",
+                    loc: "San Lorenzo de Tarrazú",
                     temp: "19°C",
                     hum: "95%",
                     name: "Rana de las Nacientes",
@@ -406,11 +406,11 @@
                     morph: "Tamaño <4cm, coloración verdosa críptica.",
                     ethology: "Nocturna, arborícola, machos vocalizan cerca de nacientes.",
                     repro: "Puesta de huevos gelatinosos sobre hojas colgantes en agua.",
-                    courtship: "Canto nupcial nocturno en coros y dimorfismo con sacos vocales desarrollados en machos.",
-                    relations: "Intraespecífica: Competencia acústica por cantos de apareamiento. Interespecífica: Depredación sobre artrópodos menores.",
+                    courtship: "Canto nupcial en coros; machos con sacos vocales desarrollados.",
+                    relations: "Competencia acústica intraespecífica y depredación de artrópodos.",
                     science: "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
-                    img: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "65%", left: "30%" },
+                    img: "img/rana_nacientes.jpg.jpeg",
+                    mapPos: { top: "50%", left: "30%" },
                     annots: ["Tamaño diminuto", "Garganta translúcida", "Endémica", "Sensible"]
                 },
                 {
@@ -425,11 +425,11 @@
                     morph: "Ojos rojos prominentes, verde brillante con flancos azulados.",
                     ethology: "Despliegue ocular repentino para asustar depredadores.",
                     repro: "Reproducción explosiva en charcas temporales.",
-                    courtship: "Reunión masiva en vegetación colgante sobre charcas tras lluvias intensas.",
-                    relations: "Presa de serpientes arborícolas y aves nocturnas; depredador de insectos.",
+                    courtship: "Reunión masiva en vegetación colgante sobre charcas tras lluvias.",
+                    relations: "Presa de serpientes arborícolas y aves nocturnas.",
                     science: "Sus ojos escarlata actúan como mecanismo de defensa por sobresalto (deimatic display).",
                     img: "https://images.unsplash.com/photo-1574068468758-86d9d70fcd41?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "35%", left: "65%" },
+                    mapPos: { top: "40%", left: "60%" },
                     annots: ["Ojos rojos", "Parotoides", "Termorregulación", "Arborícola"]
                 },
                 {
@@ -444,18 +444,18 @@
                     morph: "Dorso rugoso críptico, sin membranas natatorias.",
                     ethology: "Terrestre, hábitos crípticos ocultos.",
                     repro: "Desarrollo directo dentro del huevo (sin fase de renacuajo).",
-                    courtship: "Cortes silenciosos o llamadas de corto alcance en el suelo del bosque.",
+                    courtship: "Llamadas de corto alcance en el suelo del bosque.",
                     relations: "Competencia con otros anfibios terrestres por recursos de hojarasca.",
                     science: "Adaptación evolutiva a torrentes fríos de altura al omitir la fase acuática libre.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "75%", left: "45%" },
+                    mapPos: { top: "55%", left: "45%" },
                     annots: ["Dorso rugoso", "Sin membranas", "Desarrollo directo", "Bioindicador"]
                 }
             ],
             reptiles: [
                 {
                     title: "Guía Taxonómica - Reptiles",
-                    loc: "Cerro Vueltas, 2,300 msnm",
+                    loc: "Cerro Vueltas, León Cortés",
                     temp: "18°C",
                     hum: "85%",
                     name: "Víbora Mano de Piedra",
@@ -465,11 +465,11 @@
                     morph: "Cabeza triangular ancha, escamas quilladas robustas.",
                     ethology: "Nocturna y crepuscular, termorregulando sobre rocas.",
                     repro: "Vivípara; da a luz crías desarrolladas.",
-                    courtship: "Rituales de combate y proximidad química mediante feromonas.",
-                    relations: "Depredador de roedores y aves ground-nesting; presa ocasional de rapaces.",
+                    courtship: "Rituales de proximidad química y combate ritual.",
+                    relations: "Controlador natural de roedores en zonas de altura.",
                     science: "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
                     img: "https://images.unsplash.com/photo-1531386151447-f70ad79493dc?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "25%", left: "50%" },
+                    mapPos: { top: "30%", left: "50%" },
                     annots: ["Cabeza triangular", "Foseta loreal", "Hemotóxico", "Controlador"]
                 }
             ],
@@ -486,18 +486,18 @@
                     morph: "Cuerpo vermiforme aterciopelado con múltiples lobópodos.",
                     ethology: "Expulsa chorros de baba adhesiva para inmovilizar presas.",
                     repro: "Vivíparo con reproducción especializada.",
-                    courtship: "Transferencia indirecta o directa de espermatóforos en la superficie cutánea.",
-                    relations: "Endemismo estricto; interacciones directas con microfauna de descomposición.",
+                    courtship: "Transferencia de espermatóforos en la superficie cutánea.",
+                    relations: "Endemismo estricto; interacciones con microfauna de descomposición.",
                     science: "Considerado un fósil viviente cuya anatomía externa se mantiene intacta desde hace más de 500 millones de años.",
                     img: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "40%", left: "75%" },
+                    mapPos: { top: "70%", left: "75%" },
                     annots: ["Piel terciopelo", "Papilas de baba", "Antenas", "Fósil viviente"]
                 }
             ],
             flora: [
                 {
                     title: "Guía Taxonómica - Flora & Musgos",
-                    loc: "Río Savegre, 1,900 msnm",
+                    loc: "Río Savegre, Dota",
                     temp: "19°C",
                     hum: "95%",
                     name: "Musgos y Epífitas",
@@ -507,11 +507,11 @@
                     morph: "Filidios sin nervio central, alta capilaridad.",
                     ethology: "Crecimiento lento dependiente de la neblina horizontal.",
                     repro: "Reproducción por esporas y fragmentación.",
-                    courtship: "No aplica (reproducción asexual y por esporas).",
-                    relations: "Simbiosis y epifitismo nodriza; alberga comunidades enteras de tardígrados e insectos.",
+                    courtship: "No aplica.",
+                    relations: "Epifitismo nodriza; alberga comunidades enteras de tardígrados e insectos.",
                     science: "Los briófitos capturan hasta un 50% de agua de neblina horizontal, recargando los acuíferos de la zona cafetalera.",
                     img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "50%", left: "20%" },
+                    mapPos: { top: "80%", left: "65%" },
                     annots: ["Retención hídrica", "Microecosistema", "Filidios", "Epífita nodriza"]
                 }
             ],
@@ -528,11 +528,11 @@
                     morph: "Matriz cristalina fanerítica con cuarzo y biotita.",
                     ethology: "Sometido a intensa meteorización por gradiente altitudinal.",
                     repro: "Emplazamiento magmático miocénico.",
-                    courtship: "No aplica (origen abiótico/tectónico).",
-                    relations: "Sustento físico para el desarrollo de la cobertura vegetal y los microhábitats edáficos.",
+                    courtship: "No aplica.",
+                    relations: "Sustento físico para el desarrollo de la cobertura vegetal.",
                     science: "El alzamiento de Talamanca ocurrió en el Mioceno (hace ~10 millones de años), generando los nichos de altura actuales.",
                     img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
-                    mapPos: { top: "15%", left: "45%" },
+                    mapPos: { top: "25%", left: "60%" },
                     annots: ["Matriz cristalina", "Cuarzo biotita", "Magmático", "Erosión"]
                 }
             ]
@@ -618,7 +618,7 @@
                 marker.style.left = "50%";
             }
 
-            document.getElementById('map-canton-tag').innerText = data.loc.includes('Dota') ? 'Dota' : (data.loc.includes('Tarrazú') ? 'Tarrazú' : 'Talamanca');
+            document.getElementById('map-canton-tag').innerText = data.loc.includes('Dota') ? 'Dota' : (data.loc.includes('Tarrazú') ? 'Tarrazú' : 'León Cortés');
 
             document.getElementById('counter-display').innerText = `${currentIndex + 1}/${list.length}`;
             document.getElementById('record-count').innerText = `Ficha #${currentIndex + 1} / ${list.length}`;
@@ -628,7 +628,7 @@
                 document.getElementById('annot-1'),
                 document.getElementById('annot-2'),
                 document.getElementById('annot-3'),
-                document.getElementById('annot-4')
+                document.getElementById('annot-4']
             ];
 
             annotElements.forEach((el, idx) => {
