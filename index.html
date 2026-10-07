@@ -257,12 +257,13 @@
         </div>
     </main>
 
-    <!-- Modal para Agregar / Editar -->
+    <!-- Modal para Agregar / Editar (Separado para Especies y Sitios) -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <h2 id="modal-title-text" class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie</h2>
             <form id="new-record-form" onsubmit="handleSaveRecord(event)" class="space-y-2.5 handwritten text-lg text-[#3a1d0c]">
                 
+                <!-- FORMULARIO 1: ESPECIES -->
                 <div id="form-species-fields" class="space-y-2.5">
                     <div>
                         <label class="block typewriter text-xs font-bold uppercase">Categoría:</label>
@@ -284,8 +285,79 @@
                         <label class="block typewriter text-xs font-bold uppercase">Nombre Científico:</label>
                         <input type="text" id="modal-sci" placeholder="Ej. Pharomachrus mocinno" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block typewriter text-xs font-bold uppercase">Cantón o Ubicación:</label>
+                            <input type="text" id="modal-loc" placeholder="Dota / Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        </div>
+                        <div>
+                            <label class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
+                            <input type="text" id="modal-clim" placeholder="10°C / 90%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
+                        </div>
+                    </div>
+
+                    <!-- Configuración de Dimorfismo e Imágenes -->
+                    <div id="form-dimorph-section" class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878] space-y-2">
+                        <div>
+                            <label class="block typewriter text-xs font-bold uppercase">¿Tiene Dimorfismo Sexual?:</label>
+                            <select id="modal-dimorph" onchange="toggleDimorphInputs()" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter">
+                                <option value="false" selected>No</option>
+                                <option value="true">Sí (Dos imágenes / Macho y Hembra)</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div>
+                                <label class="block typewriter text-[10px] font-bold uppercase">Ruta Imagen 1 (ej. img/img1.png):</label>
+                                <input type="text" id="modal-img1-url" placeholder="img/img1.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter">
+                            </div>
+                            <div id="div-img2" class="hidden">
+                                <label class="block typewriter text-[10px] font-bold uppercase">Ruta Imagen 2 (ej. img/img2.png):</label>
+                                <input type="text" id="modal-img2-url" placeholder="img/img2.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block typewriter text-[10px] font-bold uppercase">Hábitat (Físico):</label>
+                            <input type="text" id="modal-f1" placeholder="Bosque nuboso..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        </div>
+                        <div>
+                            <label class="block typewriter text-[10px] font-bold uppercase">Nicho Ecológico (Rol):</label>
+                            <input type="text" id="modal-f2" placeholder="Recarga hídrica..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="block typewriter text-[10px] font-bold uppercase">Morfología:</label>
+                            <input type="text" id="modal-f3" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        </div>
+                        <div>
+                            <label class="block typewriter text-[10px] font-bold uppercase">Etología:</label>
+                            <input type="text" id="modal-f4" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        </div>
+                        <div>
+                            <label class="block typewriter text-[10px] font-bold uppercase">Reproducción:</label>
+                            <input type="text" id="modal-f5" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block typewriter text-[10px] font-bold uppercase">Cortejo y Dimorfismo:</label>
+                            <input type="text" id="modal-f6" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        </div>
+                        <div>
+                            <label class="block typewriter text-[10px] font-bold uppercase">Relaciones:</label>
+                            <input type="text" id="modal-f7" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
+                        <textarea id="modal-science" rows="2" placeholder="Información comprobada..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
+                    </div>
                 </div>
 
+                <!-- FORMULARIO 2: SITIOS Y CERROS -->
                 <div id="form-sites-fields" class="space-y-2.5 hidden">
                     <div>
                         <label class="block typewriter text-xs font-bold uppercase">Nombre Oficial del Cerro / Sitio:</label>
@@ -295,77 +367,40 @@
                         <label class="block typewriter text-xs font-bold uppercase">Nombre Popular / Histórico:</label>
                         <input type="text" id="modal-site-popular" placeholder="Ej. Cerro de la Cruz" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                     </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label id="label-loc-input" class="block typewriter text-xs font-bold uppercase">Cantón o Ubicación:</label>
-                        <input type="text" id="modal-loc" required placeholder="Dota / Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
-                    </div>
-                    <div>
-                        <label id="label-clim-input" class="block typewriter text-xs font-bold uppercase">Nicho Térmico / Humedad:</label>
-                        <input type="text" id="modal-clim" placeholder="10°C / 90%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
-                    </div>
-                </div>
-
-                <!-- Configuración de Dimorfismo e Imágenes -->
-                <div id="form-dimorph-section" class="bg-[#f0e3d0] p-2.5 rounded border border-[#cca878] space-y-2">
-                    <div>
-                        <label class="block typewriter text-xs font-bold uppercase">¿Tiene Dimorfismo Sexual?:</label>
-                        <select id="modal-dimorph" onchange="toggleDimorphInputs()" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter">
-                            <option value="false" selected>No</option>
-                            <option value="true">Sí (Dos imágenes / Macho y Hembra)</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block typewriter text-[10px] font-bold uppercase">Ruta Imagen 1 (ej. img/img1.png):</label>
-                            <input type="text" id="modal-img1-url" placeholder="img/img1.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter">
+                            <label class="block typewriter text-xs font-bold uppercase">Ubicación / Cantón:</label>
+                            <input type="text" id="modal-site-loc" placeholder="Dota / Tarrazú" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                         </div>
-                        <div id="div-img2" class="hidden">
-                            <label class="block typewriter text-[10px] font-bold uppercase">Ruta Imagen 2 (ej. img/img2.png):</label>
-                            <input type="text" id="modal-img2-url" placeholder="img/img2.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm typewriter">
+                        <div>
+                            <label class="block typewriter text-xs font-bold uppercase">Altitud / Clima:</label>
+                            <input type="text" id="modal-site-clim" placeholder="3,156 m s. n. m. | 12°C / 90%" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base">
                         </div>
                     </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label id="modal-l1" class="block typewriter text-[10px] font-bold uppercase">Hábitat (Físico):</label>
-                        <input type="text" id="modal-f1" required placeholder="Bosque nuboso..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label class="block typewriter text-[10px] font-bold uppercase">Toponimia e Historia:</label>
+                        <textarea id="modal-site-history" rows="2" placeholder="Origen del nombre, anécdotas..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm"></textarea>
                     </div>
                     <div>
-                        <label id="modal-l2" class="block typewriter text-[10px] font-bold uppercase">Nicho Ecológico (Rol):</label>
-                        <input type="text" id="modal-f2" required placeholder="Recarga hídrica..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
-                    </div>
-                </div>
-                <div class="grid grid-cols-3 gap-2">
-                    <div>
-                        <label id="modal-l3" class="block typewriter text-[10px] font-bold uppercase">Morfología:</label>
-                        <input type="text" id="modal-f3" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label class="block typewriter text-[10px] font-bold uppercase">Contexto Geológico:</label>
+                        <textarea id="modal-site-geology" rows="2" placeholder="Formación rocosa, hidrografía..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm"></textarea>
                     </div>
                     <div>
-                        <label id="modal-l4" class="block typewriter text-[10px] font-bold uppercase">Etología:</label>
-                        <input type="text" id="modal-f4" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label class="block typewriter text-[10px] font-bold uppercase">Ecosistema y Bosque:</label>
+                        <textarea id="modal-site-ecology" rows="2" placeholder="Tipo de bosque, páramo..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm"></textarea>
                     </div>
                     <div>
-                        <label id="modal-l5" class="block typewriter text-[10px] font-bold uppercase">Reproducción:</label>
-                        <input type="text" id="modal-f5" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label id="modal-l6" class="block typewriter text-[10px] font-bold uppercase">Cortejo y Dimorfismo:</label>
-                        <input type="text" id="modal-f6" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label class="block typewriter text-[10px] font-bold uppercase">Flora y Fauna Destacada:</label>
+                        <textarea id="modal-site-flora" rows="2" placeholder="Especies representativas..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm"></textarea>
                     </div>
                     <div>
-                        <label id="modal-l7" class="block typewriter text-[10px] font-bold uppercase">Relaciones:</label>
-                        <input type="text" id="modal-f7" placeholder="Detalle..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm">
+                        <label class="block typewriter text-[10px] font-bold uppercase">Características Especiales / Valor Educativo:</label>
+                        <textarea id="modal-site-special" rows="2" placeholder="Miradores, rutas de acceso..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-sm"></textarea>
                     </div>
-                </div>
-                <div>
-                    <label id="modal-l8" class="block typewriter text-xs font-bold uppercase">Dato Científico / Investigación:</label>
-                    <textarea id="modal-science" rows="2" placeholder="Información comprobada..." class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base"></textarea>
+                    <div>
+                        <label class="block typewriter text-xs font-bold uppercase">Ruta de Imagen (ej. img/img7.png):</label>
+                        <input type="text" id="modal-site-img" placeholder="img/img7.png" class="w-full bg-[#f9f5ed] border border-[#d0b894] rounded p-1 text-base typewriter">
+                    </div>
                 </div>
 
                 <div class="flex justify-end gap-2 pt-2">
@@ -376,7 +411,7 @@
         </div>
     </div>
 
-    <!-- Script con base de datos completa integrada y dimorfismo sexual -->
+    <!-- Script con base de datos completa integrada y formulario de sitios corregido -->
     <script>
         const initialSpeciesDB = {
             "anfibios": [
@@ -424,7 +459,7 @@
                     "title": "Guía Taxonómica - Aves",
                     "loc": "San Gerardo de Dota",
                     "temp": "16°C",
-                    hum: "88%",
+                    "hum": "88%",
                     "name": "Colibrí Volcánico",
                     "sci": "Selasphorus flammula",
                     "habitat": "Matorrales de altura y páramo.",
@@ -548,16 +583,16 @@
                     "loc": "Cordillera de Talamanca y Zonas Altas de Los Santos",
                     "temp": "16°C",
                     hum: "85%",
-                    name: "Lagartija Espinosa Malaquita",
-                    sci: "Sceloporus malachiticus",
+                    "name": "Lagartija Espinosa Malaquita",
+                    "sci": "Sceloporus malachiticus",
                     "habitat": "Rocas expuestas, troncos caídos y matorrales de altura en zonas montañosas y bordes de bosque.",
                     "niche": "Insectívoro diurno; cumple un papel clave en el control biológico de poblaciones de insectos y artrópodos.",
-                    morph: "Lagartija robusta con escamas dorsales fuertemente aquilladas y espinosas; coloración general verdosa o café con patrones crípticos para termorregulación.",
-                    ethology: "Hábitos estrictamente diurnos; pasa gran parte del día realizando termorregulación activa sobre rocas expuestas a la radiación solar.",
-                    repro: "Vivípara u ovípara según adaptaciones altitudinales de alta montaña; puesta o alumbramiento protegido en grietas rocosas.",
-                    courtship: "Despliegues visuales mediante flexiones corporales (*push-ups*) y exhibición de colores gulares por parte de los machos.",
-                    relations: "Importante presa para aves rapaces de altura y serpientes arbóreas o terrestres; competencia por espacios óptimos de termorregulación.",
-                    science: "Excelente indicador biológico de la calidad de hábitats abiertos y rocosos expuestos a la luz solar en los gradientes altitudinales de Talamanca.",
+                    "morph": "Lagartija robusta con escamas dorsales fuertemente aquilladas y espinosas; coloración general verdosa o café con patrones crípticos para termorregulación.",
+                    "ethology": "Hábitos estrictamente diurnos; pasa gran parte del día realizando termorregulación activa sobre rocas expuestas a la radiación solar.",
+                    "repro": "Vivípara u ovípara según adaptaciones altitudinales de alta montaña; puesta o alumbramiento protegido en grietas rocosas.",
+                    "courtship": "Despliegues visuales mediante flexiones corporales (*push-ups*) y exhibición de colores gulares por parte de los machos.",
+                    "relations": "Importante presa para aves rapaces de altura y serpientes arbóreas o terrestres; competencia por espacios óptimos de termorregulación.",
+                    "science": "Excelente indicador biológico de la calidad de hábitats abiertos y rocosos expuestos a la luz solar en los gradientes altitudinales de Talamanca.",
                     "dimorphism": true,
                     "img1": "img/img13.png",
                     "img2": "img/img13_hembra.png"
@@ -600,31 +635,31 @@
                 "title": "Sitio Emblemático - Talamanca",
                 "name": "Cerro Abejonal",
                 "popularName": "El Abejonal",
-                loc: "San Antonio / San Pablo de León Cortés",
+                "loc": "San Antonio / San Pablo de León Cortés",
                 "alt": "2,029 m s. n. m.",
                 "temp": "16°C a 20°C",
-                hum: "82% a 90%",
-                history: "Tradicionalmente conocido como el cerro más alto de San Pablo. Su nombre popular se debe a que durante el mes de mayo el sitio se llena de gran cantidad de abejones (escarabajos melolóntidos).",
-                geology: "Elevación prominente con vistas panorámicas hacia los valles de San Pablo y San Marcos de Tarrazú.",
-                ecology: "Ecosistemas de transición agrícola y boscosa, con corredores biológicos locales activos.",
-                floraFauna: "Árboles frutales silvestres, aves migratorias, colibríes y abundante entomofauna estacional.",
-                special: "Tradicional destino de paseo familiar, caminatas recreativas comunitarias y contacto directo con la cultura local.",
-                img: "img/img9.png"
+                "hum": "82% a 90%",
+                "history": "Tradicionalmente conocido como el cerro más alto de San Pablo. Su nombre popular se debe a que durante el mes de mayo el sitio se llena de gran cantidad de abejones (escarabajos melolóntidos).",
+                "geology": "Elevación prominente con vistas panorámicas hacia los valles de San Pablo y San Marcos de Tarrazú.",
+                "ecology": "Ecosistemas de transición agrícola y boscosa, con corredores biológicos locales activos.",
+                "floraFauna": "Árboles frutales silvestres, aves migratorias, colibríes y abundante entomofauna estacional.",
+                "special": "Tradicional destino de paseo familiar, caminatas recreativas comunitarias y contacto directo con la cultura local.",
+                "img": "img/img9.png"
             },
             {
                 "title": "Sitio Emblemático - Talamanca",
                 "name": "Cerro La Trinidad",
-                "popularName": "Cerro de la Cruz",
+                popularName: "Cerro de la Cruz",
                 loc: "San Marcos de Tarrazú",
                 alt: "1,944 m s. n. m.",
-                temp: "16°C a 21°C",
-                hum: "80% a 88%",
+                "temp": "16°C a 21°C",
+                "hum": "80% a 88%",
                 history: "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
                 geology: "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
                 ecology: "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
                 floraFauna: "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
                 special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
-                img: "img/img10.png"
+                "img": "img/img10.png"
             }
         ];
 
@@ -954,19 +989,16 @@
             
             const spFields = document.getElementById('form-species-fields');
             const stFields = document.getElementById('form-sites-fields');
-            const dimorphSection = document.getElementById('form-dimorph-section');
 
             if (currentMode === 'species') {
                 document.getElementById('modal-title-text').innerText = "Agregar Nueva Especie";
                 spFields.classList.remove('hidden');
                 stFields.classList.add('hidden');
-                dimorphSection.classList.remove('hidden');
                 document.getElementById('modal-cat').value = currentCategoryKey;
             } else {
                 document.getElementById('modal-title-text').innerText = "Agregar Nuevo Sitio / Cerro";
                 spFields.classList.add('hidden');
                 stFields.classList.remove('hidden');
-                dimorphSection.classList.add('hidden');
             }
             document.getElementById('add-modal').classList.remove('hidden');
         }
@@ -975,7 +1007,6 @@
             isEditing = true;
             const spFields = document.getElementById('form-species-fields');
             const stFields = document.getElementById('form-sites-fields');
-            const dimorphSection = document.getElementById('form-dimorph-section');
 
             if (currentMode === 'species') {
                 const list = speciesDatabase[currentCategoryKey];
@@ -985,7 +1016,6 @@
                 document.getElementById('modal-title-text').innerText = "Editar Ficha de Especie";
                 spFields.classList.remove('hidden');
                 stFields.classList.add('hidden');
-                dimorphSection.classList.remove('hidden');
 
                 document.getElementById('modal-cat').value = currentCategoryKey;
                 document.getElementById('modal-common').value = data.name || "";
@@ -1011,21 +1041,17 @@
                 document.getElementById('modal-title-text').innerText = "Editar Ficha de Sitio / Cerro";
                 spFields.classList.add('hidden');
                 stFields.classList.remove('hidden');
-                dimorphSection.classList.add('hidden');
 
                 document.getElementById('modal-site-name').value = site.name || "";
                 document.getElementById('modal-site-popular').value = site.popularName || "";
-                document.getElementById('modal-loc').value = site.loc || "";
-                document.getElementById('modal-clim').value = `${site.alt || ''} | ${site.temp || ''} / ${site.hum || ''}`;
-                document.getElementById('modal-img1-url').value = site.img || "";
-                document.getElementById('modal-f1').value = site.history || "";
-                document.getElementById('modal-f2').value = site.geology || "";
-                document.getElementById('modal-f3').value = site.ecology || "";
-                document.getElementById('modal-f4').value = site.floraFauna || "";
-                document.getElementById('modal-f5').value = site.special || "";
-                document.getElementById('modal-f6').value = "";
-                document.getElementById('modal-f7').value = "";
-                document.getElementById('modal-science').value = "";
+                document.getElementById('modal-site-loc').value = site.loc || "";
+                document.getElementById('modal-site-clim').value = `${site.alt || ''} | ${site.temp || ''} / ${site.hum || ''}`;
+                document.getElementById('modal-site-history').value = site.history || "";
+                document.getElementById('modal-site-geology').value = site.geology || "";
+                document.getElementById('modal-site-ecology').value = site.ecology || "";
+                document.getElementById('modal-site-flora').value = site.floraFauna || "";
+                document.getElementById('modal-site-special').value = site.special || "";
+                document.getElementById('modal-site-img').value = site.img || "";
             }
             document.getElementById('add-modal').classList.remove('hidden');
         }
@@ -1061,18 +1087,18 @@
 
         function handleSaveRecord(event) {
             event.preventDefault();
-            const climRaw = document.getElementById('modal-clim').value.split('/');
-            const loc = document.getElementById('modal-loc').value;
-            const img1Url = document.getElementById('modal-img1-url').value;
-            const img2Url = document.getElementById('modal-img2-url').value;
 
             if (currentMode === 'species') {
                 const cat = document.getElementById('modal-cat').value;
                 const common = document.getElementById('modal-common').value;
                 const sci = document.getElementById('modal-sci').value;
+                const loc = document.getElementById('modal-loc').value;
+                const climRaw = document.getElementById('modal-clim').value.split('/');
                 const temp = climRaw[0] ? climRaw[0].trim() : "18°C";
                 const hum = climRaw[1] ? climRaw[1].trim() : "90%";
                 const hasDimorph = document.getElementById('modal-dimorph').value === 'true';
+                const img1Url = document.getElementById('modal-img1-url').value;
+                const img2Url = document.getElementById('modal-img2-url').value;
 
                 const entryData = {
                     title: `Guía Taxonómica - ${cat.charAt(0).toUpperCase() + cat.slice(1)}`,
@@ -1121,9 +1147,11 @@
             } else {
                 const siteName = document.getElementById('modal-site-name').value;
                 const sitePopular = document.getElementById('modal-site-popular').value;
-                const climParts = document.getElementById('modal-clim').value.split('|');
+                const loc = document.getElementById('modal-site-loc').value;
+                const climParts = document.getElementById('modal-site-clim').value.split('|');
                 const alt = climParts[0] ? climParts[0].trim() : "2,000 m s. n. m.";
                 const restClim = climParts[1] ? climParts[1].split('/') : ["15°C", "85%"];
+                const imgUrl = document.getElementById('modal-site-img').value;
 
                 const siteData = {
                     title: "Sitio Emblemático - Talamanca",
@@ -1133,12 +1161,12 @@
                     alt: alt,
                     temp: restClim[0] ? restClim[0].trim() : "15°C",
                     hum: restClim[1] ? restClim[1].trim() : "85%",
-                    history: document.getElementById('modal-f1').value,
-                    geology: document.getElementById('modal-f2').value,
-                    ecology: document.getElementById('modal-f3').value,
-                    floraFauna: document.getElementById('modal-f4').value,
-                    special: document.getElementById('modal-f5').value,
-                    img: img1Url ? img1Url.trim() : ""
+                    history: document.getElementById('modal-site-history').value,
+                    geology: document.getElementById('modal-site-geology').value,
+                    ecology: document.getElementById('modal-site-ecology').value,
+                    floraFauna: document.getElementById('modal-site-flora').value,
+                    special: document.getElementById('modal-site-special').value,
+                    img: imgUrl ? imgUrl.trim() : ""
                 };
 
                 if (isEditing) {
