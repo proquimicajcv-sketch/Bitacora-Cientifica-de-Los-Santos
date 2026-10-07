@@ -136,7 +136,8 @@
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <img id="specimen-img" src="" alt="Imagen" class="w-full h-full object-cover filter sepia-[0.3] contrast-125 rounded hidden">
+                            <!-- MODIFICACIÓN: object-contain para evitar cortes en las imágenes -->
+                            <img id="specimen-img" src="" alt="Imagen" class="w-full h-full object-contain filter sepia-[0.3] contrast-125 rounded hidden">
                             <div id="img-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center handwritten text-sm text-[#7a1f00]">
                                 📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>
                             </div>
@@ -583,7 +584,7 @@
                     "loc": "Cordillera de Talamanca y Zonas Altas de Los Santos",
                     "temp": "16°C",
                     hum: "85%",
-                    "name": "Lagartija Espinosa Malaquita",
+                    name: "Lagartija Espinosa Malaquita",
                     "sci": "Sceloporus malachiticus",
                     "habitat": "Rocas expuestas, troncos caídos y matorrales de altura en zonas montañosas y bordes de bosque.",
                     "niche": "Insectívoro diurno; cumple un papel clave en el control biológico de poblaciones de insectos y artrópodos.",
@@ -649,16 +650,16 @@
             {
                 "title": "Sitio Emblemático - Talamanca",
                 "name": "Cerro La Trinidad",
-                popularName: "Cerro de la Cruz",
-                loc: "San Marcos de Tarrazú",
-                alt: "1,944 m s. n. m.",
+                "popularName": "Cerro de la Cruz",
+                "loc": "San Marcos de Tarrazú",
+                "alt": "1,944 m s. n. m.",
                 "temp": "16°C a 21°C",
                 "hum": "80% a 88%",
-                history: "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
-                geology: "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
-                ecology: "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
-                floraFauna: "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
-                special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
+                "history": "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
+                "geology": "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
+                "ecology": "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
+                "floraFauna": "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
+                "special": "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
                 "img": "img/img10.png"
             }
         ];
