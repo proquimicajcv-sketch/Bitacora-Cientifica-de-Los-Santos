@@ -352,7 +352,7 @@
         </div>
     </div>
 
-    <!-- Script con base de datos completa e imágenes fijas numeradas (img1.png, img2.png...) -->
+    <!-- Script con base de datos completa e imágenes fijas numeradas -->
     <script>
         const initialSpeciesDB = {
             anfibios: [
@@ -568,7 +568,6 @@
             }
         ];
 
-        // Sincronización robusta que asegura que los datos base y las imágenes fijas no se pierdan
         let speciesDatabase = JSON.parse(localStorage.getItem('losSantosSpeciesDB'));
         if (!speciesDatabase) {
             speciesDatabase = initialSpeciesDB;
