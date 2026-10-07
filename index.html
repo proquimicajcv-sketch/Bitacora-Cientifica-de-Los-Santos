@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía de Estudio - Especies y Sitios de Los Santos</title>
+    
+    <!-- Configuración de ícono para iOS / iPadOS y dispositivos móviles -->
+    <link rel="apple-touch-icon" href="img/icon-bitacora.png">
+    <link rel="icon" type="image/png" href="img/icon-bitacora.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Bitácora de Campo">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -136,7 +144,7 @@
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <!-- MODIFICACIÓN: object-contain para evitar cortes en las imágenes -->
+                            <!-- object-contain para evitar que las imágenes se recorten -->
                             <img id="specimen-img" src="" alt="Imagen" class="w-full h-full object-contain filter sepia-[0.3] contrast-125 rounded hidden">
                             <div id="img-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center handwritten text-sm text-[#7a1f00]">
                                 📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>
@@ -412,7 +420,7 @@
         </div>
     </div>
 
-    <!-- Script con base de datos completa integrada y formulario de sitios corregido -->
+    <!-- Script con base de datos completa integrada y object-contain -->
     <script>
         const initialSpeciesDB = {
             "anfibios": [
@@ -565,7 +573,7 @@
                     "loc": "Cerro Vueltas y Zonas Altas de Talamanca",
                     "temp": "14°C",
                     hum: "90%",
-                    "name": "Toboba de Altura",
+                    name: "Toboba de Altura",
                     "sci": "Cerrophidion sasai",
                     "habitat": "Bosques montanos nubosos y de altura de la Cordillera de Talamanca (1,460 a 2,875 m s. n. m.).",
                     "niche": "Depredador diurno y crepuscular de emboscada especializado en el control de roedores, lagartijas e invertebrados.",
@@ -650,16 +658,16 @@
             {
                 "title": "Sitio Emblemático - Talamanca",
                 "name": "Cerro La Trinidad",
-                "popularName": "Cerro de la Cruz",
-                "loc": "San Marcos de Tarrazú",
-                "alt": "1,944 m s. n. m.",
-                "temp": "16°C a 21°C",
-                "hum": "80% a 88%",
-                "history": "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
-                "geology": "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
-                "ecology": "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
-                "floraFauna": "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
-                "special": "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
+                popularName: "Cerro de la Cruz",
+                loc: "San Marcos de Tarrazú",
+                alt: "1,944 m s. n. m.",
+                temp: "16°C a 21°C",
+                hum: "80% a 88%",
+                history: "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
+                geology: "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
+                ecology: "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
+                floraFauna: "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
+                special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
                 "img": "img/img10.png"
             }
         ];
