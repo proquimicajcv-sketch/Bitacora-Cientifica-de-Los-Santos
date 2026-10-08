@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía de Estudio - Especies y Sitios de Los Santos</title>
     
-    <!-- Configuración de ícono para iOS / iPadOS -->
+    <!-- Configuración de ícono para iOS / iPadOS y dispositivos móviles -->
     <link rel="apple-touch-icon" href="img/icon-bitacora.png">
     <link rel="icon" type="image/png" href="img/icon-bitacora.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -144,7 +144,7 @@
                 <div class="my-2 relative flex flex-col md:flex-row items-center gap-4">
                     <div class="w-full md:w-1/2 relative bg-[#f9f5ed] p-2 rounded border border-[#d0b894] shadow-sm">
                         <div class="relative w-full h-44 sm:h-52 flex items-center justify-center overflow-hidden rounded bg-[#efe4d1]">
-                            <!-- object-contain para evitar recortes -->
+                            <!-- object-contain para evitar que las imágenes se recorten -->
                             <img id="specimen-img" src="" alt="Imagen" class="w-full h-full object-contain filter sepia-[0.3] contrast-125 rounded hidden">
                             <div id="img-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center handwritten text-sm text-[#7a1f00]">
                                 📷 Sin imagen asignada<br><span class="text-[10px] typewriter">Edita la ficha para agregar ruta (ej. img/img1.png)</span>
@@ -222,8 +222,8 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Control y Navegación (Desplazable) -->
-            <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2 overflow-y-auto max-h-[720px] pr-1">
+            <!-- LADO DERECHO: Panel de Control y Navegación -->
+            <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
                 <div class="space-y-2">
                     <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                         <h2 id="sidebar-title" class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
@@ -237,19 +237,12 @@
                         <p class="text-[9px] typewriter text-[#d8c5aa] opacity-75">Zona de Los Santos, C.R.</p>
                     </div>
 
-                    <!-- Botones de Control con Flechas de Navegación -->
-                    <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1.5">
+                    <!-- Botones de Control -->
+                    <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1">
+                        <button type="button" onclick="nextRecord()" class="w-full bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow cursor-pointer">
+                            🔄 Siguiente <span id="next-label">Especie</span> (<span id="counter-display">1/3</span>)
+                        </button>
                         <div class="grid grid-cols-2 gap-1">
-                            <button type="button" onclick="prevRecord()" class="bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow cursor-pointer font-bold">
-                                ◀ Anterior
-                            </button>
-                            <button type="button" onclick="nextRecord()" class="bg-[#3d271d] hover:bg-[#523528] text-[#f3e9dc] text-xs typewriter py-1.5 px-2 rounded border border-[#70492c] transition shadow cursor-pointer font-bold">
-                                Siguiente ▶
-                            </button>
-                        </div>
-                        <p class="typewriter text-[10px] text-[#d8c5aa]">Registro: <span id="counter-display" class="text-[#d4af37] font-bold">1/3</span></p>
-
-                        <div class="grid grid-cols-2 gap-1 pt-0.5">
                             <button type="button" onclick="openEditModal()" class="bg-[#5c3a21] hover:bg-[#70492c] text-[#f3e9dc] text-[11px] typewriter py-1 px-1 rounded border border-[#8b5a2b] transition shadow font-bold cursor-pointer">
                                 ✏️ Editar Ficha
                             </button>
@@ -263,25 +256,17 @@
                     </div>
                 </div>
 
-                <!-- CONTENEDOR INFERIOR DE CATEGORÍAS -->
-                <nav id="sidebar-nav-container" class="flex flex-col space-y-1 my-2">
+                <!-- CONTENEDOR INFERIOR -->
+                <nav id="sidebar-nav-container" class="flex flex-col space-y-1">
                     <!-- Se llena dinámicamente por JS -->
                 </nav>
-
-                <!-- WIDGET DE NOTEBOOKLM (Al final del todo) -->
-                <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1 shadow-inner mt-2">
-                    <span class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">🧠 Repaso y Actividades:</span>
-                    <a href="https://notebook.google.com/notebook/ec9092c3-4697-446a-bab6-bd5cac703514" target="_blank" rel="noopener noreferrer" class="block w-full bg-[#2d6a4f] hover:bg-[#40916c] text-white text-xs typewriter py-1.5 px-2 rounded border border-[#1b4332] transition shadow font-bold text-center">
-                        📓 Actividades NotebookLM
-                    </a>
-                </div>
 
             </aside>
 
         </div>
     </main>
 
-    <!-- Modal para Agregar / Editar -->
+    <!-- Modal para Agregar / Editar (Separado para Especies y Sitios) -->
     <div id="add-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f3e9dc] border-4 border-[#3a1d0c] rounded-xl max-w-lg w-full p-5 paper-texture shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <h2 id="modal-title-text" class="typewriter text-lg font-bold text-[#3a1d0c] border-b-2 border-[#b08d57] pb-1 mb-3">Agregar Nueva Especie</h2>
@@ -435,7 +420,7 @@
         </div>
     </div>
 
-    <!-- Script con base de datos completa e interfaz optimizada -->
+    <!-- Script con base de datos completa integrada y object-contain -->
     <script>
         const initialSpeciesDB = {
             "anfibios": [
@@ -456,25 +441,6 @@
                     "science": "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
                     "dimorphism": false,
                     "img1": "img/img1.png",
-                    "img2": ""
-                },
-                {
-                    "title": "Guía Taxonómica - Anfibios",
-                    "loc": "Dota / Cordillera de Talamanca",
-                    "temp": "8°C a 15°C",
-                    "hum": "85% a 98%",
-                    "name": "Salamandra de patas rojas",
-                    "sci": "Bolitoglossa pesrubra (Plethodontidae)",
-                    "habitat": "Sotobosque de bosques nubosos primarios y secundarios maduros, bosques de roble (Quercus), taludes húmedos con musgo y bromelias terrestres o epífitas donde suele refugiarse.",
-                    "niche": "Consumidor secundario y depredador nocturno de invertebrados diminutos del suelo y la hojarasca (ácaros, colémbolos, pequeños insectos); pieza fundamental en la biomasa de vertebrados del sotobosque de altura.",
-                    "morph": "Salamandra de tamaño moderado; longitud total desde el hocico hasta la punta de la cola que puede alcanzar hasta los 13 cm. Cuerpo robusto de coloración general oscura (café negruzco o grisáceo), caracterizada de manera distintiva por presentar las palmas de las manos, las plantas de los pies y las extremidades inferiores con una coloración rojiza o anaranjada muy llamativa (origen de su epíteto específico pesrubra). Dedos palmeados adaptados para trepar y caminar sobre superficies húmedas.",
-                    "ethology": "Nocturna y de hábitos discretos y pausados. Durante el día permanece refugiada en la humedad de la hojarasca, bajo troncos o dentro de bromelias; se activa por las noches o en días con neblina densa para desplazarse en busca de alimento.",
-                    "repro": "Desarrollo directo (sin fase larval acuática libre). Las hembras depositan racimos de huevos en sitios terrestres muy húmedos (bajo musgos o troncos), donde los embriones completan su metamorfosis internamente para eclosionar directamente como salamandras juveniles miniatura.",
-                    "courtship": "El cortejo implica interacciones táctiles y uso de glándulas de marcaje químico para el reconocimiento de pareja; fecundación interna sin canto nupcial.",
-                    "relations": "Depredador clave sobre microinvertebrados del suelo y presa ocasional de serpientes y aves de sotobosque.",
-                    "science": "Especie endémica de alta montaña, muy sensible a la desecación y a la alteración de su microhábitat en la hojarasca y bromelias.",
-                    "dimorphism": false,
-                    "img1": "img/img14.png",
                     "img2": ""
                 }
             ],
@@ -607,7 +573,7 @@
                     "loc": "Cerro Vueltas y Zonas Altas de Talamanca",
                     "temp": "14°C",
                     hum: "90%",
-                    "name": "Toboba de Altura",
+                    name: "Toboba de Altura",
                     "sci": "Cerrophidion sasai",
                     "habitat": "Bosques montanos nubosos y de altura de la Cordillera de Talamanca (1,460 a 2,875 m s. n. m.).",
                     "niche": "Depredador diurno y crepuscular de emboscada especializado en el control de roedores, lagartijas e invertebrados.",
@@ -852,23 +818,6 @@
             } else {
                 if (sitesDatabase && sitesDatabase.length > 0) {
                     currentIndex = (currentIndex + 1) % sitesDatabase.length;
-                    renderSidebarSitesList();
-                    renderCurrentRecord();
-                }
-            }
-        }
-
-        function prevRecord() {
-            currentImgIndex = 0;
-            if (currentMode === 'species') {
-                const list = speciesDatabase[currentCategoryKey];
-                if (list && list.length > 0) {
-                    currentIndex = (currentIndex - 1 + list.length) % list.length;
-                    renderCurrentRecord();
-                }
-            } else {
-                if (sitesDatabase && sitesDatabase.length > 0) {
-                    currentIndex = (currentIndex - 1 + sitesDatabase.length) % sitesDatabase.length;
                     renderSidebarSitesList();
                     renderCurrentRecord();
                 }
