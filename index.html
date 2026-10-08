@@ -261,20 +261,20 @@
                             ➕ Agregar <span id="add-label">Nueva Especie</span>
                         </button>
                     </div>
-
-                    <!-- WIDGET DE NOTEBOOKLM -->
-                    <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1 shadow-inner">
-                        <span class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">🧠 Repaso y Actividades:</span>
-                        <a href="https://notebook.google.com/notebook/ec9092c3-4697-446a-bab6-bd5cac703514" target="_blank" rel="noopener noreferrer" class="block w-full bg-[#2d6a4f] hover:bg-[#40916c] text-white text-xs typewriter py-1.5 px-2 rounded border border-[#1b4332] transition shadow font-bold text-center">
-                            📓 Actividades NotebookLM
-                        </a>
-                    </div>
                 </div>
 
                 <!-- CONTENEDOR INFERIOR DE CATEGORÍAS -->
-                <nav id="sidebar-nav-container" class="flex flex-col space-y-1 mt-2">
+                <nav id="sidebar-nav-container" class="flex flex-col space-y-1 my-2">
                     <!-- Se llena dinámicamente por JS -->
                 </nav>
+
+                <!-- WIDGET DE NOTEBOOKLM (Colocado al final del panel) -->
+                <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center space-y-1 shadow-inner mt-2">
+                    <span class="typewriter text-[10px] uppercase tracking-widest text-[#d4af37] font-bold block">🧠 Repaso y Actividades:</span>
+                    <a href="https://notebook.google.com/notebook/ec9092c3-4697-446a-bab6-bd5cac703514" target="_blank" rel="noopener noreferrer" class="block w-full bg-[#2d6a4f] hover:bg-[#40916c] text-white text-xs typewriter py-1.5 px-2 rounded border border-[#1b4332] transition shadow font-bold text-center">
+                        📓 Actividades NotebookLM
+                    </a>
+                </div>
 
             </aside>
 
@@ -435,7 +435,7 @@
         </div>
     </div>
 
-    <!-- Script con base de datos completa, object-contain, flechas y widget NotebookLM -->
+    <!-- Script con base de datos completa y control de categorías restaurado -->
     <script>
         const initialSpeciesDB = {
             "anfibios": [
@@ -607,7 +607,7 @@
                     "loc": "Cerro Vueltas y Zonas Altas de Talamanca",
                     "temp": "14°C",
                     hum: "90%",
-                    name: "Toboba de Altura",
+                    "name": "Toboba de Altura",
                     "sci": "Cerrophidion sasai",
                     "habitat": "Bosques montanos nubosos y de altura de la Cordillera de Talamanca (1,460 a 2,875 m s. n. m.).",
                     "niche": "Depredador diurno y crepuscular de emboscada especializado en el control de roedores, lagartijas e invertebrados.",
@@ -692,16 +692,16 @@
             {
                 "title": "Sitio Emblemático - Talamanca",
                 "name": "Cerro La Trinidad",
-                popularName: "Cerro de la Cruz",
-                loc: "San Marcos de Tarrazú",
-                alt: "1,944 m s. n. m.",
-                temp: "16°C a 21°C",
-                hum: "80% a 88%",
-                history: "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
-                geology: "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
-                ecology: "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
-                floraFauna: "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
-                special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
+                "popularName": "Cerro de la Cruz",
+                "loc": "San Marcos de Tarrazú",
+                "alt": "1,944 m s. n. m.",
+                "temp": "16°C a 21°C",
+                "hum": "80% a 88%",
+                "history": "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
+                "geology": "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
+                "ecology": "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
+                "floraFauna": "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
+                "special": "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
                 "img": "img/img10.png"
             }
         ];
@@ -1113,7 +1113,7 @@
                 document.getElementById('modal-site-special').value = site.special || "";
                 document.getElementById('modal-site-img').value = site.img || "";
             }
-            document.getElementById('add-modal').classList.add('hidden');
+            document.getElementById('add-modal').classList.remove('hidden');
         }
 
         function closeAddModal() {
