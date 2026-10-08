@@ -222,8 +222,8 @@
                 </div>
             </div>
 
-            <!-- LADO DERECHO: Panel de Control y Navegación -->
-            <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2">
+            <!-- LADO DERECHO: Panel de Control y Navegación (Desplazable) -->
+            <aside class="w-full lg:w-72 flex flex-col justify-between space-y-2 overflow-y-auto max-h-[720px] pr-1">
                 <div class="space-y-2">
                     <div class="bg-[#1f140f] p-2 rounded-lg border border-[#4a3424] text-center shadow-inner">
                         <h2 id="sidebar-title" class="typewriter text-xs uppercase tracking-widest text-[#d4af37] font-bold">Taxonomía Regional</h2>
@@ -271,8 +271,8 @@
                     </div>
                 </div>
 
-                <!-- CONTENEDOR INFERIOR -->
-                <nav id="sidebar-nav-container" class="flex flex-col space-y-1">
+                <!-- CONTENEDOR INFERIOR DE CATEGORÍAS -->
+                <nav id="sidebar-nav-container" class="flex flex-col space-y-1 mt-2">
                     <!-- Se llena dinámicamente por JS -->
                 </nav>
 
@@ -435,7 +435,7 @@
         </div>
     </div>
 
-    <!-- Script con base de datos completa, object-contain, flechas y enlace NotebookLM -->
+    <!-- Script con base de datos completa, object-contain, flechas y widget NotebookLM -->
     <script>
         const initialSpeciesDB = {
             "anfibios": [
@@ -456,6 +456,25 @@
                     "science": "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
                     "dimorphism": false,
                     "img1": "img/img1.png",
+                    "img2": ""
+                },
+                {
+                    "title": "Guía Taxonómica - Anfibios",
+                    "loc": "Dota / Cordillera de Talamanca",
+                    "temp": "8°C a 15°C",
+                    "hum": "85% a 98%",
+                    "name": "Salamandra de patas rojas",
+                    "sci": "Bolitoglossa pesrubra (Plethodontidae)",
+                    "habitat": "Sotobosque de bosques nubosos primarios y secundarios maduros, bosques de roble (Quercus), taludes húmedos con musgo y bromelias terrestres o epífitas donde suele refugiarse.",
+                    "niche": "Consumidor secundario y depredador nocturno de invertebrados diminutos del suelo y la hojarasca (ácaros, colémbolos, pequeños insectos); pieza fundamental en la biomasa de vertebrados del sotobosque de altura.",
+                    "morph": "Salamandra de tamaño moderado; longitud total desde el hocico hasta la punta de la cola que puede alcanzar hasta los 13 cm. Cuerpo robusto de coloración general oscura (café negruzco o grisáceo), caracterizada de manera distintiva por presentar las palmas de las manos, las plantas de los pies y las extremidades inferiores con una coloración rojiza o anaranjada muy llamativa (origen de su epíteto específico pesrubra). Dedos palmeados adaptados para trepar y caminar sobre superficies húmedas.",
+                    "ethology": "Nocturna y de hábitos discretos y pausados. Durante el día permanece refugiada en la humedad de la hojarasca, bajo troncos o dentro de bromelias; se activa por las noches o en días con neblina densa para desplazarse en busca de alimento.",
+                    "repro": "Desarrollo directo (sin fase larval acuática libre). Las hembras depositan racimos de huevos en sitios terrestres muy húmedos (bajo musgos o troncos), donde los embriones completan su metamorfosis internamente para eclosionar directamente como salamandras juveniles miniatura.",
+                    "courtship": "El cortejo implica interacciones táctiles y uso de glándulas de marcaje químico para el reconocimiento de pareja; fecundación interna sin canto nupcial.",
+                    "relations": "Depredador clave sobre microinvertebrados del suelo y presa ocasional de serpientes y aves de sotobosque.",
+                    "science": "Especie endémica de alta montaña, muy sensible a la desecación y a la alteración de su microhábitat en la hojarasca y bromelias.",
+                    "dimorphism": false,
+                    "img1": "img/img14.png",
                     "img2": ""
                 }
             ],
@@ -588,7 +607,7 @@
                     "loc": "Cerro Vueltas y Zonas Altas de Talamanca",
                     "temp": "14°C",
                     hum: "90%",
-                    "name": "Toboba de Altura",
+                    name: "Toboba de Altura",
                     "sci": "Cerrophidion sasai",
                     "habitat": "Bosques montanos nubosos y de altura de la Cordillera de Talamanca (1,460 a 2,875 m s. n. m.).",
                     "niche": "Depredador diurno y crepuscular de emboscada especializado en el control de roedores, lagartijas e invertebrados.",
@@ -673,16 +692,16 @@
             {
                 "title": "Sitio Emblemático - Talamanca",
                 "name": "Cerro La Trinidad",
-                "popularName": "Cerro de la Cruz",
-                "loc": "San Marcos de Tarrazú",
-                "alt": "1,944 m s. n. m.",
-                "temp": "16°C a 21°C",
-                "hum": "80% a 88%",
-                "history": "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
-                "geology": "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
-                "ecology": "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
-                "floraFauna": "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
-                "special": "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
+                popularName: "Cerro de la Cruz",
+                loc: "San Marcos de Tarrazú",
+                alt: "1,944 m s. n. m.",
+                temp: "16°C a 21°C",
+                hum: "80% a 88%",
+                history: "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
+                geology: "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
+                ecology: "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
+                floraFauna: "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
+                special: "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
                 "img": "img/img10.png"
             }
         ];
@@ -1094,7 +1113,7 @@
                 document.getElementById('modal-site-special').value = site.special || "";
                 document.getElementById('modal-site-img').value = site.img || "";
             }
-            document.getElementById('add-modal').classList.remove('hidden');
+            document.getElementById('add-modal').classList.add('hidden');
         }
 
         function closeAddModal() {
