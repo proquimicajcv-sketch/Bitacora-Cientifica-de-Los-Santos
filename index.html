@@ -21,14 +21,33 @@
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden;
         }
-        .container, .sidebar {
+        
+        /* Contenedores principales con scroll interno */
+        .container {
             background: var(--panel-bg);
             border: 2px solid var(--accent-gold);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
         }
+        .sidebar {
+            background: var(--panel-bg);
+            border: 2px solid var(--accent-gold);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        
         h2, h3 { color: var(--accent-gold); border-bottom: 1px solid var(--accent-gold); padding-bottom: 5px; margin-top: 0; }
         select, button {
             background: #5a3d28;
@@ -42,20 +61,35 @@
             font-family: 'Georgia', serif;
         }
         button:hover { background: var(--btn-red); }
-        .field-group { margin-bottom: 12px; }
-        .field-label { font-weight: bold; color: var(--accent-gold); font-size: 0.9rem; }
-        .field-value { background: #2b1d12; padding: 8px; border-radius: 4px; margin-top: 2px; min-height: 20px; font-size: 0.95rem; border: 1px solid #4a3321; }
         
-        /* Estilo para resaltar los nombres con mayor tamaño */
-        .highlight-title {
-            font-size: 1.35rem !important;
-            font-weight: bold;
-            color: #ffd700;
+        .field-group { margin-bottom: 10px; }
+        .field-label { font-weight: bold; color: var(--accent-gold); font-size: 0.85rem; }
+        .field-value { background: #2b1d12; padding: 6px 8px; border-radius: 4px; margin-top: 2px; min-height: 18px; font-size: 0.9rem; border: 1px solid #4a3321; }
+        
+        /* =========================================================
+           CLASES NUEVAS PARA RESALTAR EL NOMBRE COMÚN Y CIENTÍFICO 
+           ========================================================= */
+        .value-name {
+            font-size: 1.8rem !important; /* Letra mucho más grande */
+            font-weight: 900 !important;  /* Grosor máximo */
+            color: #ffd700;               /* Color dorado brillante */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Sombra para resaltar */
+            padding: 10px;
+            text-transform: capitalize;
+        }
+        
+        .value-sci {
+            font-size: 1.6rem !important; /* Letra grande */
+            font-weight: bold !important;
+            font-style: italic;           /* Cursiva para nombre científico */
+            color: #fce38a;               /* Tono ligeramente más suave que el común */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            padding: 10px;
         }
 
         .nav-buttons { display: flex; gap: 10px; margin-top: 15px; }
         .counter { text-align: center; margin-top: 10px; font-size: 0.9rem; color: var(--accent-gold); font-weight: bold; }
-        .notebook-section { margin-top: 25px; border-top: 1px solid var(--accent-gold); padding-top: 15px; text-align: center; }
+        .notebook-section { margin-top: 20px; border-top: 1px solid var(--accent-gold); padding-top: 15px; text-align: center; }
     </style>
 </head>
 <body>
@@ -78,19 +112,28 @@
             </select>
         </div>
 
-        <!-- Ficha de Registro con nombres resaltados y más grandes -->
-        <div id="fichaContent">
+        <!-- Ficha de Registro -->
+        <div id="fichaContent" style="flex-grow: 1;">
+            
+            <!-- NOMBRES RESALTADOS AQUÍ -->
             <div class="field-group">
                 <label class="field-label">NOMBRE COMÚN:</label>
-                <div class="field-value highlight-title" id="val-name">-</div>
+                <div class="field-value value-name" id="val-name">-</div>
             </div>
+            
             <div class="field-group">
                 <label class="field-label">NOMBRE CIENTÍFICO:</label>
-                <div class="field-value highlight-title" id="val-sci" style="font-style: italic;">-</div>
+                <div class="field-value value-sci" id="val-sci">-</div>
             </div>
+
+            <!-- Resto de los campos en tamaño normal -->
             <div class="field-group">
                 <label class="field-label">Ubicación / Registro:</label>
                 <div class="field-value" id="val-loc">-</div>
+            </div>
+            <div class="field-group">
+                <label class="field-label">Temperatura y Humedad:</label>
+                <div class="field-value" id="val-climate">-</div>
             </div>
             <div class="field-group">
                 <label class="field-label">Hábitat:</label>
@@ -155,7 +198,6 @@
             <div class="field-value" id="site-ecology">-</div>
         </div>
 
-        <!-- Enlace de NotebookLM al final -->
         <div class="notebook-section">
             <div class="field-label" style="margin-bottom: 8px;">🧠 Repaso y Actividades</div>
             <button onclick="window.open('#', '_blank')">📚 Actividades NotebookLM</button>
@@ -163,444 +205,644 @@
     </div>
 
     <script>
-        // Base de datos completa embebida con todas las categorías y registros de la bitácora[cite: 2]
+        // BASE DE DATOS COMPLETA INCRUSTADA
         const bitacoraData = {
-          "species": {
-            "anfibios": [
-              {
-                "name": "Rana de las Nacientes",
-                "sci": "Isthmohyla nacientes",
-                "loc": "San Lorenzo de Tarrazú",
-                "habitat": "Vegetación arbustiva y riachuelos.",
-                "niche": "Depredador nocturno de insectos y bioindicador.",
-                "morph": "Tamaño <4cm, coloración verdosa críptica.",
-                "ethology": "Nocturna, arborícola, machos vocalizan cerca de nacientes.",
-                "repro": "Puesta de huevos gelatinosos sobre hojas colgantes en agua.",
-                "courtship": "Canto nupcial en coros; machos con sacos vocales desarrollados.",
-                "relations": "Competencia acústica intraespecífica y depredación de artrópodos.",
-                "science": "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola."
-              },
-              {
-                "name": "Rana de arroyo de altura",
-                "sci": "Isthmohyla rivularis",
-                "loc": "León Cortés",
-                "habitat": "Vegetación arbustiva, arbórea y herbácea que crece directamente a lo largo o sobre la vegetación colgante sobre arroyos y quebradas rápidas y cristalinas en bosques premontanos y nubosos.",
-                "niche": "Consumidor secundario (depredador nocturno de insectos y artrópodos pequeños); bioindicador clave de la calidad del agua y la salud de los ecosistemas ribereños de montaña.",
-                "morph": "Rana arbórea de tamaño pequeño a moderado; los machos alcanzan hasta 34 mm y las hembras hasta 37 mm de longitud hocico-cloaca.",
-                "ethology": "Los machos vocalizan posados sobre la vegetación ribereña muy cerca o directamente sobre corrientes de agua rápidas.",
-                "repro": "Reproducción asociada a corrientes lóticas. Los huevos son depositados en la vegetación o rocas sobre el agua.",
-                "courtship": "Los machos emiten cantos nupciales desde la vegetación ribereña. Dimorfismo sexual en tamaño.",
-                "relations": "Competencia acústica y espacial con otros anfibios simpátricos de arroyo.",
-                "science": "Especie icónica redescubierta en reservas de bosque nuboso tras declives históricos por el hongo quitridio."
-              },
-              {
-                "name": "Rana arborícola de potrero",
-                "sci": "Isthmohyla pseudopuma",
-                "loc": "Dota/Tarrazú",
-                "habitat": "Charcas intermitentes, marismas, pastizales encharcados, jardines rurales y bordes de potreros.",
-                "niche": "Consumidor secundario y depredador nocturno de insectos y artrópodos terrestres y voladores.",
-                "morph": "Rana arborícola de tamaño pequeño a moderado; machos 30-38 mm, hembras 35-42 mm.",
-                "ethology": "Durante el día permanece oculta entre la vegetación baja; por la noche vocaliza en charcas.",
-                "repro": "Ovípara. Deposita masas de huevos gelatinosos en cuerpos de agua estancados.",
-                "courtship": "Coros numerosos en noches lluviosas. Hembras más grandes y robustas.",
-                "relations": "Competencia acústica intraespecífica; presa de aves zancudas y serpientes.",
-                "science": "Resiliencia notable e incluso expansión local en hábitats alterados por actividades agropecuarias (LC)."
-              },
-              {
-                "name": "Rana arborícola enmascarada",
-                "sci": "Smilisca phaeota",
-                "loc": "Santa Marta, Tarrazú",
-                "habitat": "Bosques húmedos tropicales, charcas temporales, pantanos y plantaciones agrícolas.",
-                "niche": "Consumidor secundario nocturno y depredador generalista de insectos y arañas.",
-                "morph": "Rana de tamaño mediano a grande. Línea o 'máscara' oscura notable desde fosas nasales a brazos.",
-                "ethology": "Durante el día descansa mimetizada sobre hojas grandes; de noche se desplaza a charcas.",
-                "repro": "Ovípara. Película delgada flotante de hasta 2,000 huevos en charcas temporales.",
-                "courtship": "Llamado territorial fuerte y áspero similar a un 'wrauk'.",
-                "relations": "Competencia acústica alta en coros mixtos; presa de serpientes nocturnas.",
-                "science": "Hábitos plásticos y tolerantes a la alteración humana del paisaje."
-              },
-              {
-                "name": "Rana de vidrio de Esmeralda",
-                "sci": "Espadarana prosoblepon",
-                "loc": "Zona de los Santos",
-                "habitat": "Vegetación colgante sobre arroyos rápidos, cascadas o quebradas rocosas.",
-                "niche": "Depredador nocturno de insectos pequeños; bioindicador de pureza del agua.",
-                "morph": "Verde brillante con vientre transparente. Machos con espina humeral.",
-                "ethology": "Nocturna y territorial sobre la vegetación de arroyos.",
-                "repro": "Masas de huevos gelatinosos en el envés de hojas sobre la corriente.",
-                "courtship": "Combates territoriales entre machos utilizando espinas humerales.",
-                "relations": "Competencia por perchas; presa de arañas errantes y serpientes de arroyo.",
-                "science": "Amplia plasticidad ecológica comparada con otros centrolénidos."
-              },
-              {
-                "name": "Rana de vidrio de Fleischmann",
-                "sci": "Hyalinobatrachium fleischmanni",
-                "loc": "Dota/Tarrazú",
-                "habitat": "Hojas de arbustos y helechos sobre el cauce de ríos y quebradas.",
-                "niche": "Depredador nocturno de insectos pequeños del follaje ribereño.",
-                "morph": "Verde claro translúcido con vientre totalmente transparente.",
-                "ethology": "Adherida al envés de hojas durante el día; vocaliza de noche sobre el agua.",
-                "repro": "Cuidado parental estricto por parte del macho sobre las puestas de huevos.",
-                "courtship": "Silbido corto y agudo; defensa territorial por contacto.",
-                "relations": "Competencia espacial en vegetación ribereña.",
-                "science": "Modelo clásico de investigación en ecología conductual por el cuidado parental del macho."
-              },
-              {
-                "name": "Rana de vidrio granulosa",
-                "sci": "Cochranella granulosa",
-                "loc": "Laderas boscosas de Los Santos",
-                "habitat": "Vegetación arbórea y helechos a 5-10 m sobre quebradas rápidas.",
-                "niche": "Depredador nocturno de insectos pequeños; bioindicador de calidad fluvial.",
-                "morph": "Textura dorsal granulada, verde amarillento a azulado, vientre transparente.",
-                "ethology": "Nocturna y arborícola en estratos altos sobre arroyos.",
-                "repro": "Masas de huevos en hojas vigiladas activamente por los machos.",
-                "courtship": "Llamados agudos y defensa agresiva de perchas.",
-                "relations": "Competencia con otros centrolénidos.",
-                "science": "Vulnerable a la contaminación agrícola por pesticidas en zonas aledañas."
-              },
-              {
-                "name": "Salamandra de patas rojas",
-                "sci": "Bolitoglossa pesrubra",
-                "loc": "Dota / Cerro de la Muerte",
-                "habitat": "Sotobosque de bosques nubosos, robledales y bromelias epífitas.",
-                "niche": "Depredador nocturno de invertebrados pequeños del suelo y hojarasca.",
-                "morph": "Cuerpo robusto oscuro con palmas, plantas y extremidades rojizas o anaranjadas.",
-                "ethology": "Nocturna y pausada; refugiada bajo troncos u hojarasca durante el día.",
-                "repro": "Desarrollo directo (sin fase larval acuática libre).",
-                "courtship": "Interacciones táctiles y uso de glándulas de feromonas en la cabeza.",
-                "relations": "Competencia por espacio en hojarasca; presa de aves insectívoras.",
-                "science": "Pulmonada ausente, respira por la piel; altamente vulnerable al cambio climático."
-              },
-              {
-                "name": "Salamandra tica",
-                "sci": "Bolitoglossa tica",
-                "loc": "Cerro de la Muerte / Tapantí",
-                "habitat": "Sotobosque de bosques nubosos maduros, robledales y taludes con musgo.",
-                "niche": "Depredador de invertebrados diminutos del suelo y hojarasca.",
-                "morph": "Cuerpo esbelto, extremidades cortas con membranas interdigitales. Sin pulmones.",
-                "ethology": "Terrestre y semi-arborícola discreta; activa tras lluvias o neblina.",
-                "repro": "Desarrollo directo en sitios terrestres muy húmedos bajo musgos.",
-                "courtship": "Comportamientos táctiles y uso de glándulas especializadas.",
-                "relations": "Competencia con otros anfibios endémicos de altura.",
-                "science": "Endémica estricta de los altos talamancanos, muy sensible a la alteración climática."
-              }
-            ],
-            "aves": [
-              {
-                "name": "Quetzal, Quetzal mesoamericano",
-                "sci": "Pharomachrus mocinno costaricensis",
-                "loc": "Cordillera de Talamanca",
-                "habitat": "Bosques nubosos primarios y secundarios maduros con epífitas.",
-                "niche": "Frugívoro especializado y dispersor clave de semillas (familia Lauraceae).",
-                "morph": "Macho con plumas supracaudales alargadas y pecho rojo carmesí; hembra más opaca.",
-                "ethology": "Solitario o en parejas; migraciones altitudinales cortas.",
-                "repro": "Anidan en cavidades descompuestas de árboles muertos. 1-2 huevos azules.",
-                "courtship": "Vuelos acrobáticos espectaculares y llamados melodiosos del macho.",
-                "relations": "Competencia pacífica por frutos de lauráceas; depredación de nidos.",
-                "science": "Indicador de la integridad de bosques nubosos maduros y corredores altitudinales."
-              },
-              {
-                "name": "Colibrí Volcánico",
-                "sci": "Selasphorus flammula",
-                "loc": "San Gerardo de Dota",
-                "habitat": "Matorrales de altura y páramo.",
-                "niche": "Nectarívoro especializado y polinizador clave de plantas de Ericaceae.",
-                "morph": "Tamaño diminuto, pico corto y recto.",
-                "ethology": "Soporta temperaturas bajo cero mediante letargo nocturno.",
-                "repro": "Nido en taza copa sobre arbustos.",
-                "courtship": "Vuelos en picada en forma de 'U' y despliegue de garganta.",
-                "relations": "Competencia interespecífica por recursos florales en alta montaña.",
-                "science": "Reduce su temperatura corporal para conservar energía a más de 3,000 m s. n. m."
-              },
-              {
-                "name": "Pava negra",
-                "sci": "Chamaepetes unicolor",
-                "loc": "Bosques nubosos de Talamanca",
-                "habitat": "Estrato medio y alto de bosques nubosos primarios y robledales.",
-                "niche": "Frugívoro de gran tamaño y dispersor clave de semillas del dosel.",
-                "morph": "Negro uniforme con reflejos verdosos, pico azul pálido, patas rojas, iris rojo.",
-                "ethology": "Diurna, arisca; se desplaza en parejas o grupos familiares saltando entre ramas.",
-                "repro": "Nidos voluminosos de ramas y hojas sobre árboles (2-3 huevos blancos).",
-                "courtship": "Despliegues visuales discretos y vocalizaciones graves.",
-                "relations": "Vulnerable a cacería ilegal y depredación de nidos.",
-                "science": "Excelente indicador biológico de la salud general de los bosques nubosos maduros."
-              },
-              {
-                "name": "Pava crestada o granadera",
-                "sci": "Penelope purpurascens",
-                "loc": "Naranjillo, Tarrazú",
-                "habitat": "Dosel de bosques primarios densos, áreas ribereñas y bordes.",
-                "niche": "Frugívoro y dispersor primario de semillas de gran tamaño.",
-                "morph": "Marrón oscuro con reflejos bronceados, cresta eréctil y papada roja.",
-                "ethology": "Arborícola diurna; sola, en parejas o grupos de hasta 12 individuos.",
-                "repro": "Nidos en forma de tazón sobre árboles altos (2-3 huevos claros).",
-                "courtship": "Actividad reproductiva entre marzo y junio. Sin dimorfismo marcado.",
-                "relations": "Competencia pacífica con otros frugívoros; afectada por cacería.",
-                "science": "Prefiere climas más cálidos y premontanos que la pava negra de altura."
-              }
-            ],
-            "flora": [
-              {
-                "name": "Musgos, Epífitas y Chusquea (Bambú de Altura)",
-                "sci": "Chusquea subtomentosa & Sphagnum spp.",
-                "loc": "Río Savegre, Dota",
-                "habitat": "Sotobosques densos de bosque nuboso y troncos de Quercus costaricensis.",
-                "niche": "Formador de sotobosque denso, retenedor hídrico y refugio para avifauna.",
-                "morph": "Bambú leñoso amacollado con tallos macizos y filidios de alta capilaridad.",
-                "ethology": "Crecimiento estacional y floración sincrónica masiva periódica.",
-                "repro": "Reproducción asexual por rizomas y sexual por semillas tras floración gregaria.",
-                "courtship": "No aplica.",
-                "relations": "Sustento y refugio de anidación para aves endémicas de Talamanca.",
-                "science": "Vital para la estabilidad de suelos en pendientes y regulación hídrica."
-              }
-            ],
-            "hongos": [
-              {
-                "name": "Amanita muscaria",
-                "sci": "Amanita muscaria",
-                "loc": "Cerro Abejonal, León Cortés",
-                "habitat": "Suelo de bosques montanos, asociado a robles (Quercus).",
-                "niche": "Hongo micorrízico mutualista; facilita absorción de nutrientes en árboles.",
-                "morph": "Sombrero rojo escarlata con escamas blancas, láminas libres y base bulbosa.",
-                "ethology": "Seta conspicua epigea.",
-                "repro": "Reproducción sexual por basidiosporas dispersadas por viento y fauna.",
-                "courtship": "No aplica",
-                "relations": "Relación simbiótica con flora arbórea local.",
-                "science": "Especie introducida con toxinas neurotóxicas (ácido iboténico y muscimol)."
-              }
-            ],
-            "invertebrados": [],
-            "mamiferos": [
-              {
-                "name": "Puma, León de montaña",
-                "sci": "Puma concolor costaricensis",
-                "loc": "Cordillera de Talamanca",
-                "habitat": "Bosques primarios y secundarios densos, bosque nuboso y matorrales.",
-                "niche": "Superdepredador tope y carnívoro obligado; regula poblaciones de herbívoros.",
-                "morph": "Felino grande esbelto, café amarillento o rojizo, cola larga con punta oscura. 50-90 kg.",
-                "ethology": "Solitario, territorial, elusivo y de hábitos crepusculares/nocturnos.",
-                "repro": "Polígamo. Gestación de 90 días, 1-4 crías en cuevas o raíces.",
-                "courtship": "Hembras emiten gritos agudos para atraer machos. Machos notablemente mayores.",
-                "relations": "Competencia indirecta con el jaguar; predador de saínos y pizotes.",
-                "science": "Indicador de la salud y conectividad de corredores biológicos en Talamanca."
-              },
-              {
-                "name": "Jaguar",
-                "sci": "Panthera onca",
-                "loc": "Cordillera de Talamanca y Los Santos",
-                "habitat": "Bosques primarios densos, áreas de bosque nuboso maduro y corredores ribereños.",
-                "niche": "Superdepredador tope absoluto; regulador clave de grandes herbívoros.",
-                "morph": "Cuerpo musculoso robusto, rosetas negras grandes con manchas internas. 60-100 kg.",
-                "ethology": "Solitario, territorial, excelente nadador y cazador de emboscada.",
-                "repro": "Gestación de 3 meses, 2-3 crías al cuidado de la madre.",
-                "courtship": "Llamadas vocales potentes de hembras en celo.",
-                "relations": "Coexiste de forma indirecta con el puma; predador de mamíferos medianos.",
-                "science": "Su presencia confirma conectividad biológica en Los Santos a pesar de la fragmentación."
-              },
-              {
-                "name": "Caucel, Tigrillo, Margay",
-                "sci": "Leopardus wiedii",
-                "loc": "Bosques montañosos de Los Santos",
-                "habitat": "Estrato alto y dosel de bosques primarios y secundarios avanzados.",
-                "niche": "Depredador carnívoro especializado en la caza arbórea (aves, roedores).",
-                "morph": "Felino pequeño y esbelto de cola muy larga (hasta 70% de su cuerpo). 2.5-9 kg.",
-                "ethology": "Nocturno y altamente arborícola; articulaciones rotan casi 180° para bajar de cabeza.",
-                "repro": "Gestación de 80-84 días, una sola cría en oquedades de árboles.",
-                "courtship": "Llamados vocales agudos en época reproductiva.",
-                "relations": "Presa ocasional de superdepredadores como el jaguar o puma.",
-                "science": "Casi Amenazado globalmente por depender estrictamente de bosques maduros complejos."
-              },
-              {
-                "name": "Yaguarundí, León breñero",
-                "sci": "Herpailurus yagouaroundi",
-                "loc": "Márgenes agrícolas y cafetales de Los Santos",
-                "habitat": "Áreas abiertas con matorrales densos, tacotales y bordes de bosque.",
-                "niche": "Depredador carnívoro generalista de roedores y aves terrestres.",
-                "morph": "Aspecto de comadreja, cuerpo alargado, extremidades cortas. Fases oscura y rojiza.",
-                "ethology": "Diurno (pico de actividad durante el día), terrestre y solitario.",
-                "repro": "Gestación de 70-75 días, 1-4 crías en madrigueras ocultas.",
-                "courtship": "Vocalizaciones suaves, ronroneos y chillidos en celo.",
-                "relations": "Competencia con carnívoros terrestres; vulnerable a atropellos viales.",
-                "science": "Muy plástica y adaptable a paisajes modificados por actividades humanas."
-              },
-              {
-                "name": "Danta centroamericana",
-                "sci": "Tapirus bairdii",
-                "loc": "Cerro de la Muerte y páramos",
-                "habitat": "Bosques nubosos primarios, robledales y páramos con charcas de lodo.",
-                "niche": "Herbívoro gigante y principal dispersor de semillas ('jardinero del bosque').",
-                "morph": "Mamífero silvestre más grande de Centroamérica (150-300 kg). Trompa móvil.",
-                "ethology": "Solitaria, tímida, crepuscular/nocturna. Excelente nadadora y amante de lodazales.",
-                "repro": "Gestación muy larga de 13 meses, una sola cría con rayas de camuflaje.",
-                "courtship": "Chillidos agudos, soplidos y marcaje olfativo.",
-                "relations": "Presa potencial de grandes felinos en estado juvenil.",
-                "science": "En Peligro de Extinción (EN). Indicador primordial de conectividad ecológica."
-              },
-              {
-                "name": "Coyote",
-                "sci": "Canis latrans",
-                "loc": "Zonas agropecuarias de Los Santos",
-                "habitat": "Áreas abiertas, pastizales, potreros y bordes de bosque secundario.",
-                "niche": "Carnívoro y omnívoro oportunista generalista; regulador de roedores e insectos.",
-                "morph": "Cánido de tamaño mediano (9-18 kg), hocico puntiagudo, orejas erectas.",
-                "ethology": "Socialmente flexible, crepuscular y nocturno.",
-                "repro": "Monógamo estacional. Gestación de 60-63 días, 4-7 crías.",
-                "courtship": "Aullidos, ladridos y gemidos colectivos.",
-                "relations": "Competencia con carnívoros medianos; interacción con felinos silvestres.",
-                "science": "Especie de expansión muy exitosa en el neotrópico y paisajes fragmentados."
-              },
-              {
-                "name": "Zorro gris",
-                "sci": "Urocyon cinereoargenteus",
-                "loc": "Cafetales y transición rural",
-                "habitat": "Bosques, matorrales espesos y plantaciones de café con cobertura.",
-                "niche": "Carnívoro y omnívoro generalista nocturno; dispersor de semillas.",
-                "morph": "Cánido pequeño (hasta 7 kg) con garras curvas especiales para trepar árboles.",
-                "ethology": "Solitario, nocturno. Único cánido en América que trepa árboles con soltura.",
-                "repro": "Monógamo. Gestación de 53-63 días, 1-7 crías en oquedades o rocas.",
-                "courtship": "Vocalizaciones agudas, ladridos y marcaje olfativo.",
-                "relations": "Competencia trófica con pequeños carnívoros y felinos menores.",
-                "science": "Muestra alta tolerancia a fincas cafetaleras y paisajes agropecuarios."
-              },
-              {
-                "name": "Mapache",
-                "sci": "Procyon lotor",
-                "loc": "Cuencas fluviales y áreas rurales",
-                "habitat": "Bosques de galería cercanos a ríos, pantanos y zonas agrícolas.",
-                "niche": "Omnívoro oportunista nocturno; regulador de invertebrados acuáticos y frutos.",
-                "morph": "Cuerpo robusto, cola con anillos oscuros y máscara negra facial. 3-10 kg.",
-                "ethology": "Nocturno, comportamiento característico de manipular alimentos en el agua.",
-                "repro": "Gestación de 63-65 días, 2-5 crías en oquedades de árboles.",
-                "courtship": "Chillidos, gruñidos y ronroneos.",
-                "relations": "Competencia trófica con omnívoros medianos; presa ocasional de grandes felinos.",
-                "science": "Gran inteligencia y adaptabilidad a la modificación antrópica del paisaje."
-              },
-              {
-                "name": "Comadreja de cola larga",
-                "sci": "Mustela frenata",
-                "loc": "Robledales y fincas de Los Santos",
-                "habitat": "Bosques, matorrales, pastizales y fincas de café con montones de piedra.",
-                "niche": "Depredador hipercarnívoro especializado en el control biológico de roedores.",
-                "morph": "Cuerpo extremadamente alargado y esbelto. Cola con punta negra. 85-450 g.",
-                "ethology": "Solitaria, hiperactiva, de metabolismo acelerado; excelente trepadora y nadadora.",
-                "repro": "Implantación retrasada del blastocisto, 3-9 crías en madrigueras.",
-                "courtship": "Chillidos agudos y fuerte olor almizclado defensivo. Dimorfismo sexual marcado.",
-                "relations": "Depredador eficiente pero presa de rapaces y serpientes grandes.",
-                "science": "Coexisten con gran éxito en paisajes agrícolas tradicionales de montaña."
-              }
-            ],
-            "reptiles": [
-              {
-                "name": "Víbora Mano de Piedra",
-                "sci": "Atropoides nummifer",
-                "loc": "Naranjillo, Tarrazú",
-                "habitat": "Bordes de bosque con rocas y troncos.",
-                "niche": "Depredador de emboscada que controla roedores silvestres.",
-                "morph": "Cabeza triangular ancha, escamas quilladas robustas.",
-                "ethology": "Nocturna y crepuscular, termorregulando sobre rocas.",
-                "repro": "Vivípara; da a luz crías desarrolladas.",
-                "courtship": "Rituales de proximidad química y combate ritual.",
-                "relations": "Controlador natural de roedores en zonas de altura.",
-                "science": "Veneno hemotóxico que cumple rol ecológico en el control de roedores."
-              },
-              {
-                "name": "Toboba de Altura",
-                "sci": "Cerrophidion sasai",
-                "loc": "La Pastora / Tarrazú",
-                "habitat": "Bosques montanos nubosos de Talamanca (1,460 - 2,875 m s. n. m.).",
-                "niche": "Depredador diurno y crepuscular de emboscada especializado en roedores.",
-                "morph": "Pequeña a mediana (50-85 cm). Marcas geométricas cuadradas en el dorso.",
-                "ethology": "Terrestre, diurna y crepuscular; temperamento tranquilo pero ponzoñosa.",
-                "repro": "Vivípara; da a luz crías completamente formadas.",
-                "courtship": "Competencia de machos y marcaje químico por feromonas.",
-                "relations": "Importante regulador natural de poblaciones de roedores altoandinos.",
-                "science": "Especie venenosa hemotóxica endémica de Talamanca y Cordillera Central."
-              },
-              {
-                "name": "Lagartija Espinosa Malaquita",
-                "sci": "Sceloporus malachiticus",
-                "loc": "Zonas altas de Los Santos",
-                "habitat": "Rocas expuestas, troncos caídos y matorrales de altura.",
-                "niche": "Insectívoro diurno; control biológico de insectos y artrópodos.",
-                "morph": "Robusta con escamas dorsales espinosas; tonos verdosos o café crípticos.",
-                "ethology": "Estrictamente diurna; realiza termorregulación activa sobre rocas al sol.",
-                "repro": "Vivípara u ovípara según altitud; protección en grietas rocosas.",
-                "courtship": "Flexiones corporales ('push-ups') y exhibición gular de los machos.",
-                "relations": "Presa de aves rapaces de altura y serpientes.",
-                "science": "Excelente indicador biológico de hábitats abiertos expuestos a la luz solar."
-              },
-              {
-                "name": "Toboba de árbol",
-                "sci": "Bothriechis nigroviridis",
-                "loc": "Cerro de la Muerte / Dota",
-                "habitat": "Dosel, sotobosque denso, bromelias epífitas y helechos arborescentes.",
-                "niche": "Depredador tope arbóreo de aves pequeñas, lagartijas y roedores arborícolas.",
-                "morph": "Cuerpo delgado, cola prensil. Verde brillante con puntos negros. 50-80 cm.",
-                "ethology": "Nocturna y crepuscular; paciente y enroscada entre el follaje y bromelias.",
-                "repro": "Vivípara (5-12 neonatos al inicio de la estación lluviosa).",
-                "courtship": "Cortejo en ramas mediante contacto. Hembras más robustas.",
-                "relations": "Presa ocasional de rapaces nocturnas y mamíferos carnívoros.",
-                "science": "Sensible a la deforestación y dependencia estricta de epífitas y bromelias."
-              },
-              {
-                "name": "Lagarto escorpión de altura",
-                "sci": "Abronia monticola",
-                "loc": "Dota / Tarrazú / León Cortés",
-                "habitat": "Bosques nubosos maduros, robledales y páramos (bajo troncos o rocas).",
-                "niche": "Depredador diurno de invertebrados terrestres (insectos, arañas).",
-                "morph": "Cuerpo alargado, escamas quilladas y pliegue lateral flexible. Cola frágil.",
-                "ethology": "Diurna y terrestre/semirrupícola. Realiza autotomía caudal ante amenazas.",
-                "repro": "Ovovivípara (retiene huevos y da a luz crías vivas adaptadas al frío).",
-                "courtship": "Activa en meses secos; machos con cabezas ligeramente más anchas.",
-                "relations": "Competencia con otros reptiles de altura; presa de aves y serpientes.",
-                "science": "Endémica regional de Talamanca, muy sensible a cambios en nubosidad."
-              },
-              {
-                "name": "Víbora de palma verde / Lora",
-                "sci": "Bothriechis lateralis",
-                "loc": "Bosques montanos y cafetales de Los Santos",
-                "habitat": "Follaje denso de árboles, arbustos y bases de hojas de palma o cafetales.",
-                "niche": "Depredador tope arbóreo de roedores pequeños, aves y reptiles arborícolas.",
-                "morph": "60-80 cm. Verde esmeralda llamativo con líneas laterales amarillas. Cola prensil.",
-                "ethology": "Nocturna y sumamente pasiva/críptica; inmóvil entre las ramas.",
-                "repro": "Vivípara (camadas de 6-10 neonatos sincronizadas con clima local).",
-                "courtship": "Apareamiento arbóreo mediante acercamientos táctiles.",
-                "relations": "Competencia por nicho arbóreo con otras víboras; presa de rapaces nocturnas.",
-                "science": "Veneno hemotóxico. Antiveneno producido por el Instituto Clodomiro Picado (ICP)."
-              }
-            ]
-          },
-          "sites": [
-            {
-              "name": "Cerro Vueltas",
-              "popularName": "Reserva Biológica Cerro Vueltas",
-              "alt": "3,156 m s. n. m.",
-              "history": "Ubicado al lado de la Panamericana Sur. Su nombre proviene de las cerradas curvas para superar su altitud.",
-              "ecology": "Bosque nuboso alto, robledales dominados por Quercus costaricensis y transición a páramo."
-            },
-            {
-              "name": "Cerro Placas",
-              "popularName": "Cerro San Jerónimo",
-              "alt": "2,120 m s. n. m.",
-              "history": "Punto más alto de Tarrazú. Divisoria de aguas natural hacia la cuenca del río Pirrís.",
-              "ecology": "Bosques semimaduros, parches primarios y colindancias con cafetales de altura."
-            },
-            {
-              "name": "Cerro Abejonal",
-              "popularName": "El Abejonal",
-              "alt": "2,029 m s. n. m.",
-              "history": "Cerro más alto de San Pablo. Llamado así por la abundancia de escarabajos abejones en mayo.",
-              "ecology": "Ecosistemas de transición agrícola y boscosa con corredores biológicos locales."
-            },
-            {
-              "name": "Cerro La Trinidad",
-              "popularName": "Cerro de la Cruz",
-              "alt": "1,944 m s. n. m.",
-              "history": "Símbolo natural e histórico de Tarrazú con gran cruz instalada en su cima.",
-              "ecology": "Vegetación de ladera montañosa premontana y parches de bosque secundario."
-            }
-          ]
-        };
+  "species": {
+    "anfibios": [
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "San Lorenzo de Tarrazú",
+        "temp": "19°C",
+        "hum": "95%",
+        "name": "Rana de las Nacientes",
+        "sci": "Isthmohyla nacientes",
+        "habitat": "Vegetación arbustiva y riachuelos.",
+        "niche": "Depredador nocturno de insectos y bioindicador.",
+        "morph": "Tamaño <4cm, coloración verdosa críptica.",
+        "ethology": "Nocturna, arborícola, machos vocalizan cerca de nacientes.",
+        "repro": "Puesta de huevos gelatinosos sobre hojas colgantes en agua.",
+        "courtship": "Canto nupcial en coros; machos con sacos vocales desarrollados.",
+        "relations": "Competencia acústica intraespecífica y depredación de artrópodos.",
+        "science": "Alta dependencia de microhábitats prístinos asociados a nacientes, siendo vulnerable a la contaminación agrícola.",
+        "img": "img/img1.png"
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "León Cortés",
+        "temp": "12-20°C",
+        "hum": "85-95%",
+        "name": "Rana de arroyo de altura",
+        "sci": "Isthmohyla rivularis",
+        "habitat": "Vegetación arbustiva, arbórea y herbácea que crece directamente a lo largo o sobre la vegetación colgante sobre arroyos y quebradas rápidas y cristalinas en bosques premontanos y nubosos.",
+        "niche": "Consumidor secundario (depredador nocturno de insectos y artrópodos pequeños); bioindicador clave de la calidad del agua y la salud de los ecosistemas ribereños de montaña.",
+        "morph": "Rana arbórea de tamaño pequeño a moderado; los machos alcanzan hasta 34 mm y las hembras hasta 37 mm de longitud hocico-cloaca. Discos adhesivos grandes en los dedos de las manos (con membrana hasta un tercio) y pies (con membrana de dos tercios). Coloración dorsal variable de gris a marrón claro, frecuentemente con una línea oscura delgada que cruza el ojo; flancos amarillentos, verdosos o azulados e iris de color bronce con reticulaciones negras.",
+        "ethology": "Los machos vocalizan posados sobre la vegetación ribereña muy cerca o directamente sobre corrientes de agua rápidas. Es una especie de hábitos muy discretos y elusivos.",
+        "repro": "Reproducción asociada a corrientes lóticas. Los huevos son depositados en la vegetación o rocas sobre el agua, permitiendo que los renacuajos caigan o se desarrollen directamente en el agua de los arroyos de montaña.",
+        "courtship": "Los machos emiten cantos nupciales desde la vegetación ribereña para atraer a las hembras. Presenta dimorfismo sexual en el tamaño corporal (las hembras son ligeramente más grandes y robustas que los machos).",
+        "relations": "Competencia acústica y espacial con otros anfibios simpátricos de arroyo; depredada por insectos acuáticos grandes, serpientes de agua y aves nocturnas.",
+        "science": "Especie icónica en la biología de la conservación en Costa Rica; se pensaba extinta en la década de los 80 debido a drásticos declives poblacionales (atribuidos fuertemente al hongo quitridio y la pérdida de hábitat), siendo redescubierta posteriormente en reservas de bosque nuboso, lo que subraya su extrema vulnerabilidad ecológica.",
+        "dimorphism": false,
+        "img1": "img/img19.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "Dota/Tarrazú",
+        "temp": "13°C a 21°C",
+        "hum": "80% a 95%",
+        "name": "Rana arborícola de potrero",
+        "sci": "Isthmohyla pseudopuma",
+        "habitat": "Muy versátil en comparación con otras ranas de altura; habita en charcas intermitentes de agua dulce, marismas, pastizales encharcados, jardines rurales, bordes de potreros y zonas secundarias previamente boscosas, utilizando vegetación herbácea y arbustiva baja.",
+        "niche": "Consumidor secundario y depredador nocturno de insectos y artrópodos terrestres y voladores; es una especie clave por su alta adaptabilidad a paisajes alterados por actividades agropecuarias típicas de la región.",
+        "morph": "Rana arborícola de tamaño pequeño a moderado; los machos miden entre 30 y 38 mm y las hembras entre 35 y 42 mm. Discos adhesivos desarrollados en los dedos. Coloración dorsal altamente variable, comúnmente de tonos pardo-rojizos, amarillentos o verdosos, a menudo con manchas oscuras dorsales y una coloración contrastante en la ingle y los muslos.",
+        "ethology": "Durante el día permanece oculta entre la vegetación baja o en axilas de plantas; por la noche los machos se congregan activamente alrededor de cuerpos de agua estancada o charcas para vocalizar.",
+        "repro": "Ovípara. Deposita masas de huevos gelatinosos en cuerpos de agua estancados, charcas temporales o marismas, donde los renacuajos completan su desarrollo acuático.",
+        "courtship": "Los machos forman coros numerosos en las noches lluviosas, emitiendo llamadas nupciales cortas y distintivas desde la vegetación baja o el suelo inundado. Presenta dimorfismo sexual en el tamaño corporal (las hembras son notablemente más grandes y robustas que los machos).",
+        "relations": "Competencia acústica intraespecífica intensa en coros reproductivos compartidos con otros anuros de charca; presa de aves zancudas, serpientes de hábitos acuáticos y anfibios o insectos predadores más grandes.",
+        "science": "A diferencia de muchas especies de anfibios montanos que sufrieron drásticos desplomes poblacionales por el hongo quitridio, Isthmohyla pseudopuma ha mostrado una resiliencia notable e incluso expansión local en hábitats alterados por el ser humano (como potreros y charcas agrícolas), clasificándose globalmente en preocupación menor (LC).\n",
+        "dimorphism": false,
+        "img1": "img/img20.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "Santa Marta, Tarrazú",
+        "temp": "20°C a 28°C",
+        "hum": "75% a 95%",
+        "name": "Rana arborícola enmascarada",
+        "sci": "Smilisca phaeota",
+        "habitat": "Bosques húmedos tropicales y subtropicales, charcas temporales, pantanos, áreas abiertas secundarias, orillas de caminos y plantaciones agrícolas (como banano o café).",
+        "niche": "Consumidor secundario nocturno y depredador generalista de insectos (ortópteros, dípteros) y arañas; clave en el control de poblaciones de artrópodos en el sotobosque y charcas.",
+        "morph": "Rana de tamaño mediano a grande (machos de 51 a 65 mm; hembras hasta 78 mm de longitud hocico-cloaca). Cuerpo moderadamente robusto y aplanado. Presenta una característica franja blanca plateada en el labio superior y una línea o \"máscara\" oscura muy notable que va desde las fosas nasales hasta la base de los brazos. Coloración dorsal capaz de cambiar de verde brillante (de noche) a marrón claro o bronceado (de día).",
+        "ethology": "Durante el día descansa completamente estirada y mimetizada sobre el haz de hojas grandes, helechos o plantas cultivadas; por la noche se desplaza activamente hacia los cuerpos de agua para la reproducción.",
+        "repro": "Ovípara. Las hembras depositan hasta 2,000 huevos formando una película delgada flotante en la superficie de charcas temporales o pozas de agua estancada. Los renacuajos completan un desarrollo larvario rápido (30 a 40 días) para evitar la desecación del agua.",
+        "courtship": "Los machos se concentran en las charcas tras las lluvias nocturnas y emiten un llamado territorial fuerte y áspero similar a un \"wrauk\". Presenta dimorfismo sexual evidente en el tamaño corporal (las hembras son notablemente más grandes y corpulentas que los machos).",
+        "relations": "Competencia acústica alta en coros mixtos con otras ranas de charca; presa de serpientes nocturnas (como Bothrops asper o especies de Leptodeira) y de aves zancudas o mamíferos carnívoros.",
+        "science": "Especie de hábitos muy plásticos y tolerantes a la alteración humana del paisaje; muestra una alta capacidad de adaptación para reproducirse en cuerpos de agua artificiales u oquedades con agua de lluvia en zonas intervenidas.",
+        "dimorphism": false,
+        "img1": "img/img21.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "",
+        "temp": "16°C a 24°C",
+        "hum": "85% a 98%",
+        "name": "Rana de vidrio de Esmeralda",
+        "sci": "Espadarana prosoblepon",
+        "habitat": "Vegetación arbustiva, helechos, arbustos y en el haz o envés de hojas de plantas que crecen directamente colgando sobre arroyos rápidos, cascadas o quebradas rocosas en bosques primarios y secundarios maduros.",
+        "niche": "Depredador nocturno de insectos y artrópodos pequeños (como dípteros, pequeños ortópteros y arañas); funciona como un bioindicador clave de la pureza del agua, la salud fluvial y la integridad de los corredores ribereños.",
+        "morph": "Rana de tamaño pequeño a moderado; los machos miden de 22 a 28 mm y las hembras de 26 a 32 mm de longitud hocico-cloaca. Coloración dorsal de tono verde brillante (frecuentemente con puntos oscuros o amarillos diminutos). Posee el vientre transparente, lo que permite observar claramente los órganos internos (como el tracto digestivo y el pericardio). Presenta una pequeña espina humeral en el húmero de los machos adultos.",
+        "ethology": "Nocturna y de comportamiento territorial. Durante el día permanecen inmóviles y crípticos sobre las hojas; por la noche los machos se ubican en la vegetación sobre el agua para defender sus territorios y atraer parejas.",
+        "repro": "Ovípara. Los machos defienden los sitios de puesta. Las hembras depositan masas de huevos gelatinosos generalmente en el envés de las hojas que cuelgan directamente sobre la corriente de agua, permitiendo que los renacuajos caigan al río al eclosionar.",
+        "courtship": "El cortejo incluye combates territoriales entre machos utilizando las espinas humerales y vocalizaciones agudas tipo silbido o zumbido desde las hojas. Presenta dimorfismo sexual evidente en el tamaño (las hembras son ligeramente más grandes) y en la presencia de la espina humeral en los machos.",
+        "relations": "Competencia acústica y espacial por territorios en las mejores perchas sobre los arroyos; presa de arañas errantes grandes, insectos acuáticos predadores, serpientes de arroyo y aves nocturnas.",
+        "science": "Especie de amplia plasticidad ecológica comparada con otros centrolénidos, capaz de tolerar parches boscosos secundarios o cercanías a zonas agrícolas siempre que los ríos mantengan su caudal y calidad sin contaminación severa; sin embargo, sigue siendo vulnerable a la deforestación de la franja ribereña.",
+        "dimorphism": false,
+        "img1": "img/img22.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "Dota/Tarrazú",
+        "temp": "18°C a 26°C",
+        "hum": "80% a 95%",
+        "name": "Rana de vidrio de Fleischmann",
+        "sci": "Hyalinobatrachium fleischmanni",
+        "habitat": "Hojas de arbustos, árboles bajos y helechos que crecen directamente sobre el cauce de ríos y quebradas de corriente moderada en bosques primarios, secundarios e incluso áreas parcialmente alteradas con buena cobertura boscosa ribereña.",
+        "niche": "Depredador nocturno especializado en insectos pequeños y artrópodos del follaje ribereño; actúa como un indicador clave de la salud ambiental de los ecosistemas acuáticos de montaña.",
+        "morph": "Rana de tamaño pequeño; los machos miden de 19 a 24 mm y las hembras de 20 a 28 mm de longitud hocico-cloaca. Coloración dorsal verde claro translúcida con pequeñas manchas amarillas o blanquecinas. Posee un vientre totalmente transparente y claro que permite ver con absoluta nitidez todos sus órganos internos, el tracto digestivo y los latidos del corazón a través del pericardio transparente.",
+        "ethology": "Nocturna y altamente territorial. Durante el día permanecen adheridas al envés de las hojas, adoptando una postura aplanada que las vuelve casi invisibles (camuflaje por transparencia). Por la noche, los machos vocalizan activamente desde las hojas sobre el agua para defender sus sitios de cría.",
+        "repro": "Ovípara. Los machos cuidan rigurosamente las puestas de huevos. Las hembras depositan masas gelatinosas de huevos principalmente en el envés de las hojas que cuelgan sobre la corriente, permitiendo que los renacuajos caigan directamente al agua al eclosionar.",
+        "courtship": "Los machos emiten un llamado de apareamiento característico (un silbido corto y agudo) y defienden sus territorios mediante combates de contacto o posturas amenazantes. Presenta un dimorfismo sexual sutil centrado en el tamaño corporal ligeramente mayor de las hembras y la presencia de una pequeña almohadilla nupcial en los machos.",
+        "relations": "Competencia acústica y espacial por los mejores sitios de percha en la vegetación ribereña; presa natural de arañas errantes grandes, insectos acuáticos predadores, serpientes de arroyo y aves nocturnas.",
+        "science": "Es una de las especies de ranas de cristal mejor estudiadas del neotrópico. Su comportamiento de cuidado parental por parte del macho (quien hidrata y protege los huevos contra la desecación y hongos) es un modelo clásico de investigación en ecología conductual de anfibios.",
+        "dimorphism": false,
+        "img1": "img/img23.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "",
+        "temp": "20°C a 26°C",
+        "hum": "85% a 98%",
+        "name": "Rana de vidrio granulosa",
+        "sci": "Cochranella granulosa",
+        "habitat": "Vegetación arbórea, arbustiva y helechos situados por lo general de 5 a 10 metros por encima de quebradas o ríos de corriente rápida en bosques húmedos tropicales y premontanos.",
+        "niche": "Depredador nocturno de insectos pequeños (como moscas y grillos); actúa como bioindicador de la calidad de los cuerpos de agua y de la conectividad de los corredores ribereños.",
+        "morph": "Rana de tamaño pequeño; los adultos miden de 23 a 32 mm de longitud. Su piel dorsal tiene una textura característicamente granulada, con una coloración que va de verde amarillento a verde azulado, frecuentemente adornada con pequeñas manchas oscuras o turquesas. Vientre transparente que permite observar el pericardio y parte de los órganos internos.",
+        "ethology": "Estrictamente nocturna y de hábitos arborícolas. Durante el día permanece inmóvil y mimetizada en el envés de las hojas; por la noche los machos ascienden a las partes altas de la vegetación sobre las quebradas para vocalizar y defender sus territorios.",
+        "repro": "Las hembras depositan masas gelatinosas con un número moderado de huevos en el envés de las hojas sobre el agua, las cuales son vigiladas activamente por los machos para asegurar su viabilidad antes de la eclosión de los renacuajos.",
+        "courtship": "Los machos emiten llamados territoriales agudos y compiten de forma directa y agresiva contra machos intrusos que invadan su percha. Presenta un dimorfismo sexual sutil centrado en el tamaño corporal ligeramente mayor de las hembras y adaptaciones de defensa territorial en los machos.",
+        "relations": "Competencia acústica y espacial con otros centrolénidos en los estratos altos de la vegetación ribereña; presa de arañas errantes, insectos acuáticos grandes y serpientes u otras especies nocturnas.",
+        "science": "Especie vulnerable a la alteración o pérdida de los hábitats riparios y a la contaminación agrícola de las fuentes de agua debido al uso de pesticidas y fertilizantes en las zonas de cultivo aledañas.",
+        "dimorphism": false,
+        "img1": "img/img24.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "Dota / Cordillera de Talamanca (Km 74 Panamericana)",
+        "temp": "8°C a 16°C",
+        "hum": "85% a 98%",
+        "name": "Salamandra de patas rojas",
+        "sci": "Bolitoglossa pesrubra (Plethodontidae)",
+        "habitat": "Sotobosque de bosques nubosos primarios y secundarios, bosques de roble (Quercus), y zonas altoandinas; hábitos tanto terrestres como semi-arborícolas, encontrándose frecuentemente bajo troncos caídos, rocas, hojarasca húmeda y en el interior de axilas de bromelias epífitas.",
+        "niche": "Consumidor secundario y depredador nocturno de invertebrados pequeños del suelo y la hojarasca (ácaros, colémbolos, pequeños insectos); pieza fundamental en la biomasa de vertebrados del sotobosque de altura.",
+        "morph": "Salamandra de tamaño moderado; longitud total desde el hocico hasta la punta de la cola que puede alcanzar hasta los 13 cm. Cuerpo robusto de coloración general oscura (café negruzco o grisáceo), caracterizada de manera distintiva por presentar las palmas de las manos, las plantas de los pies y las extremidades inferiores con una coloración rojiza o anaranjada muy llamativa (origen de su epíteto específico pesrubra). Dedos palmeados adaptados para trepar y caminar sobre superficies húmedas.",
+        "ethology": "Nocturna y de hábitos discretos y pausados. Durante el día permanece refugiada en la humedad de la hojarasca, bajo troncos o dentro de bromelias; se activa por las noches o en días con neblina densa para desplazarse en busca de alimento.",
+        "repro": "Desarrollo directo (sin fase larval acuática libre). Las hembras depositan racimos de huevos en sitios terrestres muy húmedos (bajo musgos o troncos), donde los embriones completan su metamorfosis internamente para eclosionar directamente como salamandras juveniles miniatura.",
+        "courtship": "El cortejo implica interacciones táctiles y uso de glándulas de feromonas en la región de la cabeza y el mentón. Presenta un dimorfismo sexual sutil centrado en variaciones de tamaño corporal y proporciones de la cola entre machos y hembras adultos.",
+        "relations": "Competencia por el espacio en la hojarasca con otros anfibios y reptiles terrestres de altura; presa de aves insectívoras, roedores de sotobosque y serpientes montañosas.",
+        "science": "Al ser un anfibio pulmonado ausente (respira exclusivamente a través de la piel y el revestimiento de la boca), es altamente vulnerable a la desecación, al cambio climático y a la alteración de los bosques nubosos de altitud, estando catalogada bajo criterios de conservación como especie sensible.",
+        "dimorphism": false,
+        "img1": "img/img26.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Anfibios",
+        "loc": "Dota / Cordillera de Talamanca (Km 74 Panamericana)",
+        "temp": "8°C a 15°C",
+        "hum": "85% a 98%",
+        "name": "Salamandra tica",
+        "sci": "Bolitoglossa tica (Plethodontidae)",
+        "habitat": "Sotobosque de bosques nubosos primarios y secundarios maduros, bosques de roble (Quercus), taludes húmedos con musgo y bromelias terrestres o epífitas donde suele refugiarse.",
+        "niche": "Consumidor secundario nocturno y depredador de invertebrados diminutos del suelo y la hojarasca (ácaros, colémbolos, pequeños insectos); pieza clave en la dinámica trófica del sotobosque altoandino.",
+        "morph": "Salamandra de tamaño moderado a pequeño, perteneciente al grupo de especies afines a Bolitoglossa subpalmata. Cuerpo esbelto y extremidades cortas con dedos provistos de membranas interdigitales. Coloración dorsal variable, frecuentemente con tonos oscuros, pardos o rojizos combinados con manchas o bandas claras en el dorso. Carece de pulmones, realizando el intercambio gaseoso exclusivamente por vía cutánea y a través de la mucosa bucal.",
+        "ethology": "Nocturna y de hábitos terrestres y semi-arborícolas discretos. Durante el día permanece oculta bajo la hojarasca, troncos caídos, rocas o en el interior de las axilas de las bromelias, activándose tras los periodos de lluvia o alta neblina.",
+        "repro": "Desarrollo directo (sin fase larvaria acuática de vida libre). Las hembras depositan sus huevos en sitios terrestres muy húmedos (bajo musgos o troncos), donde los embriones completan su desarrollo interno para eclosionar directamente como salamandras miniatura.",
+        "courtship": "El cortejo incluye comportamientos táctiles y uso de glándulas especializadas. Presenta un dimorfismo sexual sutil centrado principalmente en variaciones leves de proporciones corporales y tamaño entre machos y hembras adultos.",
+        "relations": "Competencia por microhábitats en la hojarasca con otros anfibios endémicos de altura; presa natural de aves insectívoras de sotobosque, pequeños mamíferos y serpientes montañosas.",
+        "science": "Al ser un anfibio estrictamente endémico de los frágiles ecosistemas de altura de Talamanca, está catalogada bajo categorías de amenaza debido a la pérdida de hábitat, el cambio en el uso del suelo y su alta vulnerabilidad frente a las alteraciones climáticas que afectan los bosques nubosos.",
+        "dimorphism": false,
+        "img1": "img/img27.png",
+        "img2": ""
+      }
+    ],
+    "aves": [
+      {
+        "title": "Guía Taxonómica - Aves",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+        "temp": "10°C a 18°C",
+        "hum": "85% a 95%",
+        "name": "Quetzal, Quetzal mesoamericano",
+        "sci": "Pharomachrus mocinno (Subespecie regional: Pharomachrus mocinno costaricensis)",
+        "habitat": "Bosques nubosos primarios y secundarios maduros, densamente cargados de musgos, bromelias y plantas epífitas, frecuentando el dosel y los bordes del bosque.",
+        "niche": "Frugívoro especializado y dispersor clave de semillas (principalmente de la familia Lauraceae, como aguacatillos silvestres); clave para la regeneración y salud del ecosistema de bosque nuboso.",
+        "morph": "Ave de mediano tamaño (36 a 40 cm de longitud corporal). El macho posee plumas cobertoras supracaudales extraordinariamente alargadas (hasta 64 cm adicionales), cabeza con penacho erecto y plumaje verde esmeralda/iridiscente con pecho y vientre rojo carmesí. La hembra es de tonos más opacos, cabeza café-grisácea y sin cola larga.",
+        "ethology": "Solitario o en parejas fuera de la época reproductiva; hábitos diurnos y de conducta relativamente críptica a pesar de sus colores. Realizan migraciones altitudinales cortas siguiendo la fructificación de sus alimentos.",
+        "repro": "Monógamo estacional. Anidan en cavidades descompuestas de árboles muertos (toconas) excavadas por ambos sexos. Ponen de 1 a 2 huevos de color azul pálido, con incubación compartida entre el macho y la hembra.",
+        "courtship": "El cortejo incluye vuelos acrobáticos espectaculares del macho sobre el dosel acompañados de llamados melodiosos. Marcado dimorfismo sexual en la longitud de la cola, brillo del plumaje (verde iridiscente vs. café-grisáceo) y coloración del pico (amarillo en machos adultos, negruzco en hembras).",
+        "relations": "Interacciones de competencia pacífica con otras aves frugívoras en árboles con frutos de lauráceas; vulnerable a la depredación de nidos por tucanetes, aves de presa y mamíferos arborícolas.",
+        "science": "Especie altamente sensible a la alteración del hábitat y fragmentación del bosque nuboso. Depende estrictamente de la disponibilidad de árboles maduros para anidar y de corredores biológicos altitudinales funcionales para su supervivencia a largo plazo.",
+        "img": "img/img2.png"
+      },
+      {
+        "title": "Guía Taxonómica - Aves",
+        "loc": "San Gerardo de Dota",
+        "temp": "16°C",
+        "hum": "88%",
+        "name": "Colibrí Volcánico",
+        "sci": "Selasphorus flammula",
+        "habitat": "Matorrales de altura y páramo.",
+        "niche": "Nectarívoro especializado y polinizador clave de plantas de Ericaceae.",
+        "morph": "Tamaño diminuto, pico corto y recto.",
+        "ethology": "Muy activo, soporta temperaturas bajo cero mediante letargo.",
+        "repro": "Nido en taza copa sobre arbustos.",
+        "courtship": "Vuelos en picada en forma de 'U' y despliegue de garganta.",
+        "relations": "Competencia interespecífica por recursos florales en alta montaña.",
+        "science": "Entran en letargo nocturno reduciendo su temperatura corporal para conservar energía a más de 3,000 msnm.",
+        "dimorphism": true,
+        "img1": "img/img3.png",
+        "img2": "img/img15.png"
+      },
+      {
+        "title": "Guía Taxonómica - Aves",
+        "loc": "",
+        "temp": "18°C",
+        "hum": "90%",
+        "name": "Pava negra",
+        "sci": "Chamaepetes unicolor",
+        "habitat": "Estrato medio y alto de bosques nubosos primarios y secundarios maduros, robledales (Quercus) y áreas con densa cobertura de copas, bajando ocasionalmente al suelo en busca de frutos caída o agua.",
+        "niche": "Frugívoro de gran tamaño y dispersor clave de semillas de árboles del dosel (como familias de lauráceas y palmas de altura); vital para la regeneración natural y el mantenimiento de la diversidad vegetal del bosque nuboso.",
+        "morph": "Ave grande y robusta (aproximadamente de 62 a 69 cm de longitud). Plumaje de color negro uniforme con sutiles reflejos verdosos o bronceados en el dorso. Presenta un pico de color azul pálido o grisáceo, patas rojas o rosadas y ojos con iris rojo intenso. No presenta dimorfismo marcado en el plumaje entre sexos.",
+        "ethology": "Diurna, de hábitos generalmente ariscos y cautelosos; se desplaza en parejas o pequeños grupos familiares saltando entre las ramas o caminando con sigilo por el dosel y las ramas gruesas.",
+        "repro": "Construyen nidos voluminosos hechos de ramas y hojas secas ubicados a media o alta altura en los árboles (frecuentemente sobre bromelias o musgos). Ponen de 2 a 3 huevos de color blancuzco o crema.",
+        "courtship": "El cortejo incluye despliegues visuales discretos y vocalizaciones graves o silbidos suaves entre parejas en el dosel. Escaso dimorfismo sexual externo (los machos y las hembras son muy similares en tamaño y coloración negra uniforme).",
+        "relations": "Competencia trófica pacífica con otros grandes frugívoros del dosel; vulnerable a la presión de cacería ilegal y a la depredación de nidos por aves rapaces y mamíferos arborícolas.",
+        "science": "Especie altamente sensible a la perturbación del hábitat, la fragmentación forestal y la cacería furtiva. Funciona como un excelente indicador biológico de la integridad estructural y la salud general de los bosques nubosos maduros de la Cordillera de Talamanca.",
+        "dimorphism": false,
+        "img1": "img/img28.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Aves",
+        "loc": "Naranjillo, Tarrazú",
+        "temp": "20°C",
+        "hum": "75%",
+        "name": "Pava crestada o granadera",
+        "sci": "Penelope purpurascens (Cracidae)",
+        "habitat": "Estrato medio y alto del dosel en bosques primarios densos, crecimiento secundario avanzado, áreas ribereñas y bordes de bosque maduro, frecuentemente cerca de fuentes de agua.",
+        "niche": "Frugívoro y dispersor primario de semillas de gran tamaño en el sotobosque y dosel; cumple un papel ecológico crítico en la regeneración de la estructura forestal y la dinámica de las semillas en los bosques neotropicales.",
+        "morph": "Ave grande y esbelta (de 80 a 90 cm de longitud y un peso aproximado de 1.7 a 3 kg). Plumaje de tono marrón oscuro u oliva con reflejos bronceados, destacando bordes blancuzcos notables en las plumas del cuello y pecho. Posee una cresta eréctil densa, una piel gular o papada desnuda de color rojo anaranjado intenso, pico negruzco y patas de color rojo apagado.",
+        "ethology": "Diurna y de hábitos mayormente arborícolas. Se desplaza sola, en parejas o en pequeños grupos familiares (hasta de 12 individuos) buscando alimento en las copas de los árboles, raras veces bajando al suelo.",
+        "repro": "Monógama. Construyen nidos voluminosos en forma de tazón con ramas y hojas sobre árboles o tocones altos. La puesta consta ordinariamente de 2 a 3 huevos de tonos claros.",
+        "courtship": "El periodo reproductivo se concentra en la estación favorable (generalmente de marzo a junio). No presenta dimorfismo sexual evidente en el plumaje ni en el tamaño; ambos sexos son morfológicamente muy similares.",
+        "relations": "Competencia pacífica con otros grandes frugívoros del dosel por árboles con frutos en fructificación; altamente vulnerable a la presión de la cacería furtiva y a la fragmentación del hábitat.",
+        "science": "Especie altamente sensible a la intervención humana y a la deforestación. A diferencia de la Chamaepetes unicolor (pava negra de alta montaña), Penelope purpurascens prefiere climas más cálidos y sotobosques tropicales/premontanos, por lo que su presencia marca las transiciones hacia las bajuras o zonas cafetaleras y bosques secundarios de menor altitud en los límites regionales.",
+        "dimorphism": false,
+        "img1": "img/img29.png",
+        "img2": ""
+      }
+    ],
+    "flora": [
+      {
+        "title": "Guía Taxonómica - Flora",
+        "loc": "Río Savegre, Dota",
+        "temp": "19°C",
+        "hum": "95%",
+        "name": "Musgos, Epífitas y Chusquea (Bambú de Altura)",
+        "sci": "Chusquea subtomentosa & Sphagnum spp.",
+        "habitat": "Sotobosques densos de bosque nuboso y troncos de Quercus costaricensis.",
+        "niche": "Formador de sotobosque denso, retenedor hídrico y refugio clave para avifauna de altura.",
+        "morph": "Bambú leñoso amacollado con tallos macizos y filidios de alta capilaridad.",
+        "ethology": "Crecimiento estacional y floración sincrónica masiva (gregaria) periódica.",
+        "repro": "Reproducción asexual por rizomas y sexual por semillas tras floración gregaria.",
+        "courtship": "No aplica.",
+        "relations": "Sustento, refugio y hábitat de anidación para aves endémicas de Talamanca.",
+        "science": "La Chusquea es vital para la estabilidad de los suelos en pendientes pronunciadas y la regulación hídrica de cuencas alta.",
+        "img": "img/img12.png"
+      }
+    ],
+    "hongos": [
+      {
+        "title": "Guía Taxonómica - Hongos",
+        "loc": "Cerro Abejonal, León Cortés",
+        "temp": "22°C",
+        "hum": "94%",
+        "name": "Amanita muscaria",
+        "sci": "Amanita muscaria",
+        "habitat": "Suelo de bosques templados y montanos, creciendo de forma micorrízica principalmente bajo coníferas (como Pinus) o asociado a raíces de árboles de roble (Quercus) en microhábitats de altura.",
+        "niche": "Hongo micorrízico; establece relaciones simbióticas mutualistas obligadas con las raíces de los árboles forestales, facilitando la absorción de nutrientes y agua, y contribuyendo a la salud y dinámica del suelo del bosque.",
+        "morph": "Seta conspicua y de gran tamaño. Presenta un sombrero globoso en etapas jóvenes que se vuelve plano (de 8 a 20 cm de diámetro), de color rojo vivo o escarlata brillante, salpicado característicamente por restos blancos o amarillentos del velo universal (pequeñas escamas o puntos). Láminas libres, blancas y apretadas. Pie cilíndrico blanco con un anillo membranoso amplio y una base bulbosa rodeada de escamas concéntricas.",
+        "ethology": "Seta conspicua y de gran tamaño. Presenta un sombrero globoso en etapas jóvenes que se vuelve plano (de 8 a 20 cm de diámetro), de color rojo vivo o escarlata brillante, salpicado característicamente por restos blancos o amarillentos del velo universal (pequeñas escamas o puntos). Láminas libres, blancas y apretadas. Pie cilíndrico blanco con un anillo membranoso amplio y una base bulbosa rodeada de escamas concéntricas.",
+        "repro": "Reproducción sexual por medio de esporas (basidiosporas) liberadas desde las láminas hacia el exterior para ser dispersadas principalmente por el viento y la microfauna del suelo.",
+        "courtship": "No aplica",
+        "relations": "Relación simbiótica mutualista con la flora arbórea local (especialmente pinos y robles); sirve de alimento ocasional e invertebrados detritívoros especializados que toleran sus compuestos químicos.",
+        "science": "Especie introducida en los ecosistemas neotropicales junto con plantaciones forestales exóticas. Contiene toxinas de acción neurotóxica (como el ácido iboténico y el muscimol), por lo que no es comestible y representa un modelo clásico de estudio en micología por sus propiedades psicoactivas y su ecología micorrízica.",
+        "dimorphism": false,
+        "img1": "img/img11.png",
+        "img2": ""
+      }
+    ],
+    "invertebrados": [],
+    "mamiferos": [
+      {
+        "title": "Guía Taxonómica - Mamíferos",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (Tarrazú, Dota, León Cortés)",
+        "temp": "12°C a 20°C",
+        "hum": "80% a 95%",
+        "name": "Puma, León de montaña, León breñero",
+        "sci": "Puma concolor (Subespecie regional: Puma concolor costaricensis)",
+        "habitat": "Bosques primarios y secundarios densos, áreas de bosque nuboso, matorrales de altura y zonas de transición agrícola en terrenos quebrados o montañosos.",
+        "niche": "Superdepredador tope y carnívoro obligado; clave en la regulación poblacional de mamíferos medianos y herbívoros, manteniendo el equilibrio trófico del ecosistema.",
+        "morph": "Felino grande de complexión esbelta; cabeza pequeña, patas largas y potentes extremidades traseras para el salto. Pelaje uniforme café amarillento a rojizo en el dorso y blanquecino en el vientre; cola larga con punta oscura. Altura al hombro de 60 a 80 cm y peso entre 50 y 90 kg (machos mayores que las hembras).",
+        "ethology": "Solitario, altamente territorial, elusivo y de hábitos principalmente crepusculares y nocturnos. Amplios rangos de acción que patrulla marcando con orina y rasguños en árboles.",
+        "repro": "Polígamo. Periodo de gestación de aproximadamente 90 días, camadas de 1 a 4 crías nacidas en madrigueras protegidas (cuevas o raíces densas).",
+        "courtship": "Las hembras en celo emiten vocalizaciones fuertes y agudas (similares a gritos o llamados intensos) para atraer a los machos. Fuerte dimorfismo sexual en tamaño y peso (machos superan marcadamente a las hembras). Las crías nacen con manchas oscuras y anillos en la cola que pierden al crecer.",
+        "relations": "Solitario fuera de la época reproductiva. Competencia indirecta por espacio con el jaguar (Panthera onca) en zonas limítrofes, y relación de depredador sobre presas locales como saínos, pizotes, guatuzas y lagartomas.",
+        "science": "Especie altamente adaptable pero vulnerable a la fragmentación de hábitats y la cacería de represalia por depredación de ganado. Funciona como indicador biológico de la salud y conectividad de los corredores biológicos en Talamanca.",
+        "img": "img/img6.png"
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+        "temp": "10°C a 24°C",
+        "hum": "80% a 95%",
+        "name": "Jaguar",
+        "sci": "Panthera onca",
+        "habitat": "Bosques primarios densos, áreas de bosque nuboso maduro, corredores boscosos ribereños y zonas de transición montañosa con baja alteración humana, utilizando la cobertura vegetal densa para desplazarse con sigilo.",
+        "niche": "Superdepredador tope absoluto del continente americano; regulador clave de las poblaciones de grandes herbívoros y mamíferos medianos, siendo un indicador crítico de la salud, extensión y conectividad de los ecosistemas silvestres.",
+        "morph": "El felino más grande de América y el tercero del mundo. Cuerpo sumamente robusto y musculoso, cabeza grande, patas cortas pero con garras sumamente fuertes. Pelaje corto de color amarillo dorado o café arenoso en el dorso, con un patrón característico de manchas negras en forma de rosetas grandes que encierran una o más manchas en su interior; parte ventral blanquecina. Los machos adultos pueden alcanzar entre 80 y 100 kg, y las hembras entre 60 y 80 kg.",
+        "ethology": "Solitario, territorial, altamente elusivo y de hábitos tanto diurnos como nocturnos. Los machos patrullan amplios rangos de acción que marcan con orina y rasguños. Es un nadador excelente y un cazador de emboscada con una mordida extremadamente poderosa.",
+        "repro": "Polígamo. Periodo de gestación de aproximadamente 3 meses, con camadas de 2 a 3 crías que permanecen al cuidado de la madre durante su primer año de vida.",
+        "courtship": "Las hembras en celo emiten llamadas vocales potentes para atraer a los machos solitarios. Marcado dimorfismo sexual en el tamaño corporal y peso (los machos superan notablemente en masa a las hembras).",
+        "relations": "Superdepredador sin competencia directa por recursos con otros felinos locales (coexiste y comparte espacio de forma indirecta con el puma); predador sobre mamíferos medianos (saínos, pizotes, tepezcuintles) y ocasionalmente sobre animales domésticos cuando la fragmentación del hábitat reduce sus presas naturales.",
+        "science": "Su presencia confirmada mediante cámaras trampa en zonas altas y cafetaleras de la región de Los Santos demuestra una conectividad importante en los corredores biológicos de Talamanca. No obstante, enfrenta graves amenazas por la fragmentación del hábitat y la cacería de represalia, siendo una especie protegida de alto valor para la conservación nacional.",
+        "dimorphism": false,
+        "img1": "img/img30.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+        "temp": "12°C a 24°C",
+        "hum": "80% a 95%",
+        "name": "Caucel, Tigrillo, Margay.",
+        "sci": "Leopardus wiedii (Felidae).",
+        "habitat": "Hábitos estrictamente arborícolas y forestales; habita en el dosel, sotobosque denso y ramas altas de bosques primarios, secundarios avanzados y zonas de transición agrícola arbolada.",
+        "niche": "Depredador carnívoro mediano y especializado en la caza arbórea; regulador clave de poblaciones de aves, roedores arborícolas, marsupiales e insectos grandes en el estrato alto del bosque.",
+        "morph": "Felino pequeño y esbelto (longitud corporal de 45 a 80 cm, con una cola muy larga que puede medir de 33 a 51 cm, la cual representa hasta el 70% de la longitud de su cabeza y cuerpo). Ojos grandes y expresivos de color ámbar o café claro. Pelaje denso de color ocre o café amarillento en el dorso, adornado con hileras de manchas oscuras en forma de rosetas y líneas longitudinales (patrón similar al ocelote, pero de menor tamaño y complexión más grácil). Pesa entre 2.5 y 9 kg.",
+        "ethology": "Nocturno, solitario y de hábitos altamente arborícolas. Es el felino neotropical con mayor especialización para la vida en los árboles; sus articulaciones de las patas traseras pueden rotar casi 180 grados, lo que le permite descender de los troncos con la cabeza hacia abajo (al igual que una ardilla).",
+        "repro": "Solitario fuera del celo. Periodo de gestación de aproximadamente 80 a 84 días, dando a luz una sola cría (raramente dos) en madrigueras ocultas entre oquedades de árboles o vegetación densa.",
+        "courtship": "Las hembras emiten llamados vocales agudos en la época reproductiva para atraer a los machos. Presenta un dimorfismo sexual sutil centrado en variaciones leves de peso y tamaño corporal entre machos y hembras adultos.",
+        "relations": "Competencia trófica indirecta con otros felinos medianos terrestres; presa ocasional de superdepredadores como el jaguar o el puma, y vulnerable a la depredación por aves rapaces grandes de la noche.",
+        "science": "Especie altamente dependiente de la continuidad de los bosques maduros y la estructura arbórea compleja debido a sus hábitos arborícolas especializados. Está catalogada como Casi Amenazada a nivel global debido a la deforestación y la fragmentación de los corredores biológicos montañosos.",
+        "dimorphism": false,
+        "img1": "img/img31.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "",
+        "temp": "16°C",
+        "hum": "75%",
+        "name": "Yaguarundí, Onza, León breñero.",
+        "sci": "Herpailurus yagouaroundi (Felidae).",
+        "habitat": "Áreas abiertas con cobertura arbustiva densa, matorrales, tacotales, bordes de bosques secundarios, áreas agrícolas (como cafetales y charrudes) y sabanas arborescentes; evita por lo general el interior de los bosques primarios muy densos.",
+        "niche": "Depredador carnívoro de hábitos terrestres y generalistas; regulador eficaz de poblaciones de roedores, aves terrestres, reptiles pequeños y lagartijas en los agroecosistemas y zonas de transición.",
+        "morph": "Felino de tamaño mediano con un aspecto muy atípico que recuerda a una comadreja o un mustélido grande. Cuerpo alargado, extremidades cortas, cabeza pequeña y aplanada, y una cola sumamente larga. Presenta dos fases de coloración principal en su pelaje corto y uniforme: una fase oscura (gris pardusca o negruzca) y una fase clara (rojiza, café castaña o amarillenta). Pesa entre 3 y 9 kg y mide de 50 a 70 cm de longitud corporal (más la cola).",
+        "ethology": "Diurno (a diferencia de la mayoría de los felinos neotropicales, tiene su pico de actividad durante las horas del día), terrestre, solitario y de comportamiento muy escurridizo ante la presencia humana.",
+        "repro": "Solitario la mayor parte del año. Periodo de gestación de aproximadamente 70 a 75 días, con camadas de 1 a 4 crías nacidas en madrigueras ocultas entre matorrales densos, rocas o troncos huecos.",
+        "courtship": "Emiten vocalizaciones suaves, ronroneos y chillidos durante la época de celo. Presenta un dimorfismo sexual sutil donde los machos tienden a ser ligeramente más grandes y pesados que las hembras.",
+        "relations": "Competencia trófica con otros pequeños carnívoros terrestres; presa ocasional de felinos de mayor tamaño como el puma o el jaguar, y vulnerable a atropellos en carreteras rurales.",
+        "science": "Especie muy plástica y adaptable a paisajes modificados por actividades humanas (como la agricultura y la ganadería extensiva), lo que le permite sobrevivir en áreas donde otros felinos nativos se retiran debido a la deforestación.",
+        "dimorphism": false,
+        "img1": "img/img32.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+        "temp": "6°C a 18°C",
+        "hum": "85% a 98%",
+        "name": "Danta, Tapir centroamericano",
+        "sci": "Tapirus bairdii",
+        "habitat": "Bosques nubosos primarios densos, bosques de roble (Quercus), matorrales de altura, zonas de páramo andino y áreas con presencia de cuerpos de agua, charcas de lodo (salitrales) y ríos de montaña.",
+        "niche": "Herbívoro de gran tamaño y el mayor dispersor de semillas del neotrópico (\"jardinero del bosque\"); clave para la regeneración y estructura de los ecosistemas forestales debido al consumo y transporte masivo de semillas en sus fecas.",
+        "morph": "El mamífero terrestre silvestre más grande de Centroamérica (longitud de 1.8 a 2.5 metros y un peso que oscila entre los 150 y 300 kg). Cuerpo robusto, extremidades cortas, ojos pequeños y un hocico alargado en una probóscide o trompa móvil y flexible. Pelaje corto de color pardo oscuro o negruzco, con una zona blanquecina o grisácea en la garganta y mejillas.",
+        "ethology": "Solitaria, tímida, de hábitos crepusculares y nocturnos (aunque puede mostrar actividad diurna en zonas protegidas y aisladas). Excelente nadadora, frecuenta lodazales para termorregularse, protegerse de insectos y eliminar parásitos.",
+        "repro": "Solitaria fuera del apareamiento. Periodo de gestación sumamente largo de aproximadamente 13 meses (cerca de 390 a 400 días), dando a luz una sola cría por parto. Las crías nacen con un patrón de rayas y manchas claras longitudinales que les sirve de camuflaje y pierden al crecer.",
+        "courtship": "Se comunican mediante chillidos agudos, soplidos y marcaje olfativo. Presenta un dimorfismo sexual muy sutil, donde las hembras adultas tienden a ser ligeramente más grandes y pesadas que los machos.",
+        "relations": "Especie pacífica sin competencia trófica directa; presa potencial de grandes felinos (como el jaguar o el puma) en sus etapas juveniles, y vulnerable principalmente a la presión antrópica.",
+        "science": "Especie catalogada en Peligro de Extinción (EN) a nivel global. Es un indicador biológico primordial de la salud ecológica, extensión y conectividad de los grandes bosques neotropicales, siendo altamente vulnerable a la fragmentación de su hábitat, la cacería ilegal y los atropellos en rutas de montaña.",
+        "dimorphism": false,
+        "img1": "img/img33.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+        "temp": "8°C a 26°C",
+        "hum": "65% a 90%",
+        "name": "Coyote",
+        "sci": "Canis latrans (Canidae).",
+        "habitat": "Áreas abiertas, pastizales, potreros, zonas agrícolas, bordes de bosques secundarios y áreas fragmentadas o de transición entre el bosque y el terreno intervenido por el ser humano.",
+        "niche": "Carnívoro y omnívoro oportunista de hábitos generalistas; cumple un rol regulador de poblaciones de pequeños mamíferos (roedores), lagartijas e insectos, además de actuar como carroñero en los ecosistemas modificados.",
+        "morph": "Cánido de tamaño mediano que recuerda a un perro delgado y esbelto. Longitud corporal de 75 cm a 1 metro (más una cola poblada de 30 a 40 cm) y un peso que oscila entre los 9 y 18 kg. Hocico largo y puntiagudo, orejas grandes, erectas y triangulares. Pelaje denso de tonalidades variables entre gris, pardo amarillento y rojizo, con marcas negruzcas en el lomo y la cola, y una característica mancha blanca en la garganta.",
+        "ethology": "Altamente adaptable, inteligente y de comportamiento social flexible (puede vivir solitario, en parejas o formando pequeñas manadas familiares). De hábitos principalmente crepusculares y nocturnos, aunque frecuentemente muestra actividad diurna en zonas poco perturbadas.",
+        "repro": "Monógamo estacional. Periodo de gestación de aproximadamente 60 a 63 días, con camadas de 4 a 7 crías nacidas en madrigueras subterráneas o oquedades naturales protegidas.",
+        "courtship": "Se comunican ampliamente mediante vocalizaciones características (aullidos, ladridos y gemidos colectivos). Presenta un dimorfismo sexual sutil donde los machos tienden a ser ligeramente más grandes y pesados que las hembras.",
+        "relations": "Competencia trófica directa con otros carnívoros medianos; interacción de desplazamiento o coexistencia con felinos silvestres y vulnerabilidad ocasional frente a superdepredadores en áreas de bosque maduro.",
+        "science": "Especie altamente invasiva o de expansión exitosa en el neotrópico; su presencia en las zonas altas de la Cordillera de Talamanca y Los Santos evidencia una fuerte plasticidad ecológica para aprovechar paisajes fragmentados por la ganadería y la agricultura.",
+        "dimorphism": false,
+        "img1": "img/img34.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+        "temp": "14°C a 24 C",
+        "hum": "70% a 90%",
+        "name": "Zorro gris",
+        "sci": "Urocyon cinereoargenteus",
+        "habitat": "Bosques secos, bosques húmedos, bosques de galería, matorrales espesos, áreas secundarias y plantaciones de café, prefiriendo zonas con cobertura arbustiva o cercanía a parches boscosos.",
+        "niche": "Carnívoro pequeño y omnívoro generalista de hábitos nocturnos; cumple un papel importante en la regulación de poblaciones de roedores, insectos, reptiles y aves pequeñas, actuando además como dispersor secundario de semillas y carroñero.",
+        "morph": "Cánido pequeño y delgado con una longitud de cabeza a cuerpo de 76 a 112.5 cm (incluyendo su larga y poblada cola) y un peso que puede alcanzar hasta los 7 kg. La parte dorsal es de color gris, con tonos rojizos o café amarillento pálido en los costados, patas y una línea que va desde el pecho hasta las orejas; garganta, mejillas y vientre de color blanco. Orejas largas y triangulares. Cuenta con garras curvas y afiladas que le otorgan una habilidad única entre los cánidos.",
+        "ethology": "Solitario y de hábitos predominantemente nocturnos. Es el único cánido en América capaz de trepar árboles con facilidad gracias a sus garras curvas, lo que le proporciona ventajas considerables para buscar refugio, escapar de depredadores o cazar.",
+        "repro": "Especie monógama. Periodo de gestación de aproximadamente 53 a 63 días, con camadas de 1 a 7 crías que nacen en madrigueras protegidas entre rocas, oquedades de árboles o troncos caídos.",
+        "courtship": "Se comunican mediante vocalizaciones agudas, ladridos y marcaje olfativo. Presenta un dimorfismo sexual sutil donde los machos tienden a ser ligeramente más largos y pesados que las hembras.",
+        "relations": "Competencia trófica con otros pequeños carnívoros y felinos menores de los agroecosistemas; presa ocasional de felinos de mayor tamaño o aves rapaces nocturnas.",
+        "science": "Su capacidad única de trepar árboles lo diferencia biológicamente del resto de los cánidos continentales. Muestra una alta tolerancia a los paisajes modificados por el ser humano (como fincas cafetaleras y tacotales), lo que facilita su coexistencia en las zonas de transición rural y montañosa.",
+        "dimorphism": false,
+        "img1": "img/img35.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "",
+        "temp": "10°C a 28°C",
+        "hum": "70% a 95%",
+        "name": "Mapache",
+        "sci": "Procyon lotor (Procyonidae)",
+        "habitat": "Áreas boscosas primarias y secundarias, bosques de galería cercanos a ríos y quebradas, manglares, zonas pantanosas y áreas agrícolas o periurbanas donde exista disponibilidad de agua y refugio.",
+        "niche": "Omnívoro oportunista y generalista de hábitos nocturnos; cumple un papel importante como regulador de poblaciones de pequeños invertebrados acuáticos, crustáceos, anfibios, frutos y roedores, actuando también como dispersor de semillas y carroñero.",
+        "morph": "Mamífero de tamaño mediano con un cuerpo robusto y extremidades cortas. Longitud de cabeza y cuerpo de 40 a 70 cm, más una cola larga y densamente poblada con 4 a 7 anillos alternos oscuros y claros. Su característica más distintiva es una \"máscara\" de pelaje negro alrededor de los ojos que contrasta con el hocico y las mejillas blancas. Pesa entre 3 y 10 kg. Manos delanteras con una gran destreza táctil similar a la humana.",
+        "ethology": "Solitario o en pequeños grupos familiares, de hábitos predominantemente nocturnos y crepusculares. Posee un comportamiento característico llamado \"lavado\" (o manipulación frecuente de los alimentos y objetos en el agua para mejorar su sensibilidad táctil antes de consumirlos).",
+        "repro": "Polígamo estacional. Periodo de gestación de aproximadamente 63 a 65 días, con camadas de 2 a 5 crías que nacen en oquedades de árboles, madrigueras de otros animales o rocas.",
+        "courtship": "Se comunican mediante chillidos, gruñidos y ronroneos. Presenta un dimorfismo sexual sutil donde los machos tienden a ser ligeramente más grandes y pesados que las hembras.",
+        "relations": "Competencia trófica con otros omnívoros y carnívoros medianos; presa ocasional de grandes felinos y aves rapaces de mayor tamaño.",
+        "science": "Especie altamente inteligente y adaptable a la modificación antrópica del paisaje; su presencia en las cercanías de ríos y fincas agrícolas demuestra su éxito ecológico para aprovechar recursos asociados a la actividad humana.",
+        "dimorphism": false,
+        "img1": "img/img36.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Mamiferos",
+        "loc": "Cordillera de Talamanca y Zona de los Santos (1,500 - 3,000 m s. n. m.)",
+        "temp": "8°C a 26°C",
+        "hum": "75% a 95%",
+        "name": "Comadreja de cola larga",
+        "sci": "Mustela frenata (Mustelidae).",
+        "habitat": "Muy versátil; habita en bosques primarios, secundarios, robledales (Quercus), matorrales, zonas de pastizal, orillas de ríos y áreas agrícolas (como fincas de café y potreros con montones de piedra o troncos que ofrecen refugio).",
+        "niche": "Depredador carnívoro especializado y hipercarnívoro; desempeña un papel clave en el control biológico de poblaciones de roedores pequeños (ratones y ratas de campo), evitando plagas en los ecosistemas naturales y agroecosistemas.",
+        "morph": "Mustélido de cuerpo extremadamente alargado, flexible y esbelto, con extremidades cortas. Longitud de cabeza y cuerpo de 20 a 35 cm, más una cola larga y poblada que representa cerca de la mitad de su longitud corporal (de 10 a 15 cm), terminada en una punta de pelaje negro. Coloración dorsal marrón o canela, con el vientre y la garganta de tonos amarillentos o blanquecinos. Pesa entre 85 y 450 g.",
+        "ethology": "Solitaria, sumamente ágil, territorial y de hábitos tanto diurnos como nocturnos. Posee un metabolismo muy acelerado, por lo que debe cazar activamente de forma constante. Es excelente trepadora y nadadora.",
+        "repro": "Solitaria fuera del apareamiento. Posee un ciclo reproductivo con implantación retrasada del blastocisto; la gestación activa dura alrededor de un mes, con camadas de 3 a 9 crías que nacen en madrigueras subterráneas o bajo rocas.",
+        "courtship": "Se comunican mediante chillidos agudos y la emisión de un fuerte olor almizclado segregado por glándulas anales al sentirse amenazadas. Presenta un dimorfismo sexual marcado en el tamaño corporal (los machos son significativamente más grandes y pesados que las hembras, pudiendo duplicar su peso).",
+        "relations": "Depredador feroz pero a su vez presa de aves rapaces, serpientes grandes y pequeños felinos silvestres; compite indirectamente con otros carnívoros pequeños por los recursos de roedores.",
+        "science": "A pesar de su tamaño diminuto, es uno de los cazadores más eficientes del neotrópico. Su alta adaptabilidad le permite coexistir con éxito en paisajes fragmentados por la agricultura tradicional de montaña, como los que caracterizan a los cantones de la Zona de los Santos.",
+        "dimorphism": false,
+        "img1": "img/img37.png",
+        "img2": ""
+      }
+    ],
+    "reptiles": [
+      {
+        "title": "Guía Taxonómica - Reptiles",
+        "loc": "Naranjillo, Tarrazú",
+        "temp": "24°C",
+        "hum": "85%",
+        "name": "Víbora Mano de Piedra",
+        "sci": "Atropoides nummifer",
+        "habitat": "Bordes de bosque con rocas y troncos.",
+        "niche": "Depredador de emboscada que controla roedores silvestres.",
+        "morph": "Cabeza triangular ancha, escamas quilladas robustas.",
+        "ethology": "Nocturna y crepuscular, termorregulando sobre rocas.",
+        "repro": "Vivípara; da a luz crías desarrolladas.",
+        "courtship": "Rituales de proximidad química y combate ritual.",
+        "relations": "Controlador natural de roedores en zonas de altura.",
+        "science": "Su veneno contiene péptidos hemotóxicos locales que cumplen un rol ecológico en el control de roedores.",
+        "img": "img/img5.png"
+      },
+      {
+        "title": "Guía Taxonómica - Reptiles",
+        "loc": "La Pastora/Tarrazú",
+        "temp": "20°C",
+        "hum": "90%",
+        "name": "Toboba de Altura",
+        "sci": "Cerrophidion sasai",
+        "habitat": "Bosques montanos nubosos y de altura de la Cordillera de Talamanca (1,460 a 2,875 m s. n. m.).",
+        "niche": "Depredador diurno y crepuscular de emboscada especializado en el control de roedores, lagartijas e invertebrados.",
+        "morph": "Serpiente pequeña a mediana (adultos promedio de 50 cm, hasta 85 cm). Coloración base beige o café con una serie de marcas geométricas cuadradas u oscuras a lo largo del dorso.",
+        "ethology": "Hábito estrictamente terrestre, diurno y crepuscular; serpiente de temperamento tranquilo pero ponzoñosa.",
+        "repro": "Vivípara; da a luz crías completamente formadas.",
+        "courtship": "Competencia de machos y marcaje químico por feromonas; los machos suelen alcanzar mayor tamaño promedio.",
+        "relations": "Importante eslabón como regulador natural de poblaciones de roedores en los ecosistemas de alta montaña.",
+        "science": "Especie venenosa con veneno de acción hemotóxica; endémica de las cordilleras de Talamanca y Central en Costa Rica y oeste de Panamá.",
+        "img": "img/img4.png"
+      },
+      {
+        "title": "Guía Taxonómica - Reptiles",
+        "loc": "Cordillera de Talamanca y Zonas Altas de Los Santos",
+        "temp": "16°C",
+        "hum": "85%",
+        "name": "Lagartija Espinosa Malaquita",
+        "sci": "Sceloporus malachiticus",
+        "habitat": "Rocas expuestas, troncos caídos y matorrales de altura en zonas montañosas y bordes de bosque.",
+        "niche": "Insectívoro diurno; cumple un papel clave en el control biológico de poblaciones de insectos y artrópodos.",
+        "morph": "Lagartija robusta con escamas dorsales fuertemente aquilladas y espinosas; coloración general verdosa o café con patrones crípticos para termorregulación.",
+        "ethology": "Hábitos estrictamente diurnos; pasa gran parte del día realizando termorregulación activa sobre rocas expuestas a la radiación solar.",
+        "repro": "Vivípara u ovípara según adaptaciones altitudinales de alta montaña; puesta o alumbramiento protegido en grietas rocosas.",
+        "courtship": "Despliegues visuales mediante flexiones corporales (*push-ups*) y exhibición de colores gulares por parte de los machos.",
+        "relations": "Importante presa para aves rapaces de altura y serpientes arbóreas o terrestres; competencia por espacios óptimos de termorregulación.",
+        "science": "Excelente indicador biológico de la calidad de hábitats abiertos y rocosos expuestos a la luz solar en los gradientes altitudinales de Talamanca.",
+        "dimorphism": true,
+        "img1": "img/img13.png",
+        "img2": "img/img14.png"
+      },
+      {
+        "title": "Guía Taxonómica - Reptiles",
+        "loc": "Cerro de la Muerte/Dota",
+        "temp": "10°C a 19°C",
+        "hum": "85% a 98%",
+        "name": "Toboba de árbol",
+        "sci": "Bothriechis nigroviridis",
+        "habitat": "Hábitos estrictamente arborícolas; habita en el dosel, sotobosque denso, arbustos, bromelias epífitas y helechos arborescentes en bosques nubosos primarios y secundarios maduros.",
+        "niche": "Depredador tope arbóreo y controlador natural de poblaciones de aves pequeñas, lagartijas arborícolas y roedores que habitan en los estratos altos del bosque montano.",
+        "morph": "Serpiente viperina de cuerpo delgado y cola marcadamente prensil. Longitud promedio entre 50 y 70 cm, pudiendo alcanzar hasta 80 cm. Coloración dorsal verde brillante o verde esmeralda con manchas o puntos negros dispuestos en bandas transversales (de ahí su epíteto específico nigroviridis), aunque existen fases melánicas u oscuras. Cabeza triangular ancha con fosetas loreales termosensibles y escamas supraoculares ligeramente levantadas.",
+        "ethology": "Nocturna y crepuscular, pasando la mayor parte del tiempo enroscada entre el follaje, bromelias o musgos esperando una presa. Su naturaleza es paciente y críptica; se desplaza lentamente entre las ramas.",
+        "repro": "Vivípara, dando a luz crías vivas (usualmente entre 5 y 12 neonatos) durante la época seca o al inicio de la estación lluviosa, lo que asegura mejores condiciones de supervivencia en el estrato arbóreo.",
+        "courtship": "El cortejo ocurre en las ramas de los árboles mediante movimientos corporales y tacto. Presenta un dimorfismo sutil, donde las hembras suelen ser ligeramente más robustas y de mayor longitud total que los machos.",
+        "relations": "Competencia con otras serpientes arborícolas nocturnas de menor tamaño; presa ocasional de aves rapaces nocturnas de alta montaña y mamíferos carnívoros medianos arborícolas.",
+        "science": "Especie altamente dependiente de la integridad estructural de los bosques nubosos y de la abundancia de epífitas (como bromelias), donde suele refugiarse y cazar. Es sumamente sensible a la deforestación y fragmentación del hábitat montano.",
+        "dimorphism": false,
+        "img1": "img/img16.png",
+        "img2": ""
+      },
+      {
+        "title": "Guía Taxonómica - Reptiles",
+        "loc": "Dota/Tarrazú/León Cortés",
+        "temp": "16°C",
+        "hum": "80%",
+        "name": "Lagarto escorpión de altura",
+        "sci": "Abronia monticola",
+        "habitat": "Áreas abiertas o bordes dentro de bosques nubosos maduros, robledales (Quercus), matorrales de altura y zonas de páramo; frecuentemente asociada a troncos caídos, pilas de rocas, suelo con hojarasca densa y bases de arbustos como el chusque.",
+        "niche": "Depredador diurno de invertebrados terrestres (insectos, arañas y larvas); componente fundamental en las redes tróficas del sotobosque altoandino y presa ocasional de aves rapaces o aves de sotobosque.",
+        "morph": "Lagarto de cuerpo alargado y extremidades relativamente cortas. Posee escamas dorsales fuertemente quilladas y un pliegue lateral de piel flexible a lo largo de los flancos. Coloración dorsal variable entre tonos pardos, oliváceos o grises con bandas transversales oscuras o manchas que le otorgan camuflaje en la hojarasca y troncos. Longitud hocico-cloaca moderada con una cola larga y frágil.",
+        "ethology": "Diurna y terrestre/semirrupícola. Pasa gran parte de las mañanas soleadas termorregulándose (basking) sobre rocas, troncos o suelo expuesto antes de iniciar sus actividades de búsqueda de alimento. Ante amenazas, puede realizar autotomía caudal (desprendimiento de la cola) para distraer depredadores.",
+        "repro": "Ovovivípara (retiene los huevos internamente y da a luz crías vivas), una adaptación evolutiva clave para proteger a los embriones de las bajas temperaturas características de los ecosistemas de alta montaña.",
+        "courtship": "Activa durante los meses más templados y secos del año para el apareamiento. Presenta un dimorfismo sexual moderado, donde los machos tienden a mostrar cabezas ligeramente más anchas o triangulares y variaciones sutiles en los patrones de coloración ventral o lateral en comparación con las hembras.",
+        "relations": "Competencia por recursos de microhábitat con otros reptiles de hábitos terrestres de altura; depredador de artrópodos y presa de aves especializadas y serpientes de montaña.",
+        "science": "Es una especie endémica regional de los altos talamancanos, altamente adaptada al frío extremo de los páramos y bosques nubosos superiores. Su dependencia de la termorregulación solar la vuelve susceptible a alteraciones prolongadas en los patrones de nubosidad y clima de montaña.",
+        "dimorphism": true,
+        "img1": "img/img17.png",
+        "img2": "img/img18.png"
+      },
+      {
+        "title": "Guía Taxonómica - Reptiles",
+        "loc": "Dota/Tarrazú/León Cortés",
+        "temp": "12°C a 24°C",
+        "hum": "80% a 95%",
+        "name": "Víbora de palma verde/Lora ",
+        "sci": "Bothriechis lateralis",
+        "habitat": "Hábito estrictamente arborícola; habita en el follaje denso de árboles y arbustos, bases de hojas de palma, así como en parches boscosos secundarios y plantaciones agrícolas tradicionales (como fincas de café) cercanas a los bosques nativos.",
+        "niche": "Depredador tope arbóreo y controlador natural de poblaciones de roedores pequeños, aves e insectos/reptiles arborícolas en el sotobosque y dosel bajo de la montaña.",
+        "morph": "Serpiente viperina de tamaño pequeño a moderado; los adultos suelen medir entre 60 y 80 cm (pudiendo superar excepcionalmente los 100 cm). Cuerpo relativamente delgado con cola prensil. Coloración dorsal verde esmeralda o verde azulado muy llamativa, adornada con líneas o barras verticales amarillas o blancuzcas a los costados. Cabeza ancha y triangular bien diferenciada del cuello, provista de fosetas loreales termosensibles e iris de color amarillo. (Nota: Los juveniles son de color marrón con marcas oscuras y adquieren el tono verde definitivo entre los 18 y 24 meses de vida).",
+        "ethology": "Nocturna y de conducta sumamente pasiva y críptica; pasa largos periodos enroscada e inmóvil entre las ramas, confiando en su camuflaje para evitar ser detectada en lugar de huir o atacar de forma agresiva, aunque reacciona con rapidez si es tocada directamente.",
+        "repro": "Vivípara (da a luz crías vivas, usualmente camadas de 6 a 10 neonatos independientes desde el nacimiento), sincronizada con los ciclos climáticos locales de la región montañosa.",
+        "courtship": "El apareamiento ocurre en el estrato arbóreo mediante acercamientos táctiles entre ejemplares. Presenta un dimorfismo sexual sutil donde los machos tienden a ser ligeramente más largos y delgados en comparación con la complexión de las hembras.",
+        "relations": "Competencia por nicho arbóreo con otras serpientes de la familia Viperidae (como Bothriechis schlegelii en zonas de menor altitud o traslape); depredada ocasionalmente por aves rapaces nocturnas y mamíferos carnívoros medianos.",
+        "science": "Posee un veneno de carácter predominantemente hemotóxico (afecta la coagulación sanguínea). Aunque sus mordeduras son infrecuentes debido a su naturaleza dócil y arbórea, un accidente ofídico requiere atención médica prioritaria utilizando el antiveneno polivalente producido en el país por el Instituto Clodomiro Picado (ICP).",
+        "dimorphism": false,
+        "img1": "img/img25.png",
+        "img2": ""
+      }
+    ]
+  },
+  "sites": [
+    {
+      "title": "Sitio Emblemático - Talamanca",
+      "name": "Cerro Vueltas",
+      "popularName": "Reserva Biológica Cerro Vueltas",
+      "loc": "Dota / Cordillera de Talamanca (Km 74 Panamericana)",
+      "alt": "3,156 m s. n. m.",
+      "temp": "10°C a 14°C",
+      "hum": "90% a 98%",
+      "history": "Ubicado estratégicamente al lado de la Carretera Panamericana Sur. Su nombre histórico proviene de las cerradas y múltiples curvas (vueltas) que realizaban los vehículos para superar su empinada altitud.",
+      "geology": "Sustrato de rocas ígneas y suelos ácidos altamente orgánicos que forman una esponja natural para la recarga de mantos acuíferos.",
+      "ecology": "Bosque nuboso alto, robledales de altura dominados por Quercus costaricensis y transición hacia matorral de páramo.",
+      "floraFauna": "Roble encino, musgos esfagnos, colibríes de altura, quetzales y rica avifauna endémica de Talamanca.",
+      "special": "Impresionante mirador natural, punto clave de investigación científica sobre captación de neblina e hidrografía regional.",
+      "img": "img/img7.png"
+    },
+    {
+      "title": "Sitio Emblemático - Talamanca",
+      "name": "Cerro Placas",
+      "popularName": "Cerro San Jerónimo",
+      "loc": "San Jerónimo de Tarrazú",
+      "alt": "2,120 m s. n. m.",
+      "temp": "15°C a 19°C",
+      "hum": "85% a 92%",
+      "history": "Considerado el punto geográfico más alto del cantón de Tarrazú. Funciona como una divisoria de aguas natural y conecta visualmente la cordillera con las cuencas del Pacífico.",
+      "geology": "Formaciones montañosas abruptas modeladas por procesos tectónicos y fuerte escorrentía hacia la cuenca del río Pirrís.",
+      "ecology": "Bosques semimaduros, parches de bosque primario y colindancias con cafetales de altura.",
+      "floraFauna": "Arbustos nativos de altura, aves de sotobosque, felinos menores y gran diversidad de insectos.",
+      "special": "Destino predilecto para el ecoturismo, senderismo de aventura y rutas de turismo comunitario en la Zona de Los Santos.",
+      "img": "img/img8.png"
+    },
+    {
+      "title": "Sitio Emblemático - Talamanca",
+      "name": "Cerro Abejonal",
+      "popularName": "El Abejonal",
+      "loc": "San Antonio / San Pablo de León Cortés",
+      "alt": "2,029 m s. n. m.",
+      "temp": "16°C a 20°C",
+      "hum": "82% a 90%",
+      "history": "Tradicionalmente conocido como el cerro más alto de San Pablo. Su nombre popular se debe a que durante el mes de mayo el sitio se llena de gran cantidad de abejones (escarabajos melolóntidos).",
+      "geology": "Elevación prominente con vistas panorámicas hacia los valles de San Pablo y San Marcos de Tarrazú.",
+      "ecology": "Ecosistemas de transición agrícola y boscosa, con corredores biológicos locales activos.",
+      "floraFauna": "Árboles frutales silvestres, aves migratorias, colibríes y abundante entomofauna estacional.",
+      "special": "Tradicional destino de paseo familiar, caminatas recreativas comunitarias y contacto directo con la cultura local.",
+      "img": "img/img9.png"
+    },
+    {
+      "title": "Sitio Emblemático - Talamanca",
+      "name": "Cerro La Trinidad",
+      "popularName": "Cerro de la Cruz",
+      "loc": "San Marcos de Tarrazú",
+      "alt": "1,944 m s. n. m.",
+      "temp": "16°C a 21°C",
+      "hum": "80% a 88%",
+      "history": "Símbolo natural e histórico de Tarrazú. Se le conoce popularmente como 'Cerro de la Cruz' por la gran cruz instalada en su cima, sitio de referencia, tradición e historia comunitaria.",
+      "geology": "Estructura montañosa cercana al centro de San Marcos, compuesta de suelos volcánicos altamente aptos para la caficultura.",
+      "ecology": "Vegetación de ladera montañosa premontana, arbustos nativos y parches de bosque secundario.",
+      "floraFauna": "Aves comunes de zona cafetalera, clarineros, yigüirros y mariposas diurnas.",
+      "special": "Ofrece vistas panorámicas incomparables de todo el valle cafetalero de Los Santos; una caminata obligatoria.",
+      "img": "img/img10.png"
+    }
+  ]
+};
 
         let currentCategory = 'anfibios';
         let currentIndex = 0;
@@ -618,10 +860,12 @@
             const list = bitacoraData.species[currentCategory];
             const counter = document.getElementById('counter');
 
+            // Limpiar si no hay datos
             if (!list || list.length === 0) {
                 document.getElementById('val-name').innerText = "No hay registros en esta categoría";
                 document.getElementById('val-sci').innerText = "-";
                 document.getElementById('val-loc').innerText = "-";
+                document.getElementById('val-climate').innerText = "-";
                 document.getElementById('val-habitat').innerText = "-";
                 document.getElementById('val-niche').innerText = "-";
                 document.getElementById('val-morph').innerText = "-";
@@ -634,13 +878,22 @@
                 return;
             }
 
+            // Validar límites
             if (currentIndex >= list.length) currentIndex = 0;
             if (currentIndex < 0) currentIndex = list.length - 1;
 
             const item = list[currentIndex];
-            document.getElementById('val-name').innerText = item.name || item.sci || "Sin nombre";
+            
+            // Asignación de datos
+            document.getElementById('val-name').innerText = item.name || "-";
             document.getElementById('val-sci').innerText = item.sci || "-";
             document.getElementById('val-loc').innerText = item.loc || "Zona de los Santos";
+            
+            // Combinar Temp y Humedad si existen
+            const tempStr = item.temp ? `Temp: ${item.temp}` : "";
+            const humStr = item.hum ? `Hum: ${item.hum}` : "";
+            document.getElementById('val-climate').innerText = [tempStr, humStr].filter(Boolean).join(" | ") || "-";
+            
             document.getElementById('val-habitat').innerText = item.habitat || "-";
             document.getElementById('val-niche').innerText = item.niche || "-";
             document.getElementById('val-morph').innerText = item.morph || "-";
